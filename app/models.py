@@ -25,13 +25,13 @@ class Category(models.Model):
     def __str__(self):
         return self.category
 
-# class OrderDetails(models.Model):
-#     order_id=models.IntegerField(primary_key=True)
-#     warehouse=models.ForeignKey(Warehouse,on_delete=models.CASCADE,blank=False,null=False)
-#     quantity=models.IntegerField()
-#     date= models.DateTimeField(auto_now=True)
-#     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
-#     def __str__(self):
-#         return self.order_id
+class OrderDetails(models.Model):
+    order_id=models.IntegerField(primary_key=True)
+    warehouse=models.ForeignKey(Warehouse,on_delete=models.CASCADE,blank=False,null=False)
+    quantity=models.IntegerField()
+    date= models.DateTimeField(auto_now=True)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+    def __str__(self):
+        return self.order_id
 
 
