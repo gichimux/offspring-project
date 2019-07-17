@@ -20,10 +20,10 @@ class Warehouse(models.Model):
         return self.locality
 
 
-# class Category(models.Model):
-#     category = models.CharField(max_length=100,blank=False)
-#     def __str__(self):
-#         return self.category
+class Category(models.Model):
+    category = models.CharField(max_length=100,blank=False)
+    def __str__(self):
+        return self.category
 
 # class OrderDetails(models.Model):
 #     order_id=models.IntegerField(primary_key=True)
