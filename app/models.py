@@ -14,10 +14,10 @@ class Product(models.Model):
        def __str__(self):
         return self.name
 
-# class Warehouse(models.Model):
-#     locality=models.CharField(max_length=100,default=Karen)
-#     def __str__(self):
-#         return self.locality
+class Warehouse(models.Model):
+    locality=models.CharField(max_length=100,default=Karen)
+    def __str__(self):
+        return self.locality
 
 
 # class Category(models.Model):
