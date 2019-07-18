@@ -1,42 +1,67 @@
 from django.db import models
+import datetime as dt
+from django.contrib.auth.models import User
 
-
-# Create your models here.
-
-
-
+'''
+Class category for product categories
+'''
 class Category(models.Model):
-    category = models.CharField(max_length=100,blank=False)
+    name = models.CharField(max_length = 30)
+    
+    def save_tag(self):
+        self.save()
     def __str__(self):
-        return self.category
-
+        return self.name
+'''
+class product for product in general stock
+'''
 class Product(models.Model):
     name = models.CharField(max_length= 50,blank=False,null= False)
+    serial = models.CharField(max_length=40)
     description = models.CharField(max_length=200)
-    prod_color = models.CharField(max_length=50,blank=False)
-    prod_id = models.AutoField(primary_key=True)  
+    product_color = models.CharField(max_length=50,blank=False)
     quantity = models.IntegerField(default=0)
     size = models.IntegerField(unique= True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE) 
     def __str__(self):
         return self.name
 
-class Warehouse(models.Model):
-    locality=models.CharField(max_length=100,default='Karen')
+'''
+class distributor for the different product distributors
+'''
+
+class Distributor(models.Model):
+    name = models.CharField(max_length = 30)
+    location = models.CharField(max_length = 30,default="karen")
     def __str__(self):
         return self.locality
 
+'''
+class order details for the details about a certain order
+'''
 class OrderDetails(models.Model):
-    order_id=models.IntegerField(primary_key=True)
-    warehouse=models.ForeignKey(Warehouse,on_delete=models.CASCADE,blank=False,null=False)
-    quantity=models.IntegerField()
-    date= models.DateTimeField(auto_now=True)
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+    warehouse=models.ForeignKey(Warehouse,on_delete=models.CASCADE,blank=False,null=False)
+    quantity =models.IntegerField(default=0)
+    date= models.DateTimeField(auto_now=True)
+    
     def __str__(self):
-        return str(self.order_id)
+        return self.product
+
     @classmethod
     def search_by_id(cls,search_id):
         product=cls.ohjects.filter(order_id__icontains=search_id)
         return 
 
+'''
+class House_product for the products in particular house
+'''
+
+class House_Product(models.Model):
+    name = models.ForeignKey(MoringaMerch)
+    warehouse = models.ForeignKey('House',default=1)
+    quantity =models.IntegerField(default=0)
+    
+    def __str__(self):
+        return self.name.name
 
