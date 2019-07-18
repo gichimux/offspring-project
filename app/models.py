@@ -36,7 +36,7 @@ class OrderDetails(models.Model):
         return str(self.order_id)
     @classmethod
     def search_by_id(cls,search_id):
-        product=cls.ohjects.filter(order_id__icontains=search_id)
+        product=cls.objects.filter(order_id__icontains=search_id)
         return 
 
 
