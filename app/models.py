@@ -41,7 +41,7 @@ class order details for the details about a certain order
 '''
 class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
-    warehouse=models.ForeignKey(Warehouse,on_delete=models.CASCADE,blank=False,null=False)
+    warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.IntegerField(default=0)
     date= models.DateTimeField(auto_now=True)
     
@@ -50,7 +50,7 @@ class OrderDetails(models.Model):
 
     @classmethod
     def search_by_id(cls,search_id):
-        product=cls.ohjects.filter(order_id__icontains=search_id)
+        product=cls.objects.filter(order_id__icontains=search_id)
         return 
 
 '''
@@ -58,8 +58,8 @@ class House_product for the products in particular house
 '''
 
 class House_Product(models.Model):
-    name = models.ForeignKey(MoringaMerch)
-    warehouse = models.ForeignKey('House',default=1)
+    name = models.ForeignKey(Product)
+    warehouse = models.ForeignKey('Distributor',default=1)
     quantity =models.IntegerField(default=0)
     
     def __str__(self):

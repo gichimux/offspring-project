@@ -23,7 +23,7 @@ View for a single distributor
 '''
 def single_house(request,id):
 
-   house = House.objects.get(id=id)
+    house = House.objects.get(id=id)
     house_products = House_Product.objects.filter(warehouse=id)
     if request.method == 'POST':
         form = NewHouseProd(request.POST, request.FILES)
