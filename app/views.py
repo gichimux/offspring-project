@@ -16,7 +16,7 @@ def inventory(request):
    objects = Product.objects.all()
 
 
-   return render(request, 'vendors.html', {'objects':objects,'houses':houses})
+   return render(request, 'index.html', {'objects':objects,'houses':houses})
 
 '''
 View for a single distributor
@@ -63,13 +63,13 @@ def add_item(request,h_id,i_id):
     return render(request,'item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
 
 
-
 def search(request):
-    if 'product' in request.GET and request.GET['product']:
-        search_id =request.GET.get("product")
-        searched_order = OrderDetails.search_by_id(search_id)
-        message=f"{search_id}"
-        return render(request,'index.html',{"message":message,"products":searched_order})
+    if 'product' in request.GET and request.GET["product"]:
+        search_serial =request.GET.get("product")
+        searched_products = Product.search_by_serial(search_serial)
+        message=f"{search_serial}"
+        return render(request,'search.html',{"message":message,"products":searched_products})
     else:
-        message="You did not return any product"
-        return render(request,'index.html',{"message":message})
+        message="You did not search using a serial"
+
+    return render(request,'search.html',{"message":message})
