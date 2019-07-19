@@ -5,8 +5,10 @@ from django.conf.urls.static import static
 
 
 urlpatterns=[
- url(r'add/(\d+)/(\d+)',views.add_item,name="add"),
- url(r'house/(\d+)',views.single_house,name="house")  
+    url(r'^$',views.inventory,name='home'),
+    url(r'^search/',views.search,name='search_results'),
+    url(r'add/(\d+)/(\d+)',views.add_item,name="add"),
+    url(r'house/(\d+)',views.single_house,name="house"), 
 ]
 
 if settings.DEBUG:
