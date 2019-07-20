@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
+{% block content %} 
+{{ block.super}}
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div class="container">
+           <h1>{{category.name}}</h1>
+            {% for product in products %}
+                <div  style="border:1px solid balck;padding:20px"class="categories">
+                <h3>{{product.name}} <b>{{product.q}}</b> <a href="{% url 'stock_product_analysis' product.id %}">Add</a> </h3>
+            </div>
+                {% endfor %}
+        </div>
+    
+    </body>
+</html>
+{% endblock %}
