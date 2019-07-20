@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
+{% block content %} 
+{{ block.super}}
+
+<div class="container">
+   
+    <h3>{{to_add.name}} <b>{{to_add.quantity}}</b></h3>
+    
+  {{form.media}}
+  <form  action="{% url 'stock_product' to_add.id %}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+
+    {% bootstrap_form form%}
+    <input type="submit" class="btn btn-success btn-lg" value="Post">
+  </form>
+
+   {% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  {% bootstrap_javascript %} {% endblock %}
+
+{% endblock %}

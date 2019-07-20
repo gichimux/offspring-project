@@ -1,0 +1,19 @@
+{%extends 'base.html'%}
+{% block content %} 
+{{ block.super}}
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div class="container">
+           <h1>Categories</h1>
+            {% for category in categories %}
+                <div  style="border:1px solid balck;padding:20px"class="categories">
+                <a href="{% url 'category' category.id %}"><h3>{{category.name}}</h3></a>
+            </div>
+                {% endfor %}
+        </div>
+    </body>
+</html>
+{% endblock %}
