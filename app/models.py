@@ -34,7 +34,7 @@ class Distributor(models.Model):
     name = models.CharField(max_length = 30)
     location = models.CharField(max_length = 30,default="karen")
     def __str__(self):
-        return self.locality
+        return self.location
 
 '''
 class order details for the details about a certain order

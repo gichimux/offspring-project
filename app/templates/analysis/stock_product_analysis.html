@@ -6,6 +6,7 @@
 <div class="container">
    
     <h3>{{to_add.name}} <b>{{to_add.quantity}}</b></h3>
-    
- 
+    {% for in_house in in_houses %}
+    <p>{{in_house.name}} <b>{{in_house.warehouse}}</b><b> {{in_house.quantity}}</b></p>
+    {% endfor %}
 {% endblock %}

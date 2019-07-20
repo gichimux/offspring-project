@@ -75,7 +75,7 @@ def single_house(request,id):
             return redirect(news_today)
     else:
         form =NewHouseProd()
-    return render(request,'house.html',{'house':house,'form':form,'products':house_products})
+    return render(request,'distributor/house.html',{'house':house,'form':form,'products':house_products})
 
 
 '''
@@ -103,7 +103,7 @@ def add_house_product(request,h_id,i_id):
             return redirect(news_today)
     else:
         form =AddHouseProd()
-    return render(request,'item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
+    return render(request,'distributor/item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
 
 '''
 view to search a particular product by its serial
@@ -120,6 +120,8 @@ def search(request):
         return render(request,'search.html',{"message":message})
 
 
+
+
 '''
 Analysis view
 '''
@@ -132,7 +134,7 @@ def full_stock(request):
     categories = Category.objects.all()
     
 
-    return render(request, 'analysis.html', {'categories':categories})
+    return render(request, 'analysis/analysis.html', {'categories':categories})
 
 '''
 total items in stock  category analysis
@@ -140,7 +142,7 @@ total items in stock  category analysis
 def full_category(request,id):
     products = Product.objects.filter(category=id)
     category = Category.objects.get(id=id)
-    return render(request,'category_analysis.html',{'products':products,'category':category})
+    return render(request,'analysis/category_analysis.html',{'products':products,'category':category})
 
 
 '''
@@ -151,4 +153,4 @@ def product_analysis(request,id):
     to_add = Product.objects.get(id=id)
     in_houses = House_Product.objects.filter(name=id)
 
-    return render(request,'stock_product_analysis.html',{'to_add':to_add})
+    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses})
