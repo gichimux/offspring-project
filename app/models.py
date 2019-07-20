@@ -65,3 +65,15 @@ class House_Product(models.Model):
     def __str__(self):
         return self.name.name
 
+'''
+class for the product suppliers
+'''
+
+class Supplier(models.Model):
+    name = models.CharField(max_length= 50)
+    product = models.CharField(max_length= 50)
+    contact = models.CharField(max_length= 50)
+    
+    def __str__(self):
+        return self.name
+
