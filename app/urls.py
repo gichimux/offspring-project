@@ -11,6 +11,10 @@ urlpatterns=[
  url(r'^house/(\d+)$',views.single_house,name="house"),
  url(r'^house/update(\d+)/(\d+)$',views.add_house_product,name="add_product"),
  url(r'^category/product/(\d+)$',views.stock_product,name="stock_product"),  
+
+ url(r'^analysis$',views.full_stock,name='analysis'),
+ url(r'^analysis/category/(\d+)$',views.full_category,name='category_analysis'),
+ url(r'^analysis/category/product/(\d+)$',views.product_analysis,name="stock_product_analysis"),  
 ]
 
 
