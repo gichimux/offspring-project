@@ -21,7 +21,7 @@ class Product(models.Model):
     description = models.CharField(max_length=200)
     product_color = models.CharField(max_length=50,blank=False)
     quantity = models.IntegerField(default=0)
-    size = models.IntegerField(unique= True)
+    size = models.CharField(max_length=50,blank=False)
     category=models.ForeignKey(Category,on_delete=models.CASCADE) 
     def __str__(self):
         return self.name
@@ -62,6 +62,10 @@ class House_Product(models.Model):
     warehouse = models.ForeignKey('Distributor',default=1)
     quantity =models.IntegerField(default=0)
     
+    @classmethod
+    def search_by_serial(cls,search_serial):
+        products=cls.objects.filter(serial__icontains=search_serial)
+        return products
     def __str__(self):
         return self.name.name
 
