@@ -16,7 +16,7 @@ def inventory(request):
     categories = Category.objects.all()
     
 
-    return render(request, 'vendors.html', {'objects':objects,'houses':houses,'categories':categories})
+    return render(request, 'inventory.html', {'objects':objects,'houses':houses,'categories':categories})
 
 
 '''
@@ -36,6 +36,10 @@ def category(request,id):
     else:
         form =AddProduct()
     return render(request,'category.html',{'products':products,'category':category,'form':form})
+
+'''
+view for Single stock product
+'''
 
 def stock_product(request,id):
     to_add = Product.objects.get(id=id)
@@ -101,7 +105,9 @@ def add_house_product(request,h_id,i_id):
         form =AddHouseProd()
     return render(request,'item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
 
-
+'''
+view to search a particular product by its serial
+'''
 
 def search(request):
     if 'product' in request.GET and request.GET['product']:
@@ -112,3 +118,37 @@ def search(request):
     else:
         message="You did not return any product"
         return render(request,'search.html',{"message":message})
+
+
+'''
+Analysis view
+'''
+
+'''
+All categories view
+'''
+
+def full_stock(request):
+    categories = Category.objects.all()
+    
+
+    return render(request, 'analysis.html', {'categories':categories})
+
+'''
+total items in stock  category analysis
+'''
+def full_category(request,id):
+    products = Product.objects.filter(category=id)
+    category = Category.objects.get(id=id)
+    return render(request,'category_analysis.html',{'products':products,'category':category})
+
+
+'''
+single item stock analysis
+'''
+
+def product_analysis(request,id):
+    to_add = Product.objects.get(id=id)
+    in_houses = House_Product.objects.filter(name=id)
+
+    return render(request,'stock_product_analysis.html',{'to_add':to_add})
