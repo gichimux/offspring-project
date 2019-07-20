@@ -2,20 +2,38 @@ from .models import *
 from django import forms
 
 '''
-form to add items to products in a specific location
+form to add new product to stock
+'''
+class AddProduct(forms.ModelForm):
+    class Meta:
+        model = Product
+        exclude =['category']
+
+'''
+form to update the quantity of a product
 '''
 
-class NewProd(forms.ModelForm):
-   class Meta:
-       model = OrderDetails
-       exclude = ['warehouse']
+class UpdateProdQuantity(forms.ModelForm):
+    class Meta:
+        model = Order_Product
+        fields =['quantity']
 
 '''
-form to add more items in a house when running
-low on stock
+form to add more items in a distributor
 '''
 
 class NewHouseProd(forms.ModelForm):
     class Meta:
         model = House_Product
         exclude = ['warehouse','quantity']
+
+'''
+form to add items to products in a specific distributor when running 
+low on stock 
+'''
+
+class AddHouseProd(forms.ModelForm):
+   class Meta:
+       model = OrderDetails
+       exclude = ['warehouse']
+
