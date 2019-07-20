@@ -77,3 +77,11 @@ class Supplier(models.Model):
     def __str__(self):
         return self.name
 
+'''
+class order product that stores details of product
+being updated to stock from supplier 
+'''
+
+class Order_Product(models.Model):
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+    quantity =models.IntegerField(default=0)
