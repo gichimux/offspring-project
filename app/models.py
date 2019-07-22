@@ -59,6 +59,7 @@ class House_product for the products in particular house
 
 class House_Product(models.Model):
     name = models.ForeignKey(Product)
+    category = models.ForeignKey(Category,default='Toys')
     warehouse = models.ForeignKey('Distributor',default=1)
     quantity =models.IntegerField(default=0)
     
@@ -88,4 +89,5 @@ being updated to stock from supplier
 
 class Order_Product(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+    supplier=models.ForeignKey(Supplier,blank=True,null=True)
     quantity =models.IntegerField(default=0)

@@ -19,7 +19,8 @@ class UpdateProdQuantity(forms.ModelForm):
         fields =['quantity']
 
 '''
-form to add more items in a distributor
+form to add more items in a distributor that did 
+not exist in their stock
 '''
 
 class NewHouseProd(forms.ModelForm):
@@ -28,12 +29,12 @@ class NewHouseProd(forms.ModelForm):
         exclude = ['warehouse','quantity']
 
 '''
-form to add items to products in a specific distributor when running 
+form to add  products in a specific distributor when running 
 low on stock 
 '''
 
 class AddHouseProd(forms.ModelForm):
    class Meta:
        model = OrderDetails
-       exclude = ['warehouse']
+       exclude = ['product','warehouse']
 
