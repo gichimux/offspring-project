@@ -116,20 +116,14 @@
                     </div>
                 </div>
             </nav>
-<h1 class="text-center">Orders</h1>
-{% comment %} {% for order in orders %} {% endcomment %}
-<div class="card">
-  <div class="card-header">
-    Quote
-  </div>
-  <div class="card-body">
-    <blockquote class="blockquote mb-0">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-      <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-    </blockquote>
-  </div>
-</div>
-{% comment %} {% endfor %} {% endcomment %}
+                <h1 class="text-center">Categories</h1>
+            <div class="col-md-3">
+                 {% for product in products %}
+                <div  style="border:1px solid balck;padding:20px"class="categories">
+                <h3>{{product.name}} <b>{{product.q}}</b> <a href="{% url 'stock_product' product.id %}">Add</a> </h3>
+            </div>
+                {% endfor %}
+       </div>
             <div class="line"></div>
 
         </div>
