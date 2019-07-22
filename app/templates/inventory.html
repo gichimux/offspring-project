@@ -14,6 +14,9 @@
                 <a href="{% url 'category' category.id %}"><h3>{{category.name}}</h3></a>
             </div>
                 {% endfor %}
+            {% for house in houses %}
+            <p><a href="{% url 'single_house' house.id %}">{{house.name}}</a></p>
+            {% endfor %}
         </div>
     </body>
 </html>
