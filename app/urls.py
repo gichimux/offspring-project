@@ -5,11 +5,17 @@ from django.conf.urls.static import static
 
 
 urlpatterns=[
-    url(r'^$',views.inventory,name='home'),
-    url(r'^search/',views.search,name='search_results'),
-    url(r'add/(\d+)/(\d+)',views.add_item,name="add"),
-    url(r'house/(\d+)',views.single_house,name="house"), 
+ url(r'^$',views.inventory,name='inventory'),
+ url(r'^search/',views.search,name='search_results'),
+ url(r'^category/(\d+)$',views.category,name='category'),
+ url(r'^house/(\d+)$',views.single_house,name="house"),
+ url(r'^house/update(\d+)/(\d+)$',views.add_house_product,name="add_product"),
+ url(r'^category/product/(\d+)$',views.stock_product,name="stock_product"), 
+ url(r'^analysis$',views.full_stock,name='analysis'),
+ url(r'^analysis/category/(\d+)$',views.full_category,name='category_analysis'),
+ url(r'^analysis/category/product/(\d+)$',views.product_analysis,name="stock_product_analysis"),  
 ]
+
 
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

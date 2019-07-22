@@ -1,0 +1,26 @@
+{%extends 'all-news/base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
+{% block content %} 
+{{ block.super}}
+
+<div class="container">
+   
+
+    {% for order in orders %}
+    <div class="order" style="border:1px solid black;padding:20px;margin:5px;">
+    <p><b>Product:</b> {{order.product}}  __ <b>Quantity:</b><b> {{order.quantity}}</b> __ <b>Order date</b> {{order.pub_date}}</p>
+   </div>
+      {% endfor %}
+  {{form.media}}
+  <form  action="{% url 'add' house.id product.id %}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+
+    {% bootstrap_form form%}
+    <input type="submit" class="btn btn-success btn-lg" value="Post">
+  </form>
+
+   {% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  {% bootstrap_javascript %} {% endblock %}
+
+{% endblock %}

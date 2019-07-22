@@ -53,6 +53,20 @@ class Product(models.Model):
     def search_by_serial(cls,search_serial):
         products=cls.objects.filter(serial__icontains=search_serial)
         return products
+    size = models.CharField(max_length=50,blank=False)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE) 
+    def __str__(self):
+        return self.name
+
+'''
+class distributor for the different product distributors
+'''
+
+class Distributor(models.Model):
+    name = models.CharField(max_length = 30)
+    location = models.CharField(max_length = 30,default="karen")
+    def __str__(self):
+        return self.location
 
 '''
 class order details for the details about a certain order
@@ -80,6 +94,10 @@ class House_Product(models.Model):
     warehouse = models.ForeignKey('Distributor',default=1)
     quantity =models.IntegerField(default=0)
     
+    @classmethod
+    def search_by_serial(cls,search_serial):
+        products=cls.objects.filter(serial__icontains=search_serial)
+        return products
     def __str__(self):
         return self.name.name
     @classmethod
@@ -87,3 +105,23 @@ class House_Product(models.Model):
         products=cls.objects.filter(serial__icontains=search_serial)
         return products
 
+'''
+class for the product suppliers
+'''
+
+class Supplier(models.Model):
+    name = models.CharField(max_length= 50)
+    product = models.CharField(max_length= 50)
+    contact = models.CharField(max_length= 50)
+    
+    def __str__(self):
+        return self.name
+
+'''
+class order product that stores details of product
+being updated to stock from supplier 
+'''
+
+class Order_Product(models.Model):
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+    quantity =models.IntegerField(default=0)
