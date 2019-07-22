@@ -123,5 +123,5 @@ being updated to stock from supplier
 '''
 
 class Order_Product(models.Model):
-    product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+    name=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.IntegerField(default=0)

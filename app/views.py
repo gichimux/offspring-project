@@ -115,3 +115,27 @@ def search(request):
         message="You did not search using a serial"
 
     return render(request,'search.html',{"message":message})
+def full_stock(request):
+    categories = Category.objects.all()
+    
+
+    return render(request, 'analysis/analysis.html', {'categories':categories})
+
+'''
+total items in stock  category analysis
+'''
+def full_category(request,id):
+    products = Product.objects.filter(category=id)
+    category = Category.objects.get(id=id)
+    return render(request,'analysis/category_analysis.html',{'products':products,'category':category})
+
+
+'''
+single item stock analysis
+'''
+
+def product_analysis(request,id):
+    to_add = Product.objects.get(id=id)
+    in_houses = House_Product.objects.filter(name=id)
+
+    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses})
