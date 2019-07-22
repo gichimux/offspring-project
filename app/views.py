@@ -20,7 +20,8 @@ def inventory(request):
 
 
 '''
-view for the single categories
+view for the single categories displaying
+items under a category
 '''
 
 def category(request,id):
@@ -38,7 +39,8 @@ def category(request,id):
     return render(request,'category.html',{'products':products,'category':category,'form':form})
 
 '''
-view for Single stock product
+view for Single stock product under the respective
+category
 '''
 
 def stock_product(request,id):
@@ -58,12 +60,17 @@ def stock_product(request,id):
 
     return render(request,'stock_product.html',{'to_add':to_add,'form':form})
 
+
 '''
-View for a single distributor
+views for distributors
+'''
+
+'''
+View for a single distributor displaying categories
 '''
 
 def single_house(request,id):
-
+    categories = Category.objects.all()
     house = Distributor.objects.get(id=id)
     house_products = House_Product.objects.filter(warehouse=id)
     if request.method == 'POST':
@@ -72,21 +79,36 @@ def single_house(request,id):
             item = form.save(commit=False)
             item.warehouse=house
             item.save()
-            return redirect(news_today)
+            return redirect(single_house,id)
     else:
         form =NewHouseProd()
-    return render(request,'distributor/house.html',{'house':house,'form':form,'products':house_products})
+    return render(request,'distributor/house.html',{'house':house,'form':form,'categories':categories})
 
 
 '''
-view for a single item within a distributor 
+view for the single categories within a distributor displaying
+quantity of items under a category
+'''
+
+def house_category(request,h_id,c_id):
+    
+    products = House_Product.objects.filter(warehouse=h_id).filter(category=c_id)
+    category = Category.objects.get(id=c_id)
+    house = Distributor.objects.get(id=h_id)
+    
+    return render(request,'distributor/h_category.html',{'products':products,'category':category,'house':house})
+
+
+'''
+view for a single item within a distributor displaying single
+products quantity within the distributor
 '''
 
 
 def add_house_product(request,h_id,i_id):
     house = Distributor.objects.get(id=h_id)
     product = Product.objects.get(id=i_id)
-    to_update = House_Product.objects.get(name=product) 
+    to_update = House_Product.objects.filter(warehouse=h_id).get(name=product) 
     if request.method == 'POST':
         form = AddHouseProd(request.POST, request.FILES)
         if form.is_valid():
@@ -100,7 +122,7 @@ def add_house_product(request,h_id,i_id):
             item.save()
             prod_add.save()
             prod.save()
-            return redirect(news_today)
+            return redirect('inventory')
     else:
         form =AddHouseProd()
     return render(request,'distributor/item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
@@ -127,7 +149,7 @@ Analysis view
 '''
 
 '''
-All categories view
+All categories view 
 '''
 
 def full_stock(request):
@@ -146,7 +168,7 @@ def full_category(request,id):
 
 
 '''
-single item stock analysis
+single item stock analysis 
 '''
 
 def product_analysis(request,id):
