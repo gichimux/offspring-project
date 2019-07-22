@@ -66,7 +66,7 @@ def add_item(request,h_id,i_id):
 def search(request):
     if 'product' in request.GET and request.GET["product"]:
         search_serial =request.GET.get("product")
-        searched_products = Product.search_by_serial(search_serial)
+        searched_products = House_Product.search_by_serial(search_serial)
         message=f"{search_serial}"
         return render(request,'search.html',{"message":message,"products":searched_products})
     else:

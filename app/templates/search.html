@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search</title>
+</head>
+<body>
+    <h1>I am search</h1>
+    <div class="container">
+    <div class="row">
+        {% if products %}
+          <h2>Found {{ products|length }} product with the serial {{message}}</h2>
+        {% else %}
+          <h2> Found 0 products for the serial {{message}}</h2>
+        {% endif %}
+    
+      </div>
+    
+      <div class="row">
+    
+      {% if products %}
+        {% for product in products %}
+          <div class="col-sm-6 col-md-3">
+              <h1>{{product.name}}</h1>
+              <h1 style="color: red">{{product.serial}}</h1>
+              <h1>{{product.description}}</h1>              
+              <h1>{{product.product_color}}</h1>
+              <h1>{{product.quatity}}</h1>
+              <h1>{{product.size}}</h1>
+              <h1>{{product.category}}</h1>
+              <h1>{{product.warehouse}}</h1>
+          </div>
+        {% endfor %}
+      {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

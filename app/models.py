@@ -11,7 +11,6 @@ class Sub_Category(models.Model):
     def __str__(self):
         return self.name
 
-
 '''
 Class category for product categories
 '''
@@ -25,7 +24,18 @@ class Category(models.Model):
         return self.name
 
 '''
-class product for product in general stock
+class distributor for the different product distributors
+'''
+
+class Distributor(models.Model):
+    name = models.CharField(max_length = 30)
+    location = models.CharField(max_length = 30,default="Karen")
+    def __str__(self):
+        return self.location
+
+
+'''
+class Product for product in general stock
 '''
 class Product(models.Model):
     name = models.CharField(max_length= 50,blank=False,null= False)
@@ -34,7 +44,8 @@ class Product(models.Model):
     product_color = models.CharField(max_length=50,blank=False)
     quantity = models.IntegerField(default=0)
     size = models.CharField(max_length=3)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE) 
+    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+     
     def __str__(self):
         return self.name
     
@@ -44,22 +55,12 @@ class Product(models.Model):
         return products
 
 '''
-class distributor for the different product distributors
-'''
-
-class Distributor(models.Model):
-    name = models.CharField(max_length = 30)
-    location = models.CharField(max_length = 30,default="karen")
-    def __str__(self):
-        return self.location
-
-'''
 class order details for the details about a certain order
 '''
 class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
-    quantity =models.IntegerField(default=0)
+    quantity =models.IntegerField(blank=False,null=False)
     date= models.DateTimeField(auto_now=True)
     
     def __str__(self):
@@ -75,10 +76,14 @@ class House_product for the products in particular house
 '''
 
 class House_Product(models.Model):
-    name = models.ForeignKey(Product)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
     warehouse = models.ForeignKey('Distributor',default=1)
     quantity =models.IntegerField(default=0)
     
     def __str__(self):
         return self.name.name
+    @classmethod
+    def search_by_serial(cls,search_serial):
+        products=cls.objects.filter(serial__icontains=search_serial)
+        return products
 
