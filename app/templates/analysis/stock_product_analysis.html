@@ -3,10 +3,33 @@
 {% block content %} 
 {{ block.super}}
 
-<div class="container">
+
+<div id="container"></div>
+        <script src="https://code.highcharts.com/highcharts.src.js"></script>
+        <script>
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Quantity analysis in different locations'
+                    },
+                    xAxis: {
+                        categories: [{% for in_house in in_houses %}'{{in_house.warehouse.name}} Location'{% if not forloop.last %}, {% endif %}{% endfor %}]
+                    },
+                    series: [{
+                        name: 'Data',
+                        data: [
+                            {% for in_house in in_houses %} {{in_house.quantity}}{% if not forloop.last %}, {% endif %}{% endfor %}
+                        ],
+                        color: 'pink'
+                    }]
+                });
+              </script>
    
     <h3>{{to_add.name}} <b>{{to_add.quantity}}</b></h3>
-    {% for in_house in in_houses %}
-    <p>{{in_house.name}} <b>{{in_house.warehouse}}</b><b> {{in_house.quantity}}</b></p>
+    {% for product in products %}
+    <p>{{product.name}} <b>{{product.warehouse}}</b><b> {{product.quantity}}</b></p>
     {% endfor %}
+    
 {% endblock %}
