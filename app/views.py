@@ -12,11 +12,19 @@ of items in stock
 '''
 def inventory(request):
     houses = Distributor.objects.all()
-    objects = Product.objects.all()
+    products = Product.objects.all()
+    for product in products:
+        if product.quantity < 80:
+            message1 = 's are running low on stock'
+            messages = product.name + ''+ message1
+            print(messages)
+           
+        else:
+            messages = ''
     categories = Category.objects.all()
     
 
-    return render(request, 'inventory.html', {'objects':objects,'houses':houses,'categories':categories})
+    return render(request, 'inventory.html', {'messages':messages,'product':product,'houses':houses,'categories':categories})
 
 
 '''
@@ -24,7 +32,7 @@ view for the single categories displaying
 items under a category
 '''
 
-def category(request,id):
+def stock_category(request,id):
     products = Product.objects.filter(category=id)
     category = Category.objects.get(id=id)
     if request.method == 'POST':
@@ -33,7 +41,7 @@ def category(request,id):
             prod = form.save(commit=False)
             prod.category=Category.objects.get(id=id)
             prod.save()
-            return redirect(inventory)
+            return redirect(stock_category,id)
     else:
         form =AddProduct()
     return render(request,'category.html',{'products':products,'category':category,'form':form})
@@ -54,7 +62,7 @@ def stock_product(request,id):
             to_add.quantity=product.quantity+to_add.quantity
             product.save()
             to_add.save()
-            return redirect(inventory)
+            return redirect(stock_product,id)
     else:
         form =UpdateProdQuantity()
 
@@ -117,12 +125,12 @@ def add_house_product(request,h_id,i_id):
             item.warehouse=house
             prod=Product.objects.get(id=item.product.id)
             prod.quantity = prod.quantity-item.quantity
-            prod_add = House_Product.objects.get(name=prod)
+            prod_add = House_Product.objects.filter(warehouse=h_id).get(name=prod)
             prod_add.quantity=prod_add.quantity+item.quantity
             item.save()
             prod_add.save()
             prod.save()
-            return redirect('inventory')
+            return redirect(add_house_product,h_id,i_id)
     else:
         form =AddHouseProd()
     return render(request,'distributor/item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
@@ -142,6 +150,20 @@ def search(request):
         return render(request,'search.html',{"message":message})
 
 
+'''
+View for all the suppliers
+'''
+def suppliers(request):
+    suppliers = Supplier.objects.all()
+    return render(request,'supplier/suppiers.html',{'suppiers':suppliers})
+
+'''
+View for supplier details
+'''
+def single_supplier(request,id):
+    supplier = Supplier.objects.get(id=id)
+
+    return render(request,'supplier/supplier.html',{'supplier':supplier})
 
 
 '''
@@ -173,6 +195,11 @@ single item stock analysis
 
 def product_analysis(request,id):
     to_add = Product.objects.get(id=id)
-    in_houses = House_Product.objects.filter(name=id)
+    products = House_Product.objects.filter(name=id) 
+    in_houses = House_Product.objects.filter(name=id) \
+    .values('warehouse') \
+    .values('quantity') \
+    
+    print(in_houses)
 
-    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses})
+    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
