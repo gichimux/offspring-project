@@ -186,7 +186,7 @@ View for all orders
 view for supply orders
 '''
 def supply_orders(request):
-    orders = Order_Product.objects.all()
+    orders = Order_Product.objects.order_by('-date').all()
     return render(request,'orders/supply_orders.html',{'orders':orders})
 
 '''
