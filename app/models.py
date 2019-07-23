@@ -18,7 +18,7 @@ class product for product in general stock
 '''
 class Product(models.Model):
     name = models.CharField(max_length= 50,blank=False,null= False)
-    serial = models.CharField(max_length=40)
+    sKU = models.CharField(max_length=40)
     description = models.CharField(max_length=200)
     product_color = models.CharField(max_length=50,blank=False)
     quantity = models.PositiveIntegerField(default=0)
@@ -60,6 +60,7 @@ class House_product for the products in particular house
 
 class House_Product(models.Model):
     name = models.ForeignKey(Product)
+    sKU = models.CharField(max_length= 10,default='I')
     category = models.ForeignKey(Category,default='Toys')
     warehouse = models.ForeignKey('Distributor',default=1)
     quantity =models.PositiveIntegerField(default=0)
@@ -93,3 +94,4 @@ class Order_Product(models.Model):
     supplier=models.ForeignKey(Supplier,blank=True,null=True)
     quantity =models.PositiveIntegerField(default=0)
     date= models.DateTimeField(auto_now=True)
+
