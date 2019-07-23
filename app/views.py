@@ -5,6 +5,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
+from django.core.exceptions import ObjectDoesNotExist
 
 '''
 View for the inventory page displaying categories
@@ -81,16 +82,8 @@ def single_house(request,id):
     categories = Category.objects.all()
     house = Distributor.objects.get(id=id)
     house_products = House_Product.objects.filter(warehouse=id)
-    if request.method == 'POST':
-        form = NewHouseProd(request.POST, request.FILES)
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.warehouse=house
-            item.save()
-            return redirect(single_house,id)
-    else:
-        form =NewHouseProd()
-    return render(request,'distributor/house.html',{'house':house,'form':form,'categories':categories})
+    
+    return render(request,'distributor/house.html',{'house':house,'categories':categories})
 
 
 '''
@@ -99,12 +92,27 @@ quantity of items under a category
 '''
 
 def house_category(request,h_id,c_id):
-    
+    message = ''
     products = House_Product.objects.filter(warehouse=h_id).filter(category=c_id)
     category = Category.objects.get(id=c_id)
     house = Distributor.objects.get(id=h_id)
+    if request.method == 'POST':
+        form = NewHouseProd(request.POST, request.FILES)
+        if form.is_valid():
+            item = form.save(commit=False)
+            try:
+                no_repeat=House_Product.objects.filter(warehouse=house).get(name=item.name)
+                
+                message = 'That item already exists in this store'
+            except ObjectDoesNotExist:
+                item.warehouse=house
+                item.category=category
+                item.save()
+                return redirect(inventory)
+    else:
+        form =NewHouseProd()
     
-    return render(request,'distributor/h_category.html',{'products':products,'category':category,'house':house})
+    return render(request,'distributor/h_category.html',{'message':message,'products':products,'category':category,'house':house,'form':form})
 
 
 '''

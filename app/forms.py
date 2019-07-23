@@ -26,7 +26,7 @@ not exist in their stock
 class NewHouseProd(forms.ModelForm):
     class Meta:
         model = House_Product
-        exclude = ['warehouse','quantity']
+        exclude = ['warehouse','quantity','category']
 
 '''
 form to add  products in a specific distributor when running 
