@@ -180,6 +180,34 @@ def single_supplier(request,id):
 
 
 '''
+View for all orders
+'''
+'''
+view for supply orders
+'''
+def supply_orders(request):
+    orders = Order_Product.objects.all()
+    return render(request,'orders/supply_orders.html',{'orders':orders})
+
+'''
+View for all distributors transfers
+'''
+def transfer_orders(request):
+    distributors = Distributor.objects.all()
+    return render(request,'transfer_orders.html',{'distributors':distributors})
+
+
+'''
+view for single distributor orders
+'''
+def distributor_transfer_orders(request,id):
+    orders = OrderDetails.objects.filter(warehouse=id).order_by('-date')
+    return render(request,'single_distri_transfers.html',{'orders':orders})
+
+
+
+
+'''
 Analysis view
 '''
 
