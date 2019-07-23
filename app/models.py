@@ -1,5 +1,6 @@
 from django.db import models
 import datetime as dt
+from django.core.validators import MaxValueValidator, MinValueValidator 
 from django.contrib.auth.models import User
 
 '''
@@ -20,7 +21,7 @@ class Product(models.Model):
     serial = models.CharField(max_length=40)
     description = models.CharField(max_length=200)
     product_color = models.CharField(max_length=50,blank=False)
-    quantity = models.IntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=0)
     size = models.CharField(max_length=50,blank=False)
     category=models.ForeignKey(Category,on_delete=models.CASCADE) 
     def __str__(self):
@@ -42,7 +43,7 @@ class order details for the details about a certain order
 class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
-    quantity =models.IntegerField(default=0)
+    quantity =models.PositiveIntegerField(default=0)
     date= models.DateTimeField(auto_now=True)
     
     def __str__(self):
@@ -61,7 +62,7 @@ class House_Product(models.Model):
     name = models.ForeignKey(Product)
     category = models.ForeignKey(Category,default='Toys')
     warehouse = models.ForeignKey('Distributor',default=1)
-    quantity =models.IntegerField(default=0)
+    quantity =models.PositiveIntegerField(default=0)
     
     @classmethod
     def search_by_serial(cls,search_serial):
@@ -90,4 +91,5 @@ being updated to stock from supplier
 class Order_Product(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     supplier=models.ForeignKey(Supplier,blank=True,null=True)
-    quantity =models.IntegerField(default=0)
+    quantity =models.PositiveIntegerField(default=0)
+    date= models.DateTimeField(auto_now=True)

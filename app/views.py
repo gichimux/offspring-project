@@ -114,6 +114,7 @@ products quantity within the distributor
 
 
 def add_house_product(request,h_id,i_id):
+    message = ''
     house = Distributor.objects.get(id=h_id)
     product = Product.objects.get(id=i_id)
     to_update = House_Product.objects.filter(warehouse=h_id).get(name=product) 
@@ -124,16 +125,20 @@ def add_house_product(request,h_id,i_id):
             item.product = product
             item.warehouse=house
             prod=Product.objects.get(id=item.product.id)
-            prod.quantity = prod.quantity-item.quantity
-            prod_add = House_Product.objects.filter(warehouse=h_id).get(name=prod)
-            prod_add.quantity=prod_add.quantity+item.quantity
-            item.save()
-            prod_add.save()
-            prod.save()
-            return redirect(add_house_product,h_id,i_id)
+            if prod.quantity < item.quantity:
+                message = 'The amount of product in stock is not enough'
+            else:
+                prod.quantity = prod.quantity-item.quantity
+                prod_add = House_Product.objects.filter(warehouse=h_id).get(name=prod)
+                prod_add.quantity=prod_add.quantity+item.quantity
+                item.save()
+                prod_add.save()
+                prod.save()
+                message = ''
+                return redirect(add_house_product,h_id,i_id)
     else:
         form =AddHouseProd()
-    return render(request,'distributor/item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
+    return render(request,'distributor/item.html',{'message':message,'product':product,'house':house,'to_update':to_update,'form':form})
 
 '''
 view to search a particular product by its serial
