@@ -17,6 +17,10 @@ urlpatterns=[
  url(r'^supplier$',views.suppliers,name="suppliers"),
  url(r'^supplier/(\d+)$',views.single_supplier,name="single_supplier"),
      
+ url(r'^orders/supplier$',views.supply_orders,name='supply_orders'),
+ url(r'^orders/distributors$',views.transfer_orders,name='transfer_orders'),
+ url(r'^orders/distributors/(\d+)$',views.distributor_transfer_orders,name="dis_transfer_ord"),
+
  url(r'^analysis$',views.full_stock,name='analysis'),
  url(r'^analysis/category/(\d+)$',views.full_category,name='category_analysis'),
  url(r'^analysis/category/product/(\d+)$',views.product_analysis,name="stock_product_analysis"),  
