@@ -108,15 +108,15 @@
                     </div>
                 </div>
             </nav>
-                        <h3>Product: {{to_add.name}} <br> Quantity: {{to_add.quantity}}</b></h3>
-    
-  {{form.media}}
-  <form  action="{% url 'stock_product' to_add.id %}" method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-
-    {% bootstrap_form form%}
-    <input type="submit" class="btn btn-success btn-lg" value="Post">
-  </form>
+            <h3 class="text-center">{{category.name}}</h3>
+             <div class="container">
+           <h1>{{category.name}}</h1>
+            {% for product in products %}
+                <div  style="border:1px solid balck;padding:20px"class="categories">
+                <h3>{{product.name}} <br>{{product.q}}</b> <a href="{% url 'add_house_product' house.id product.name.id %}">Add</a> </h3>
+            </div>
+                {% endfor %}
+        </div>
 
             
             <div class="line"></div>

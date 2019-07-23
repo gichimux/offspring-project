@@ -18,6 +18,10 @@ def inventory(request):
 
     return render(request, 'dashboard/inventory.html', {'objects':objects,'houses':houses,'categories':categories})
 
+def supplier(request):
+    houses = Distributor.objects.all()
+    
+    return render(request, 'dashboard/supplier.html', {'houses':houses})
 
 '''
 view for the single categories displaying
@@ -36,7 +40,7 @@ def category(request,id):
             return redirect(inventory)
     else:
         form =AddProduct()
-    return render(request,'category.html',{'products':products,'category':category,'form':form})
+    return render(request,'dashboard/view_categories.html',{'products':products,'category':category,'form':form})
 
 '''
 view for Single stock product under the respective
@@ -58,7 +62,7 @@ def stock_product(request,id):
     else:
         form =UpdateProdQuantity()
 
-    return render(request,'stock_product.html',{'to_add':to_add,'form':form})
+    return render(request,'dashboard/product.html',{'to_add':to_add,'form':form})
 
 
 '''
@@ -82,7 +86,7 @@ def single_house(request,id):
             return redirect(single_house,id)
     else:
         form =NewHouseProd()
-    return render(request,'distributor/house.html',{'house':house,'form':form,'categories':categories})
+    return render(request,'dashboard/supplier_details.html',{'house':house,'form':form,'categories':categories})
 
 
 '''
@@ -96,7 +100,7 @@ def house_category(request,h_id,c_id):
     category = Category.objects.get(id=c_id)
     house = Distributor.objects.get(id=h_id)
     
-    return render(request,'distributor/h_category.html',{'products':products,'category':category,'house':house})
+    return render(request,'dashboard/location_category.html',{'products':products,'category':category,'house':house})
 
 
 '''
