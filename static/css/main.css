@@ -60,7 +60,7 @@ span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background:#FA7DC5;
+    background:#f1b0cf;;
     color: #fff;
     transition: all 0.3s;
 }
@@ -112,7 +112,8 @@ span {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #eb7cfa;
+    background: #47748b;
+    border-radius: 20px;
 }
 
 #sidebar .sidebar-header strong {
@@ -143,7 +144,7 @@ span {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #FA7DC5;
+    background: #f1b0cf;
 }
 
 a[data-toggle="collapse"] {
@@ -183,7 +184,7 @@ a.download {
 
 a.article,
 a.article:hover {
-    background: #eb7cfa !important;
+    background: #f1b0cf !important;
     color: #fff !important;
 }
 
