@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Collapsible sidebar using Bootstrap 4</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
@@ -26,37 +26,38 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-
-            <h1><strong>IMS</strong></h1>
-<img src="https://offspring.co.ke/wp-content/uploads/2019/01/logo1.png" alt="For All Your Parenting Needs" width="220" height="98" class="logo-default">                
+                <h3>Offspring IMS</h3>
+                <strong>IMS</strong>
             </div>
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="{% url 'categories' %}" data-toggle="collapse" aria-expanded="false">
-                        <i class="fas fa-boxes"></i>
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="fas fa-home"></i>
                         Inventory
                     </a>
                    
                 </li>
                 <li>
-                    <a href="{% url 'orders'%}">
+                    <a href="#">
                         <i class="fas fa-briefcase"></i>
                         Orders
                     </a>
-                    <a href="{% url 'transfers'%}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-copy"></i>
-                        Product Transfers
+                        Pages
                     </a>
-                    <a href="{% url 'suppliers'%}" data-toggle="collapse" aria-expanded="false" >
-                        <i class="fas fa-copy"></i>
-                        Supplier Details
-                    </a>
-                    a href="{% url 'suppliers'%}" data-toggle="collapse" aria-expanded="false" >
-                        <i class="fas fa-copy"></i>
-                        Returns
-                    </a>
-                   
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#">
@@ -71,7 +72,10 @@
                     </a>
                 </li>
                 <li>
-                   
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
                 </li>
             </ul>
 
@@ -88,7 +92,7 @@
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span></span>
+                        <span>Toggle Sidebar</span>
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
@@ -112,41 +116,16 @@
                     </div>
                 </div>
             </nav>
-<div class="card-deck">
-  <div class="card">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div> 
-  <div class="card">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
-  <div class="card">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
-</div>
-<br>
-           
-
-
-
+                <h1 class="text-center">Categories</h1>
+            <div class="col-md-3">
+                 {% for product in products %}
+                <div  style="border:1px solid balck;padding:20px"class="categories">
+                <h3>{{product.name}} <b>{{product.q}}</b> <a href="{% url 'stock_product' product.id %}">Add</a> </h3>
+            </div>
+                {% endfor %}
+       </div>
             <div class="line"></div>
 
-            <h3>Lorem Ipsum Dolor</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
     </div>
 
