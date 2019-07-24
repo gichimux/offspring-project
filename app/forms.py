@@ -1,6 +1,6 @@
 from .models import *
 from django import forms
-
+import datetime
 '''
 form to add new product to stock
 '''
@@ -38,3 +38,5 @@ class AddHouseProd(forms.ModelForm):
        model = OrderDetails
        exclude = ['product','warehouse']
 
+class DateForm(forms.Form):
+    day = forms.DateField(initial=datetime.date.today)

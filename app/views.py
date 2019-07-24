@@ -12,6 +12,9 @@ View for the inventory page displaying categories
 of items in stock
 '''
 def inventory(request):
+    order=OrderDetails.objects.get(id=1)
+    print(order.month())
+    form = DateForm()
     houses = Distributor.objects.all()
     products = Product.objects.all()
     for product in products:
@@ -25,7 +28,7 @@ def inventory(request):
     categories = Category.objects.all()
     
 
-    return render(request, 'inventory.html', {'messages':messages,'product':product,'houses':houses,'categories':categories})
+    return render(request, 'inventory.html', {'form':form,'messages':messages,'product':product,'houses':houses,'categories':categories})
 
 
 '''
@@ -194,17 +197,42 @@ View for all distributors transfers
 '''
 def transfer_orders(request):
     distributors = Distributor.objects.all()
-    return render(request,'transfer_orders.html',{'distributors':distributors})
+    return render(request,'orders/transfer_orders.html',{'distributors':distributors})
 
+'''
+view for transfer orders by month
+'''
+def transfer_order_month(request,id,m):
+    
+    orders = OrderDetails.objects.filter(warehouse=id)
+    
 
 '''
 view for single distributor orders
 '''
 def distributor_transfer_orders(request,id):
     orders = OrderDetails.objects.filter(warehouse=id).order_by('-date')
-    return render(request,'single_distri_transfers.html',{'orders':orders})
+    return render(request,'orders/single_distri_transfers.html',{'orders':orders})
+
+'''
+View for the distributor orders by the month
+'''
 
 
+'''
+View for all distributors feedback on items sold
+'''
+
+def distributor_sale(request):
+    distributors = Distributor.objects.all()
+    return render(request,'orders/distributor_feedback.html',{'distributors':distributors})
+
+'''
+View for a single distributors feedback on items sold
+'''
+def distributor_feedback(request,id):
+    orders = Distributor_sell.objects.filter(warehouse=id).order_by('-date')
+    return render(request,'orders/single_distri_feedback.html',{'orders':orders})
 
 
 '''
@@ -244,3 +272,5 @@ def product_analysis(request,id):
     print(in_houses)
 
     return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
+
+

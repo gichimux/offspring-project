@@ -44,15 +44,23 @@ class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.PositiveIntegerField(default=0)
-    date= models.DateTimeField(auto_now=True)
+    date= models.DateField(auto_now=True)
+  
     
     def __str__(self):
-        return self.product
+        return self.product.name
 
     @classmethod
     def search_by_id(cls,search_id):
         product=cls.objects.filter(order_id__icontains=search_id)
         return 
+
+    def year(self):
+        return self.date.strftime('%Y')
+    
+    def month(self):
+        return self.date.strftime('%m')
+
 
 '''
 class House_product for the products in particular house
@@ -93,5 +101,31 @@ class Order_Product(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     supplier=models.ForeignKey(Supplier,blank=True,null=True)
     quantity =models.PositiveIntegerField(default=0)
-    date= models.DateTimeField(auto_now=True)
+    date= models.DateField(auto_now=True)
+    
+
+    def year(self):
+        return self.date.strftime('%Y')
+
+    def month(self):
+        return self.date.strftime('%m')
+
+
+'''
+class to update items quantity when sold by a specific
+distributor
+'''
+
+class Distributor_sell(models.Model):
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+    sKU = models.CharField(max_length= 10)
+    warehouse = models.ForeignKey('Distributor',default=1)
+    quantity =models.PositiveIntegerField(default=0)
+    date= models.DateField(auto_now=True)
+    
+    def year(self):
+        return self.date.strftime('%Y')
+
+    def month(self):
+        return self.date.strftime('%m')
 
