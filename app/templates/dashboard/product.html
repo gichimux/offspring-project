@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html>
 
@@ -7,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>Offspring IMS dashboard</title>
+    <link rel="stylesheet" href="https://cdn.lineicons.com/1.0.1/LineIcons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -24,7 +26,8 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
+        <nav id="sidebar"><br>
+        <div class="text-center"><i class="lni-dashboard" style="font-size: 40px;"></i></div>
             <div class="sidebar-header">
                 <h3>Offspring IMS</h3>
                 <strong>IMS</strong>
@@ -32,36 +35,40 @@
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                        <i class="fas fa-home"></i>
-                        Inventory
+                    <a href="{% url 'inventory'%}" data-toggle="collapse" aria-expanded="false">
+                        <i class="fa fa-boxes"></i>
+                        Stock Management
                     </a>
                    
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="fas fa-briefcase"></i>
-                        Orders
+                    <a href="{% url 'supplier'%}">
+                        <i class="fas fa-parachute-box"></i>
+                        Supplier Management
                     </a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-copy"></i>
-                        Pages
+                        <i class="fas fa-tasks"></i>
+                        Order Management
                     </a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                  <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Page 1</a>
+                            <a href="#">Customer Orders</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a href="#">Product Transfers</a>
                         </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
+                        
                     </ul>
+                </li>
+                 <li>
+                    <a href="#">
+                        <i class="fas fa-warehouse"></i>
+                        Product Tracking
+                    </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-image"></i>
+                        <i class="fas fa-chart-line"></i>
                         Analytics
                     </a>
                 </li>
@@ -71,17 +78,9 @@
                         FAQ
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-paper-plane"></i>
-                        Contact
-                    </a>
-                </li>
-            </ul>
-
-            <ul class="list-unstyled CTAs">
                 
             </ul>
+
         </nav>
 
         <!-- Page Content  -->
@@ -116,16 +115,17 @@
                     </div>
                 </div>
             </nav>
-                <h1 class="text-center">Categories</h1>
-            <div class="col-md-3">
-                {% for category in categories %}
-           <div class="card border-danger mx-sm-1 p-3">
-               <div class="text-danger text-center mt-3"><h4>{{category.name}}</h4></div>
-            </div>{% endfor %}
-            {% for house in houses %}
-            <p><a href="{% url 'single_house' house.id %}">{{house.name}}</a></p>
-            {% endfor %}
-       </div>
+                        <h3>Product: {{to_add.name}} <br> Quantity: {{to_add.quantity}}</b></h3>
+    
+  {{form.media}}
+  <form  action="{% url 'stock_product' to_add.id %}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+
+    {% bootstrap_form form%}
+    <input type="submit" class="btn btn-success btn-lg" value="Post">
+  </form>
+
+            
             <div class="line"></div>
 
         </div>

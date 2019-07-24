@@ -1,0 +1,56 @@
+ <nav id="sidebar"><br>
+        <div class="text-center"><i class="lni-dashboard" style="font-size: 40px;"></i></div>
+            <div class="sidebar-header">
+                <h3>Offspring IMS</h3>
+                <strong>IMS</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="{% url 'inventory'%}" data-toggle="collapse" aria-expanded="false">
+                        <i class="fa fa-boxes"></i>
+                        Stock Management
+                    </a>
+                   
+                </li>
+                <li>
+                    <a href="{% url 'supplier'%}">
+                        <i class="fas fa-parachute-box"></i>
+                        Supplier Management
+                    </a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-tasks"></i>
+                        Order Management
+                    </a>
+                  <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Customer Orders</a>
+                        </li>
+                        <li>
+                            <a href="#">Product Transfers</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                 <li>
+                    <a href="#">
+                        <i class="fas fa-warehouse"></i>
+                        Product Tracking
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-chart-line"></i>
+                        Analytics
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                
+            </ul>
+
+        </nav>

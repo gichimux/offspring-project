@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html>
 
@@ -8,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Offspring IMS dashboard</title>
+    <link rel="stylesheet" href="https://cdn.lineicons.com/1.0.1/LineIcons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -24,9 +26,9 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-         <nav id="sidebar"><br>
-        <div class="text-center"><i class="lni-dashboard" style="font-size: 40px;"></i></div>
+        <nav id="sidebar">
             <div class="sidebar-header">
+            <i class="lni-dashboard"></i>
                 <h3>Offspring IMS</h3>
                 <strong>IMS</strong>
             </div>
@@ -34,39 +36,31 @@
             <ul class="list-unstyled components">
                 <li class="active">
                     <a href="{% url 'inventory'%}" data-toggle="collapse" aria-expanded="false">
-                        <i class="fa fa-boxes"></i>
-                        Stock Management
+                        <i class="fas fa-home"></i>
+                        Inventory Management
                     </a>
                    
                 </li>
                 <li>
                     <a href="{% url 'supplier'%}">
-                        <i class="fas fa-parachute-box"></i>
+                        <i class="fas fa-briefcase"></i>
                         Supplier Management
                     </a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-tasks"></i>
+                        <i class="fas fa-copy"></i>
                         Order Management
                     </a>
-                  <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Customer Orders</a>
-                        </li>
-                        <li>
-                            <a href="#">Product Transfers</a>
-                        </li>
-                        
-                    </ul>
+                  
                 </li>
                  <li>
                     <a href="#">
-                        <i class="fas fa-warehouse"></i>
+                        <i class="fas fa-image"></i>
                         Product Tracking
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-image"></i>
                         Analytics
                     </a>
                 </li>
@@ -79,45 +73,26 @@
                 
             </ul>
 
+            <ul class="list-unstyled CTAs">
+                
+            </ul>
         </nav>
 
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                        
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">IMS Admin</a>
-                           
-                            <li class="nav-item">
-                                 {% comment %} <a href="{% url 'stock_product' product.pk %}">Add Category</a> {% endcomment %}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-                <h1 class="text-center">Products under *category </h1><br>
-                 {% for product in products %}
-                <div class="col-md-3">
-                <a href="{% url 'stock_product' product.pk %}">
-           <div class="card border-danger mx-sm-1 p-3">
-                <p class="text-danger text-center ">{{product.name}} <b>{{product.q}} </p>
-                </a>
-            </div>
+        
+            <h3 class="text-center">{{category.name}}</h3>
+             <div class="container">
+           <h1>{{category.name}}</h1>
+            {% for product in products %}
+                <div  style="border:1px solid balck;padding:20px"class="categories">
+                <h3>{{product.name}} <br>{{product.q}}</b> <a href="{% url 'add_house_product' house.id product.name.id %}">Add</a> </h3>
             </div>
                 {% endfor %}
-       </div>
+        </div>
+
+            
             <div class="line"></div>
 
         </div>

@@ -1,13 +1,20 @@
 {% load static %}
+<<<<<<< HEAD
 
 {% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="en">
+=======
+{% load bootstrap4%}
+<!DOCTYPE html>
+<html>
+>>>>>>> 078cd6c46bf5551b080b82193c6565fbfac9635f
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<<<<<<< HEAD
 
     <title>OFFSPRING</title>
 
@@ -99,3 +106,90 @@
 </body>
 
 </html>
+=======
+    <link rel="stylesheet" href="https://cdn.lineicons.com/1.0.1/LineIcons.min.css">
+
+    <title>Offspring IMS dashboard</title>
+    {% block styles %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/main.css'%}">
+    {% endblock %}
+    <!-- Font Awesome JS -->
+    {% block scripts %}
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar"><br>
+        <div class="text-center"><i class="lni-dashboard" style="font-size: 40px;"></i></div>
+            <div class="sidebar-header" id="header">
+                <h3>Offspring IMS</h3>
+                <strong>IMS</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="{% url 'inventory'%}" data-toggle="collapse" aria-expanded="false">
+                        <i class="fa fa-boxes"></i>
+                        Stock Management
+                    </a>
+                   
+                </li>
+                <li>
+                    <a href="{% url 'supplier'%}">
+                        <i class="fas fa-parachute-box"></i>
+                        Supplier Management
+                    </a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-tasks"></i>
+                        Order Management
+                    </a>
+                  <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Customer Orders</a>
+                        </li>
+                        <li>
+                            <a href="#">Product Transfers</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                 <li>
+                    <a href="#">
+                        <i class="fas fa-warehouse"></i>
+                        Product Tracking
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-chart-line"></i>
+                        Analytics
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                
+            </ul>
+
+        </nav>
+    </div>
+        {% block content %}
+
+        {% endblock%}
+        {% block scripts%}
+        </body>
+    </html>
+>>>>>>> 078cd6c46bf5551b080b82193c6565fbfac9635f

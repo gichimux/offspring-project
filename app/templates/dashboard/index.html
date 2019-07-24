@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>Offspring IMS dashboard</title>
+    <link rel="stylesheet" href="https://cdn.lineicons.com/1.0.1/LineIcons.min.css">
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -24,43 +25,49 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
+         <nav id="sidebar"><br>
+        <div class="text-center"><i class="lni-dashboard" style="font-size: 40px;"></i></div>
             <div class="sidebar-header">
-
-            <h1><strong>IMS</strong></h1>
-<img src="https://offspring.co.ke/wp-content/uploads/2019/01/logo1.png" alt="For All Your Parenting Needs" width="220" height="98" class="logo-default">                
+                <h3>Offspring IMS</h3>
+                <strong>IMS</strong>
             </div>
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="{% url 'categories' %}" data-toggle="collapse" aria-expanded="false">
-                        <i class="fas fa-boxes"></i>
-                        Inventory
+                    <a href="{% url 'inventory'%}" data-toggle="collapse" aria-expanded="false">
+                        <i class="fa fa-boxes"></i>
+                        Stock Management
                     </a>
                    
                 </li>
                 <li>
-                    <a href="{% url 'orders'%}">
-                        <i class="fas fa-briefcase"></i>
-                        Orders
+                    <a href="{% url 'supplier'%}">
+                        <i class="fas fa-parachute-box"></i>
+                        Supplier Management
                     </a>
-                    <a href="{% url 'transfers'%}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-copy"></i>
-                        Product Transfers
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-tasks"></i>
+                        Order Management
                     </a>
-                    <a href="{% url 'suppliers'%}" data-toggle="collapse" aria-expanded="false" >
-                        <i class="fas fa-copy"></i>
-                        Supplier Details
+                  <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Customer Orders</a>
+                        </li>
+                        <li>
+                            <a href="#">Product Transfers</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+                 <li>
+                    <a href="#">
+                        <i class="fas fa-warehouse"></i>
+                        Product Tracking
                     </a>
-                    a href="{% url 'suppliers'%}" data-toggle="collapse" aria-expanded="false" >
-                        <i class="fas fa-copy"></i>
-                        Returns
-                    </a>
-                   
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fas fa-image"></i>
+                        <i class="fas fa-chart-line"></i>
                         Analytics
                     </a>
                 </li>
@@ -70,14 +77,9 @@
                         FAQ
                     </a>
                 </li>
-                <li>
-                   
-                </li>
-            </ul>
-
-            <ul class="list-unstyled CTAs">
                 
             </ul>
+
         </nav>
 
         <!-- Page Content  -->
