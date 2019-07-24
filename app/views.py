@@ -38,7 +38,7 @@ def inventory(request):
     categories = Category.objects.all()
     
 
-    return render(request, 'inventory.html', {'form':form,'messages':messages,'product':product,'categories':categories})
+    return render(request, 'stockmg/inventory.html', {'form':form,'messages':messages,'product':product,'categories':categories})
 
 
 '''
@@ -58,7 +58,7 @@ def stock_category(request,id):
             return redirect(stock_category,id)
     else:
         form =AddProduct()
-    return render(request,'category.html',{'products':products,'category':category,'form':form})
+    return render(request,'stockmg/category.html',{'products':products,'category':category,'form':form})
 
 '''
 view for Single stock product under the respective
@@ -80,7 +80,7 @@ def stock_product(request,id):
     else:
         form =UpdateProdQuantity()
 
-    return render(request,'stock_product.html',{'to_add':to_add,'form':form})
+    return render(request,'stockmg/stock_product.html',{'to_add':to_add,'form':form})
 
 
 '''
