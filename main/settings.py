@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, '', 'serviceworker.js')
 
 
 # Static files (CSS, JavaScript, Images)

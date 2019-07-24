@@ -6,6 +6,16 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
+from django.core import serializers
+import json
+
+
+'''
+View for pwa
+'''
+def base_layout(request):
+	template='base.html'
+	return render(request,template)
 
 '''
 View for the inventory page displaying categories
