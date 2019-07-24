@@ -8,7 +8,7 @@ from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 import json
-
+import datetime 
 
 '''
 View for pwa
@@ -23,9 +23,9 @@ of items in stock
 '''
 def inventory(request):
     order=OrderDetails.objects.get(id=1)
-    print(order.month())
+    
     form = DateForm()
-    houses = Distributor.objects.all()
+    
     products = Product.objects.all()
     for product in products:
         if product.quantity < 80:
@@ -38,7 +38,7 @@ def inventory(request):
     categories = Category.objects.all()
     
 
-    return render(request, 'inventory.html', {'form':form,'messages':messages,'product':product,'houses':houses,'categories':categories})
+    return render(request, 'inventory.html', {'form':form,'messages':messages,'product':product,'categories':categories})
 
 
 '''
@@ -88,6 +88,13 @@ views for distributors
 '''
 
 '''
+All distributors
+'''
+def all_distributors(request):
+    houses = Distributor.objects.all()
+    return render(request,'distributor/distributors.html',{'houses':houses})
+
+'''
 View for a single distributor displaying categories
 '''
 
@@ -96,7 +103,7 @@ def single_house(request,id):
     house = Distributor.objects.get(id=id)
     house_products = House_Product.objects.filter(warehouse=id)
     
-    return render(request,'distributor/house.html',{'house':house,'categories':categories})
+    return render(request,'distributor/distributor/house.html',{'house':house,'categories':categories})
 
 
 '''
@@ -125,7 +132,7 @@ def house_category(request,h_id,c_id):
     else:
         form =NewHouseProd()
     
-    return render(request,'distributor/h_category.html',{'message':message,'products':products,'category':category,'house':house,'form':form})
+    return render(request,'distributor/categories.html',{'message':message,'products':products,'category':category,'house':house,'form':form})
 
 
 '''
@@ -145,6 +152,8 @@ def add_house_product(request,h_id,i_id):
             item = form.save(commit=False)
             item.product = product
             item.warehouse=house
+            item.month=datetime.datetime.now().strftime ("%m")
+            item.year=datetime.datetime.now().strftime ("%Y")
             prod=Product.objects.get(id=item.product.id)
             if prod.quantity < item.quantity:
                 message = 'The amount of product in stock is not enough'
@@ -222,7 +231,7 @@ view for single distributor orders
 '''
 def distributor_transfer_orders(request,id):
     orders = OrderDetails.objects.filter(warehouse=id).order_by('-date')
-    return render(request,'orders/single_distri_transfers.html',{'orders':orders})
+    return render(request,'orders/distributor_transfers.html',{'orders':orders})
 
 '''
 View for the distributor orders by the month
