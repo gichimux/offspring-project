@@ -6,23 +6,15 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 
-'''
-View for the inventory page displaying categories
-of items in stock
-'''
 def inventory(request):
     houses = Distributor.objects.all()
     objects = Product.objects.all()
-    categories = Category.objects.all()
-    
+    categories = Category.objects.all()   
 
     return render(request, 'inventory.html', {'objects':objects,'houses':houses,'categories':categories})
-
-
 '''
-view for the single categories
+    View for the single categories
 '''
-
 def category(request,id):
     products = Product.objects.filter(category=id)
     category = Category.objects.get(id=id)
@@ -82,7 +74,6 @@ def single_house(request,id):
 view for a single item within a distributor 
 '''
 
-
 def add_house_product(request,h_id,i_id):
     house = Distributor.objects.get(id=h_id)
     product = Product.objects.get(id=i_id)
@@ -104,23 +95,26 @@ def add_house_product(request,h_id,i_id):
     else:
         form =AddHouseProd()
     return render(request,'distributor/item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
-
+'''
+ Search Function for looking up a specific product based on passed serial number
+'''
 def search(request):
     if 'product' in request.GET and request.GET["product"]:
         search_serial =request.GET.get("product")
-        searched_products = House_Product.search_by_serial(search_serial)
+        searched_products = Product.search_by_serial(search_serial)
         message=f"{search_serial}"
         return render(request,'search.html',{"message":message,"products":searched_products})
     else:
         message="You did not search using a serial"
 
     return render(request,'search.html',{"message":message})
+'''
+ View fuction for returning whole stock in a specific category
+'''
 def full_stock(request):
-    categories = Category.objects.all()
-    
+    categories = Category.objects.all()    
 
     return render(request, 'analysis/analysis.html', {'categories':categories})
-
 '''
 total items in stock  category analysis
 '''
@@ -131,7 +125,7 @@ def full_category(request,id):
 
 
 '''
-single item stock analysis
+    single item stock analysis
 '''
 
 def product_analysis(request,id):

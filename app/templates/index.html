@@ -1,22 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-  <h1>I am home</h1>
-    <form class="navbar-form" role="search" action="{% url 'search_results' %}">
+{%extends 'base.html'%}
+{% block content %} 
+{{ block.super}}
+<html>
+    <head>
 
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search" name="product">
-          <div class="input-group-btn">
-            <button class="btn btn-default" type="submit">Button</button>
-          </div>
+    </head>
+    <body>
+        <div class="container">
+            <p><a href="{% url 'analysis' %}">Analysis</a></p>
+            <form class="navbar-form" role="search" action="{% url 'search_results' %}">
+
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search" name="product">
+                  <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Button</button>
+                  </div>
+                </div>
+        
+              </form>
+
+                <a href="/category/"><button class="btn btn-default" type="submit">Inventory</button></a>
+                
+                <button class="btn btn-default" type="submit">Orders</button>
+                <button class="btn btn-default" type="submit">Analytics</button>
+                <button class="btn btn-default" type="submit">Product Transfers</button>
+                <button class="btn btn-default" type="submit">Supplier Details</button>
+
         </div>
-
-      </form>
-</body>
+    </body>
 </html>
+{% endblock %}

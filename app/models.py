@@ -51,22 +51,10 @@ class Product(models.Model):
     
     @classmethod
     def search_by_serial(cls,search_serial):
-        products=cls.objects.filter(serial__icontains=search_serial)
-        return products
-    size = models.CharField(max_length=50,blank=False)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE) 
+        products=cls.objects.filter(serial__iexact=search_serial)
+        return products   
     def __str__(self):
         return self.name
-
-'''
-class distributor for the different product distributors
-'''
-
-class Distributor(models.Model):
-    name = models.CharField(max_length = 30)
-    location = models.CharField(max_length = 30,default="karen")
-    def __str__(self):
-        return self.location
 
 '''
 class order details for the details about a certain order
@@ -78,7 +66,7 @@ class OrderDetails(models.Model):
     date= models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.product
+        return str(self.product)
 
     # @classmethod
     # def search_by_id(cls,search_id):
@@ -90,7 +78,7 @@ class House_product for the products in particular house
 '''
 
 class House_Product(models.Model):
-    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    name = models.ForeignKey(Product,on_delete=models.CASCADE)
     warehouse = models.ForeignKey('Distributor',default=1)
     quantity =models.IntegerField(default=0)
     
@@ -106,7 +94,7 @@ class House_Product(models.Model):
         return products
 
 '''
-class for the product suppliers
+    Class for the product suppliers
 '''
 
 class Supplier(models.Model):
@@ -118,10 +106,9 @@ class Supplier(models.Model):
         return self.name
 
 '''
-class order product that stores details of product
-being updated to stock from supplier 
+    Class order product that stores details of product being updated to stock from supplier 
 '''
 
 class Order_Product(models.Model):
-    name=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.IntegerField(default=0)

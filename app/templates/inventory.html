@@ -8,12 +8,24 @@
     <body>
         <div class="container">
             <p><a href="{% url 'analysis' %}">Analysis</a></p>
+            <form class="navbar-form" role="search" action="{% url 'search_results' %}">
+
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search" name="product">
+                  <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Button</button>
+                  </div>
+                </div>
+        
+              </form>
            <h1>Categories</h1>
             {% for category in categories %}
                 <div  style="border:1px solid balck;padding:20px"class="categories">
                 <a href="{% url 'category' category.id %}"><h3>{{category.name}}</h3></a>
             </div>
                 {% endfor %}
+                
+              
         </div>
     </body>
 </html>
