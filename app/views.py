@@ -27,7 +27,7 @@ def inventory(request):
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
         if form.is_valid():
-            
+            category=form.save(commit=False)
             category.save()
             return redirect(inventory)
     else:
