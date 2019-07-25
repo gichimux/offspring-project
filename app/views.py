@@ -104,7 +104,15 @@ All distributors
 '''
 def all_distributors(request):
     houses = Distributor.objects.all()
-    return render(request,'distributor/distributors.html',{'houses':houses})
+    if request.method == 'POST':
+        form = NewDistributor(request.POST, request.FILES)
+        if form.is_valid():
+            distributor=form.save(commit=False)
+            distributor.save()
+            return redirect(all_suppliers)
+    else:
+        form =NewDistributor()
+    return render(request,'distributor/distributors.html',{'houses':houses,'form':form})
 
 '''
 View for a single distributor displaying categories

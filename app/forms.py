@@ -57,3 +57,11 @@ class NewSupplier(forms.ModelForm):
     class Meta:
         model = Supplier
         exclude = []
+
+'''
+New distributor
+'''
+class NewDistributor(forms.ModelForm):
+    class Meta:
+        model = Distributor
+        exclude = []
