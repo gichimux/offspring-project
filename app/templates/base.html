@@ -26,7 +26,7 @@
 </head>
 
 <body>
-<div style="background-color:black;padding:20px;border-radius:0;margin:o" class="jumbotron"></div>
+<div style="background-color:black;padding:20px;border-radius:0;margin:o;color:pink" class="jumbotron"><h3 class="text-center"><b>O</b>ffspring IMS</h3></div>
 <div id="mySidenav" class="sidenav">
   <h1 class="text-center" style="color:white"><b>O</b>ffspring </h1>
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -49,6 +49,8 @@
 
 <div id="main">
     <span style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776;</span>
+    <a style="font-size:20px;margin-left:20px;color:green"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
+    
     {% block content %}{%endblock%}
   
 </div>

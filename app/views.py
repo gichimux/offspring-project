@@ -9,6 +9,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 import json
 import datetime 
+from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializer import *
+from rest_framework import status
 
 '''
 View for pwa
@@ -23,7 +28,7 @@ of items in stock
 '''
 def inventory(request):
     order=OrderDetails.objects.get(id=1)
-    
+    categories = Category.objects.all()
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
         if form.is_valid():
@@ -42,7 +47,7 @@ def inventory(request):
            
         else:
             messages = ''
-    categories = Category.objects.all()
+    
     
 
     return render(request, 'stockmg/inventory.html', {'form':form,'messages':messages,'product':product,'categories':categories})
@@ -195,17 +200,25 @@ def search(request):
 '''
 View for all the suppliers
 '''
-def suppliers(request):
+def all_suppliers(request):
     suppliers = Supplier.objects.all()
-    return render(request,'supplier/suppliers.html',{'suppliers':suppliers})
+    if request.method == 'POST':
+        form = NewSupplier(request.POST, request.FILES)
+        if form.is_valid():
+            supplier=form.save(commit=False)
+            supplier.save()
+            return redirect(all_suppliers)
+    else:
+        form =NewSupplier()
+    return render(request,'supplier/suppliers.html',{'suppliers':suppliers,'form':form})
 
 '''
 View for supplier details
 '''
 def single_supplier(request,id):
     supplier = Supplier.objects.get(id=id)
-
-    return render(request,'supplier/supplier.html',{'supplier':supplier})
+    orders = Order_Product.objects.filter(supplier=id)
+    return render(request,'supplier/supplier.html',{'supplier':supplier,'orders':orders})
 
 
 '''
@@ -303,3 +316,45 @@ def product_analysis(request,id):
 '''
 Api views
 '''
+# class Category(APIView):
+#     def get(self, request, format=None):
+#         all_projects = Category.objects.all()
+#         serializers = CategorySerializer(all_projects, many=True)
+#         return Response(serializers.data)
+
+#     def post(self, request, format=None):
+#         serializers = CategorySerializer(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data, status=status.HTTP_201_CREATED)
+#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+#         permission_classes = (IsAdminOrReadOnly,)
+
+# class Distributors(APIView):
+#     def get(self, request, format=None):
+#         all_projects = Distributor.objects.all()
+#         serializers = DistributorSerializer(all_projects, many=True)
+#         return Response(serializers.data)
+
+#     def post(self, request, format=None):
+#         serializers = DistributorSerializer(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data, status=status.HTTP_201_CREATED)
+#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+#         permission_classes = (IsAdminOrReadOnly,)
+
+# class Suppliers(APIView):
+#     def get(self, request, format=None):
+#         all_projects = Supplier.objects.all()
+#         serializers = SupplierSerializer(all_projects, many=True)
+#         return Response(serializers.data)
+
+#     def post(self, request, format=None):
+#         serializers = SupplierSerializer(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data, status=status.HTTP_201_CREATED)
+#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+#         permission_classes = (IsAdminOrReadOnly,)
+
