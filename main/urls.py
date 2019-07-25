@@ -19,5 +19,6 @@ from django.contrib.auth import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('app.urls')),
+    url(r'home/', include('app.urls')),
+    url('', include('pwa.urls')),
 ]

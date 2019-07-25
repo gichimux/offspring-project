@@ -6,10 +6,26 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 
+from django.core import serializers
+
 '''
 View for the inventory page displaying categories
 of items in stock
 '''
+
+
+def index(request):
+	template='dashboard/index.html'
+	
+    return render(request, 'dashboard/index.html')
+
+
+
+def base_layout(request):
+	
+    return render(request,'dashboard/base.html')
+
+
 def inventory(request):
     houses = Distributor.objects.all()
     objects = Product.objects.all()
