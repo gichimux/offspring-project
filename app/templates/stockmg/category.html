@@ -1,0 +1,91 @@
+{%extends 'base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
+{% block content %} 
+{{ block.super}}
+<html>
+    <head>
+        <style>
+              button{
+             float:right;
+         }
+         .container{
+            font-family: 'Roboto Condensed', sans-serif;
+         }
+         .categories{
+            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+            margin:10px;
+            transition:0.9s;
+            padding:20px;
+            padding-bottom:20px;
+
+         }
+         a{
+             text-decoration: none;
+             color:black;
+         }
+         .categories:hover{
+            -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+            margin:10px;
+
+         }
+          a:hover{
+            
+            text-decoration: none;
+             color:black; 
+         }
+            </style>
+    </head>
+    <body>
+        <div class="container">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Add product
+                      </button>
+                <h1 class="text-center">{{category.name}}</h1>
+                <hr><hr><br>
+            <div class="row">
+          
+          
+            {% for product in products %}
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+                    <a href="{% url 'stock_product' product.id %}">
+                <div  style=""class="categories">
+                <h3 class="text-center">{{product.name}} </h3><hr>
+                <h4 class="text-center">{{product.quantity}}</h4>
+                <p class="text-center"style="color:red">View</p>
+            </div>
+                </a>
+            </div>
+                {% endfor %}
+                </div>
+        </div>
+        <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>New</h3>  
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            
+                            </div>  
+                            <div class="modal-body">    
+        {{form.media}}
+        <form  action="{% url 'category' category.id %}" method="post" enctype="multipart/form-data">
+          {%csrf_token%}
+      
+          {% bootstrap_form form%}
+          <input type="submit" class="btn btn-success btn-lg" value="Post">
+        </form>
+      
+         {% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        {% bootstrap_javascript %} {% endblock %}
+    </div>
+</div>
+</div>
+</div>
+    </body>
+</html>
+{% endblock %}

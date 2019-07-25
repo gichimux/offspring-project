@@ -1,6 +1,14 @@
 from .models import *
 from django import forms
+import datetime
 
+'''
+New category
+'''
+class NewCategory(forms.ModelForm):
+    class Meta:
+        model = Category
+        exclude =[]
 '''
 form to add new product to stock
 '''
@@ -26,7 +34,7 @@ not exist in their stock
 class NewHouseProd(forms.ModelForm):
     class Meta:
         model = House_Product
-        exclude = ['warehouse','quantity']
+        exclude = ['warehouse','quantity','category']
 
 '''
 form to add  products in a specific distributor when running 
@@ -36,5 +44,7 @@ low on stock
 class AddHouseProd(forms.ModelForm):
    class Meta:
        model = OrderDetails
-       exclude = ['product','warehouse']
+       exclude = ['product','warehouse','month','year']
 
+class DateForm(forms.Form):
+    day = forms.DateField(initial=datetime.date.today)
