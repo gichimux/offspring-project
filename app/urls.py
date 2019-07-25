@@ -15,7 +15,7 @@ urlpatterns=[
  url(r'^house/category/(\d+)/(\d+)$',views.house_category,name="house_category"),
  url(r'^house/category/product/(\d+)/(\d+)$',views.add_house_product,name="add_house_product"),
 
- url(r'^supplier$',views.suppliers,name="suppliers"),
+ url(r'^supplier$',views.all_suppliers,name="suppliers"),
  url(r'^supplier/(\d+)$',views.single_supplier,name="supplier"),
      
  url(r'^orders/supplier$',views.supply_orders,name='supply_orders'),
