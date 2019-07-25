@@ -1,0 +1,70 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %} 
+{{ block.super}}
+<html>
+    <head>
+            
+            
+     <style>
+         button{
+             float:right;
+         }
+         .container{
+            font-family: 'Roboto Condensed', sans-serif;
+         }
+         .categories{
+            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+            margin:10px;
+            transition:0.9s;
+            padding-bottom:20px;
+
+         }
+         a{
+             text-decoration: none;
+             color:black;
+         }
+         .categories:hover{
+            -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+            margin:10px;
+
+         }
+         .categories:hover a{
+            
+            text-decoration: none;
+             color:black; 
+         }
+        </style>   
+
+    </head>
+    <body>
+        <div class="container">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Add new supplier
+                      </button>
+           
+           
+            
+           <h1 class="text-center">Suppliers</h1><hr><hr>
+           <div class="row">
+            {% for supplier in suppliers %}
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+                    <a href="{% url 'supplier' supplier.id %}">
+                <div  style="border:1px solid white;padding:20px"class="categories">
+                <h3 class="text-center">{{supplier.name}}</h3></a><hr>
+                <p class="text-center" style="color:red">View</p>
+               
+            </div>
+            </div>
+                {% endfor %}
+                </div>
+            
+           
+        </div>
+
+{% endblock %}

@@ -10,6 +10,7 @@ admin.site.register(Sub_Category)
 admin.site.register(House_Product)
 admin.site.register(Supplier)
 admin.site.register(Order_Product)
+admin.site.register(Distributor_sell)
 
 admin.site.site_header = "Offspring";
 admin.site.site_title = "Offspring Inventory ";
