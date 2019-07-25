@@ -109,7 +109,7 @@ def all_distributors(request):
         if form.is_valid():
             distributor=form.save(commit=False)
             distributor.save()
-            return redirect(all_suppliers)
+            return redirect(all_distributors)
     else:
         form =NewDistributor()
     return render(request,'distributor/distributors.html',{'houses':houses,'form':form})
