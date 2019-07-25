@@ -232,6 +232,8 @@ def single_supplier(request,id):
 '''
 View for all orders
 '''
+def all_orders(request):
+    return render(request,'orders/orders.html')
 '''
 view for supply orders
 '''

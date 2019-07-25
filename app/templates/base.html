@@ -35,15 +35,7 @@
 
   <a href="{% url 'distributors' %}">Distributors</a>
  
-  <span class="dropdown">
-    <button style="" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Orders
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li class="dropdown-header">Orders</li>
-      <li><a  href="{% url 'supply_orders' %}">Supplied orders</a></li>
-      <li><a href="{% url 'transfer_orders'  %}">Distributor orders</a></li>
-    </ul>
-  </span>
+  <a href="{% url 'orders' %}">Orders</a>
   <a href="{% url 'analysis' %}">Analysis</a>
 </div>
 
