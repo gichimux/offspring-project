@@ -96,7 +96,7 @@ def add_house_product(request,h_id,i_id):
         form =AddHouseProd()
     return render(request,'distributor/item.html',{'product':product,'house':house,'to_update':to_update,'form':form})
 '''
- Search Function for looking up a specific product based on passed serial number
+    Search Function for looking up a specific product based on passed serial number
 '''
 def search(request):
     if 'product' in request.GET and request.GET["product"]:
@@ -109,14 +109,14 @@ def search(request):
 
     return render(request,'search.html',{"message":message})
 '''
- View fuction for returning whole stock in a specific category
+    View fuction for returning whole stock in a specific category
 '''
 def full_stock(request):
     categories = Category.objects.all()    
 
     return render(request, 'analysis/analysis.html', {'categories':categories})
 '''
-total items in stock  category analysis
+    total items in stock  category analysis
 '''
 def full_category(request,id):
     products = Product.objects.filter(category=id)
