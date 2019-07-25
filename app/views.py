@@ -24,7 +24,14 @@ of items in stock
 def inventory(request):
     order=OrderDetails.objects.get(id=1)
     
-    form = DateForm()
+    if request.method == 'POST':
+        form = NewCategory(request.POST, request.FILES)
+        if form.is_valid():
+            
+            category.save()
+            return redirect(inventory)
+    else:
+        form =NewCategory()
     
     products = Product.objects.all()
     for product in products:
@@ -103,7 +110,7 @@ def single_house(request,id):
     house = Distributor.objects.get(id=id)
     house_products = House_Product.objects.filter(warehouse=id)
     
-    return render(request,'distributor/distributor/house.html',{'house':house,'categories':categories})
+    return render(request,'distributor/distributor.html',{'house':house,'categories':categories})
 
 
 '''
@@ -190,7 +197,7 @@ View for all the suppliers
 '''
 def suppliers(request):
     suppliers = Supplier.objects.all()
-    return render(request,'supplier/suppiers.html',{'suppiers':suppliers})
+    return render(request,'supplier/suppliers.html',{'suppliers':suppliers})
 
 '''
 View for supplier details
@@ -208,7 +215,7 @@ View for all orders
 view for supply orders
 '''
 def supply_orders(request):
-    orders = Order_Product.objects.order_by('-date').all()
+    orders = Order_Product.objects.all()
     return render(request,'orders/supply_orders.html',{'orders':orders})
 
 '''
@@ -221,16 +228,16 @@ def transfer_orders(request):
 '''
 view for transfer orders by month
 '''
-def transfer_order_month(request,id,m):
+def transfer_order_month(request,m):
     
-    orders = OrderDetails.objects.filter(warehouse=id)
-    
+    orders = OrderDetails.objects.filter(month=m)
+    return render(request,'orders/transfers_by_month.html',{'orders':orders})
 
 '''
 view for single distributor orders
 '''
 def distributor_transfer_orders(request,id):
-    orders = OrderDetails.objects.filter(warehouse=id).order_by('-date')
+    orders = OrderDetails.objects.filter(warehouse=id).all()
     return render(request,'orders/distributor_transfers.html',{'orders':orders})
 
 '''
@@ -293,3 +300,6 @@ def product_analysis(request,id):
     return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
 
 
+'''
+Api views
+'''

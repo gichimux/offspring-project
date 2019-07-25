@@ -1,0 +1,31 @@
+button{
+    float:right;
+}
+.container{
+   font-family: 'Roboto Condensed', sans-serif;
+}
+.categories{
+   -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+   margin:10px;
+   transition:0.9s;
+   padding-bottom:20px;
+
+}
+a{
+    text-decoration: none;
+    color:black;
+}
+.categories:hover{
+   -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+   margin:10px;
+
+}
+.categories:hover a{
+   
+   text-decoration: none;
+    color:black; 
+}

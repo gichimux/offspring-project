@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pwa',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'main.wsgi.application'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 
 MODE=config("MODE", default="dev")
@@ -117,7 +124,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, '', 'serviceworker.js')
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'app/static/js', 'serviceworker.js')
 
 
 # Static files (CSS, JavaScript, Images)

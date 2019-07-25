@@ -37,14 +37,13 @@ class Distributor(models.Model):
     def __str__(self):
         return self.location
 
-'''
-class order details for the details about a certain order
-'''
+
 class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.PositiveIntegerField(default=0)
-    date= models.DateField(auto_now=True)
+    month=models.PositiveIntegerField(default=0)
+    year=models.PositiveIntegerField(default=0)
   
     
     def __str__(self):
@@ -58,9 +57,7 @@ class OrderDetails(models.Model):
     def year(self):
         return self.date.strftime('%Y')
     
-    def month(self):
-        return self.date.strftime('%m')
-
+    
 
 '''
 class House_product for the products in particular house
@@ -101,9 +98,11 @@ class Order_Product(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     supplier=models.ForeignKey(Supplier,blank=True,null=True)
     quantity =models.PositiveIntegerField(default=0)
-    date= models.DateField(auto_now=True)
+    month= models.PositiveIntegerField(default=0)
+    year= models.PositiveIntegerField(default=0)
     
-
+    def __str__(self):
+        return self.product + ''+self.quantity
     def year(self):
         return self.date.strftime('%Y')
 
@@ -121,11 +120,8 @@ class Distributor_sell(models.Model):
     sKU = models.CharField(max_length= 10)
     warehouse = models.ForeignKey('Distributor',default=1)
     quantity =models.PositiveIntegerField(default=0)
-    date= models.DateField(auto_now=True)
+    month= models.PositiveIntegerField(default=0)
+    year= models.PositiveIntegerField(default=0)
     
-    def year(self):
-        return self.date.strftime('%Y')
-
-    def month(self):
-        return self.date.strftime('%m')
-
+    def __str__(self):
+        return self.warehouse + ''+self.quantity

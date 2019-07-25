@@ -1,0 +1,56 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %} 
+{{ block.super}}
+
+<style>
+     button{
+             float:right;
+         }
+         .container{
+            font-family: 'Roboto Condensed', sans-serif;
+         }
+         .categories{
+            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+            margin:10px;
+            transition:0.9s;
+            padding-bottom:20px;
+
+         }
+         a{
+             text-decoration: none;
+             color:black;
+         }
+         .categories:hover{
+            -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+            margin:10px;
+
+         }
+         a:hover {
+            
+            text-decoration: none;
+             color:black; 
+         }
+</style>
+
+<div class="container">
+    <h2 class="text-center">Distributors</h2>
+    <hr><hr><br>
+        <div class="row">
+{% for house in houses %}
+<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+        <a href="{% url 'single_house' house.id %}">
+        <div  style="border:1px solid white;padding:20px"class="categories">
+<h3 class="text-center">{{house.name}}</h3><hr>
+<p style="color:red"class="text-center">View</p>
+</div></a>
+</div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}
