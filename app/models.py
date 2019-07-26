@@ -24,6 +24,7 @@ class Product(models.Model):
     quantity = models.PositiveIntegerField(default=0)
     size = models.CharField(max_length=50,blank=False)
     category=models.ForeignKey(Category,on_delete=models.CASCADE) 
+    
     def __str__(self):
         return self.name
 
@@ -44,7 +45,7 @@ class OrderDetails(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     month=models.PositiveIntegerField(default=0)
     year=models.PositiveIntegerField(default=0)
-  
+    date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.product.name
@@ -100,7 +101,7 @@ class Order_Product(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     month= models.PositiveIntegerField(default=0)
     year= models.PositiveIntegerField(default=0)
-    
+    date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.product + ''+self.quantity
     def year(self):
@@ -122,6 +123,6 @@ class Distributor_sell(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     month= models.PositiveIntegerField(default=0)
     year= models.PositiveIntegerField(default=0)
-    
+    date = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.warehouse + ''+self.quantity

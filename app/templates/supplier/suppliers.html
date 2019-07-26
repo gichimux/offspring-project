@@ -15,6 +15,7 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
+            border-top:50px solid #50B9D3;
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
@@ -44,10 +45,11 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     </head>
     <body>
         <div class="container">
+                {% if request.user == superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add new supplier
                       </button>
-           
+           {% endif%}
            
             
            <h1 class="text-center">Suppliers</h1><hr><hr>
@@ -55,10 +57,10 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
             {% for supplier in suppliers %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
                     <a href="{% url 'supplier' supplier.id %}">
-                <div  style="border:1px solid white;padding:20px"class="categories">
+                <div  style="padding:15px"class="categories">
                 <h3 class="text-center">{{supplier.name}}</h3><hr>
                 <h4 class="text-center">{{supplier.product}}</h4>
-                <p class="text-center" style="color:red">View</p>
+                <p class="text-center" style="color:#50B9D3">View</p>
                
             </div>
             </a>

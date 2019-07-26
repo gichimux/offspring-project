@@ -18,6 +18,7 @@ from rest_framework import status
 '''
 View for pwa
 '''
+@login_required(login_url='/accounts/login/')
 def base_layout(request):
 	template='base.html'
 	return render(request,template)
@@ -26,6 +27,7 @@ def base_layout(request):
 View for the inventory page displaying categories
 of items in stock
 '''
+@login_required(login_url='/accounts/login/')
 def inventory(request):
     
     categories = Category.objects.all()
@@ -57,7 +59,7 @@ def inventory(request):
 view for the single categories displaying
 items under a category
 '''
-
+@login_required(login_url='/accounts/login/')
 def stock_category(request,id):
     products = Product.objects.filter(category=id)
     category = Category.objects.get(id=id)
@@ -76,7 +78,7 @@ def stock_category(request,id):
 view for Single stock product under the respective
 category
 '''
-
+@login_required(login_url='/accounts/login/')
 def stock_product(request,id):
     to_add = Product.objects.get(id=id)
     
@@ -102,6 +104,7 @@ views for distributors
 '''
 All distributors
 '''
+@login_required(login_url='/accounts/login/')
 def all_distributors(request):
     houses = Distributor.objects.all()
     if request.method == 'POST':
@@ -117,7 +120,7 @@ def all_distributors(request):
 '''
 View for a single distributor displaying categories
 '''
-
+@login_required(login_url='/accounts/login/')
 def single_house(request,id):
     categories = Category.objects.all()
     house = Distributor.objects.get(id=id)
@@ -130,7 +133,7 @@ def single_house(request,id):
 view for the single categories within a distributor displaying
 quantity of items under a category
 '''
-
+@login_required(login_url='/accounts/login/')
 def house_category(request,h_id,c_id):
     message = ''
     products = House_Product.objects.filter(warehouse=h_id).filter(category=c_id)
@@ -160,7 +163,7 @@ view for a single item within a distributor displaying single
 products quantity within the distributor
 '''
 
-
+@login_required(login_url='/accounts/login/')
 def add_house_product(request,h_id,i_id):
     message = ''
     house = Distributor.objects.get(id=h_id)
@@ -193,7 +196,7 @@ def add_house_product(request,h_id,i_id):
 '''
 view to search a particular product by its serial
 '''
-
+@login_required(login_url='/accounts/login/')
 def search(request):
     if 'product' in request.GET and request.GET['product']:
         search_serial =request.GET.get("product")
@@ -208,6 +211,7 @@ def search(request):
 '''
 View for all the suppliers
 '''
+@login_required(login_url='/accounts/login/')
 def all_suppliers(request):
     suppliers = Supplier.objects.all()
     if request.method == 'POST':
@@ -223,6 +227,7 @@ def all_suppliers(request):
 '''
 View for supplier details
 '''
+@login_required(login_url='/accounts/login/')
 def single_supplier(request,id):
     supplier = Supplier.objects.get(id=id)
     orders = Order_Product.objects.filter(supplier=id)
@@ -232,18 +237,21 @@ def single_supplier(request,id):
 '''
 View for all orders
 '''
+@login_required(login_url='/accounts/login/')
 def all_orders(request):
     return render(request,'orders/orders.html')
 '''
 view for supply orders
 '''
+@login_required(login_url='/accounts/login/')
 def supply_orders(request):
-    orders = Order_Product.objects.all()
+    orders = Order_Product.objects.order_by('-date').all()
     return render(request,'orders/supply_orders.html',{'orders':orders})
 
 '''
 View for all distributors transfers
 '''
+@login_required(login_url='/accounts/login/')
 def transfer_orders(request):
     distributors = Distributor.objects.all()
     return render(request,'orders/transfer_orders.html',{'distributors':distributors})
@@ -251,6 +259,7 @@ def transfer_orders(request):
 '''
 view for transfer orders by month
 '''
+@login_required(login_url='/accounts/login/')
 def transfer_order_month(request,m):
     
     orders = OrderDetails.objects.filter(month=m)
@@ -259,6 +268,7 @@ def transfer_order_month(request,m):
 '''
 view for single distributor orders
 '''
+@login_required(login_url='/accounts/login/')
 def distributor_transfer_orders(request,id):
     orders = OrderDetails.objects.filter(warehouse=id).all()
     return render(request,'orders/distributor_transfers.html',{'orders':orders})
@@ -272,6 +282,7 @@ View for the distributor orders by the month
 View for all distributors feedback on items sold
 '''
 
+@login_required(login_url='/accounts/login/')
 def distributor_sale(request):
     distributors = Distributor.objects.all()
     return render(request,'orders/distributor_feedback.html',{'distributors':distributors})
@@ -279,6 +290,7 @@ def distributor_sale(request):
 '''
 View for a single distributors feedback on items sold
 '''
+@login_required(login_url='/accounts/login/')
 def distributor_feedback(request,id):
     orders = Distributor_sell.objects.filter(warehouse=id).order_by('-date')
     return render(request,'orders/single_distri_feedback.html',{'orders':orders})
@@ -291,7 +303,7 @@ Analysis view
 '''
 All categories view 
 '''
-
+@login_required(login_url='/accounts/login/')
 def full_stock(request):
     categories = Category.objects.all()
     
@@ -301,6 +313,7 @@ def full_stock(request):
 '''
 total items in stock  category analysis
 '''
+@login_required(login_url='/accounts/login/')
 def full_category(request,id):
     products = Product.objects.filter(category=id)
     category = Category.objects.get(id=id)
@@ -310,7 +323,7 @@ def full_category(request,id):
 '''
 single item stock analysis 
 '''
-
+@login_required(login_url='/accounts/login/')
 def product_analysis(request,id):
     to_add = Product.objects.get(id=id)
     products = House_Product.objects.filter(name=id) 

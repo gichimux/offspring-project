@@ -12,12 +12,13 @@
      font-family: 'Roboto Condensed', sans-serif;
   }
   .categories{
+    border-top:50px solid #50B9D3;
      -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
      margin:10px;
      transition:0.9s;
-     padding-bottom:20px;
+     padding-bottom:10px;
 
   }
   a{
@@ -48,17 +49,23 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     <h1 class="text-center">Orders</h1><hr>
     <div class="row">
      {% for order in orders %}
-     <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
-             <a href="">
-         <div  style="border:1px solid white;padding:20px"class="categories">
-         <h3 class="text-center">{{order.product}}</h3></a><hr>
-         
-         <p class="text-center">{{order.quantity}}</p></a>
-         
-         
-     </div>
-     </div>
+    <div class="col-md-4 col-lg-4 col-sm-4">
+        
+            <p><b>product: </b> {{order.product}}</p>
+            <hr>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4">
+           
+            <p style="color:orange" class="text-center"> <b >Quantity: </b> {{order.quantity}}</p>
+            <hr>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4">
+            
+            <p class="text-center"><b>Date</b>: {{order.date}}</p>
+            <hr>
+    </div>
          {% endfor %}
       
 
  {% endblock %}
+ 
