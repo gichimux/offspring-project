@@ -74,6 +74,7 @@ def stock_category(request,id):
         form =AddProduct()
     return render(request,'stockmg/category.html',{'products':products,'category':category,'form':form})
 
+
 '''
 view for Single stock product under the respective
 category
@@ -273,6 +274,11 @@ def distributor_transfer_orders(request,id):
     orders = OrderDetails.objects.filter(warehouse=id).all()
     return render(request,'orders/distributor_transfers.html',{'orders':orders})
 
+@login_required(login_url='/accounts/login/')
+def distributor_sale(request):
+    orders = Distributor_sale.objects.all()
+    return render(request,'orders/distributor_sale.html',{'orders':orders})
+
 '''
 View for the distributor orders by the month
 '''
@@ -284,8 +290,8 @@ View for all distributors feedback on items sold
 
 @login_required(login_url='/accounts/login/')
 def distributor_sale(request):
-    distributors = Distributor.objects.all()
-    return render(request,'orders/distributor_feedback.html',{'distributors':distributors})
+    orders = Distributor_sale.objects.all()
+    return render(request,'orders/distributor_sale.html',{'distributors':distributors})
 
 '''
 View for a single distributors feedback on items sold
@@ -335,49 +341,106 @@ def product_analysis(request,id):
 
     return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
 
+'''
+all cusomers
+'''
+
+@login_required(login_url='/accounts/login/')
+def all_customers(request):
+    customers = Customer.objects.all()
+    if request.method == 'POST':
+        form = NewCustomer(request.POST, request.FILES)
+        if form.is_valid():
+            customer=form.save(commit=False)
+            customer.save()
+            return redirect(all_customers)
+    else:
+        form =NewCustomer()
+    return render(request,'customer/customers.html',{'customers':customers,'form':form})
+
+'''
+Customer order processing
+'''
+
+@login_required(login_url='/accounts/login/')
+def customer_order(request):
+    orders = Customer_order.objects.order_by('-date').all()
+    if request.method == 'POST':
+        form = CustomerOrder(request.POST, request.FILES)
+        if form.is_valid():
+            order=form.save(commit=False)
+            order.month = datetime.datetime.now().strftime ("%m")
+            order.year = datetime.datetime.now().strftime ("%y")
+            product = Product.objects.get(sKU=order.sKU)
+            order.total_price = product.price + product.tax - order.discount
+            to_subtract = House_Product.objects.filter(warehouse=order.warehouse).get(sKU=order.sKU)
+            to_subtract.quantity=to_subtract.quantity - order.quantity
+            to_subtract.save()
+            order.save()
+            return redirect(customer_order)
+    else:
+        form =CustomerOrder()
+    
+    return render(request,'customer/customers_order.html',{'orders':orders,'form':form})
+
+'''
+generating invoice
+'''
+@login_required(login_url='/accounts/login/')
+def customers_invoice(request):
+    if request.method == 'POST':
+        form = Invoicing(request.POST, request.FILES)
+        if form.is_valid():
+            invoice=form.save(commit=False)
+            products = Customer_order.objects.filter(sKU=invoice.SKU)
+            return redirect(customers_invoice)
+    form = Invoicing(request.POST, request.FILES)
+
+    return render(request,'customer/invoice.html',{'form':form})
+
 
 '''
 Api views
 '''
-# class Category(APIView):
-#     def get(self, request, format=None):
-#         all_projects = Category.objects.all()
-#         serializers = CategorySerializer(all_projects, many=True)
-#         return Response(serializers.data)
+class CategoriesList(APIView):
+    def get(self, request, format=None):
+        all_projects = Category.objects.all()
+        serializers = CategorySerializer(all_projects, many=True)
+        return Response(serializers.data)
 
-#     def post(self, request, format=None):
-#         serializers = CategorySerializer(data=request.data)
-#         if serializers.is_valid():
-#             serializers.save()
-#             return Response(serializers.data, status=status.HTTP_201_CREATED)
-#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-#         permission_classes = (IsAdminOrReadOnly,)
+    def post(self, request, format=None):
+        serializers = CategorySerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+        permission_classes = (IsAdminOrReadOnly,)
 
-# class Distributors(APIView):
-#     def get(self, request, format=None):
-#         all_projects = Distributor.objects.all()
-#         serializers = DistributorSerializer(all_projects, many=True)
-#         return Response(serializers.data)
+class DistributorsList(APIView):
+    def get(self, request, format=None):
+        all_projects = Distributor.objects.all()
+        serializers = DistributorSerializer(all_projects, many=True)
+        return Response(serializers.data)
 
-#     def post(self, request, format=None):
-#         serializers = DistributorSerializer(data=request.data)
-#         if serializers.is_valid():
-#             serializers.save()
-#             return Response(serializers.data, status=status.HTTP_201_CREATED)
-#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-#         permission_classes = (IsAdminOrReadOnly,)
+    def post(self, request, format=None):
+        serializers = DistributorSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+        permission_classes = (IsAdminOrReadOnly,)
 
-# class Suppliers(APIView):
-#     def get(self, request, format=None):
-#         all_projects = Supplier.objects.all()
-#         serializers = SupplierSerializer(all_projects, many=True)
-#         return Response(serializers.data)
+class SuppliersList(APIView):
+    def get(self, request, format=None):
+        all_projects = Supplier.objects.all()
+        serializers = SupplierSerializer(all_projects, many=True)
+        return Response(serializers.data)
 
-#     def post(self, request, format=None):
-#         serializers = SupplierSerializer(data=request.data)
-#         if serializers.is_valid():
-#             serializers.save()
-#             return Response(serializers.data, status=status.HTTP_201_CREATED)
-#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-#         permission_classes = (IsAdminOrReadOnly,)
+    def post(self, request, format=None):
+        serializers = SupplierSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+        permission_classes = (IsAdminOrReadOnly,)
 

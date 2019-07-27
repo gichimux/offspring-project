@@ -15,7 +15,8 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
-            border-top:50px solid #50B9D3;
+            border-top:20px solid rgb(5, 114, 141);
+            border-bottom:20px solid rgb(5, 114, 141);
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
@@ -45,21 +46,21 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     </head>
     <body>
         <div class="container">
-                {% if request.user == superuser %}
+                {% if request.user.is_superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add new supplier
                       </button>
            {% endif%}
            
             
-           <h1 class="text-center">Suppliers</h1><hr><hr>
+           <h3 class="text-center">Suppliers</h3><hr>
            <div class="row">
             {% for supplier in suppliers %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
                     <a href="{% url 'supplier' supplier.id %}">
                 <div  style="padding:15px"class="categories">
-                <h3 class="text-center">{{supplier.name}}</h3><hr>
-                <h4 class="text-center">{{supplier.product}}</h4>
+                <h5 class="text-center">{{supplier.name}}</h5><hr>
+                <h6 class="text-center">{{supplier.product}}</h6>
                 <p class="text-center" style="color:#50B9D3">View</p>
                
             </div>

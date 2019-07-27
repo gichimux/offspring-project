@@ -65,3 +65,20 @@ class NewDistributor(forms.ModelForm):
     class Meta:
         model = Distributor
         exclude = []
+
+'''
+New customer
+'''
+class NewCustomer(forms.ModelForm):
+    class Meta:
+        model = Customer
+        exclude = []
+
+class CustomerOrder(forms.ModelForm):
+    class Meta:
+        model = Customer_order
+        exclude = ['month','date','year','total_price']
+
+class Invoicing(forms.Form):
+    class Meta:
+        fields = ['SKU']

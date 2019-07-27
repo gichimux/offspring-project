@@ -7,7 +7,8 @@
 <html>
     <head>
             
-            
+            <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto+Condensed&display=swap" rel="stylesheet">
+      
      <style>
          button{
              float:right;
@@ -16,7 +17,8 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
-            border-top:50px solid #50B9D3;
+            border-top:20px solid rgb(5, 114, 141);
+            border-bottom:20px solid rgb(5, 114, 141);
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
@@ -50,12 +52,13 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     <body>
            
         <div class="container">
-                {% if request.user == superuser %}
+            <h5 style="color:red;font-family: 'Lobster', cursive;" class="text-center"><i>{{messages}}</i></h5>
+                {% if request.user.is_superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add new Category
                       </button>
            {% endif %}
-           <h1 class="text-center">Categories</h1><hr>
+           <h3 class="text-center">Categories</h3><hr>
            <div class="row">
             {% for category in categories %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
@@ -64,7 +67,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
                 <div  style="padding:15px"class="categories">
                    
                     <p style="float:left">{{category.id}}</p>
-                <h3 class="text-center">{{category.name}}</h3><hr>
+                <h5 class="text-center">{{category.name}}</h5><hr>
                 
                
                 <p class="text-center" style="color:#50B9D3">View</p>
@@ -74,6 +77,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
         </a>
             </div>
                 {% endfor %}
+                <span class="glyphicon glyphicon-mail"></span>
                 </div>
             
            
