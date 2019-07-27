@@ -12,7 +12,8 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
-            border-top:50px solid #50B9D3;
+            border-top:20px solid rgb(5, 114, 141);
+            border-bottom:20px solid rgb(5, 114, 141);
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
@@ -40,20 +41,20 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
 </style>
 
 <div class="container">
-        {% if request.user == superuser %}
+        {% if request.user.is_superuser %}
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                 Add new Distributor
               </button>
    {% endif %}
-    <h2 class="text-center">Distributors</h2>
+    <h3 class="text-center">Distributors</h3>
     <hr><br>
         <div class="row">
 {% for house in houses %}
 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
         <a href="{% url 'single_house' house.id %}">
         <div  style="padding:15px"class="categories">
-<h3 class="text-center">{{house.name}}</h3><hr>
-<h4 style="color:orange" class="text-center">{{house.location}}</h4>
+<h5 class="text-center">{{house.name}}</h5><hr>
+<h6 style="color:orange" class="text-center">{{house.location}}</h6>
 <p style="color:#50B9D3"class="text-center">View</p>
 </div></a>
 </div>

@@ -1,0 +1,99 @@
+{% extends 'base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
+{% load bootstrap4 %}
+{% block content %} 
+{{ block.super}}
+
+<style>
+  button{
+      float:right;
+  }
+  .container{
+     font-family: 'Roboto Condensed', sans-serif;
+  }
+  .categories{
+    border-top:20px solid rgb(5, 114, 141);
+    border-bottom:20px solid rgb(5, 114, 141);
+     -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+     margin:10px;
+     transition:0.9s;
+     padding-bottom:10px;
+
+  }
+  a{
+      text-decoration: none;
+      color:black;
+  }
+  .categories:hover{
+     -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+     margin:10px;
+
+  }
+  .categories:hover a{
+     
+     text-decoration: none;
+      color:black; 
+  }
+ </style>   
+
+</head>
+<body>
+    
+ <div class="container">
+
+     {% if request.user.is_superuser %}
+     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+             Add new Customer
+           </button>
+           
+        {% endif %}
+    <h3 class="text-center">Customers</h3><hr>
+    <div class="row">
+     {% for customer in customers %}
+    <div class="col-md-4 col-lg-4 col-sm-4">
+        
+            <p> {{customer.id}}</p>
+            <hr>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4">
+           
+            <p style="color:black" class="text-center">{{customer.name}}</p>
+            <hr>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4">
+            
+            <p class="text-center">{{customer.contact}}</p>
+            <hr>
+    </div>
+         {% endfor %}
+         <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>New</h3>  
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        
+                        </div>  
+                        <div class="modal-body">    
+        {{form.media}}
+        <form  action="{% url 'customers' %}" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        
+        {% bootstrap_form form%}
+        <input type="submit" class="btn btn-success btn-lg" value="Post">
+        </form>
+        
+        {% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        {% bootstrap_javascript %} {% endblock %}
+        </div>
+        </div>
+        </div>
+        </div>
+
+ {% endblock %}
+ 

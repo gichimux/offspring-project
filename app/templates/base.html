@@ -26,9 +26,12 @@
 </head>
 
 <body>
-<div  class="jumbotron"><h3 class="text-center"><b>O</b>ffspring IMS</h3></div>
+<div  class="jumbotron">
+  <span class="text-center"><h6><b>O</b>ffspring IMS</h6>
+  <h6 style="float:right">{{request.user.username}} logged in</h6><br></span>
+</div>
 <div id="mySidenav" class="sidenav">
-    <h1><div class="header-logo"><a href="https://offspring.co.ke/"><img src="https://offspring.co.ke/wp-content/uploads/2019/01/logo1.png" alt="For All Your Parenting Needs" class="logo-default" margin-right="20" width="220" height="98">
+   <h1><b>O</b>ffspring</h1>
    </h1>    
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="/">Inventory</a>
@@ -37,12 +40,13 @@
   <a href="{% url 'distributors' %}">Distributors</a>
  
   <a href="{% url 'orders' %}">Orders</a>
+  <a href="{% url 'customers' %}">Customers</a>
   <a href="{% url 'analysis' %}">Analysis</a>
 </div>
 
-<div id="main" style="margin-left:200px">
+<div id="main" style="margin-left:180px">
     <span style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776;</span>
-    <a style="font-size:20px;margin-left:20px;color:green"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
+    <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
     
     {% block content %}{%endblock%}
   
@@ -71,12 +75,19 @@ function closeNav() {
     <style>
       .jumbotron{
         background-color: rgb(5, 114, 141);
-        padding:5px;
+        padding:10px;
         color:white;
         border-radius:0;
         margin:0;
        
       }
+      .jumbotron h4{
+        margin-top:0
+      }
+      .jumbotron h6{
+        margin:0
+      }
+
       .dropdown{
         align-content: center;
       }
@@ -91,6 +102,7 @@ function closeNav() {
         #main {
         transition: margin-left .5s;
         padding: 16px;
+        background-color: whitesmoke;
       }
    
       body {
@@ -101,12 +113,12 @@ function closeNav() {
         
 
         height: 100%;
-        width: 0;
+        width: 210;
         position: fixed;
         z-index: 1;
         bottom: 0;
         left: 0;
-        background-color:#50B9D3;
+        background-color:rgb(5, 114, 141);
         font-family: 'Roboto Condensed', sans-serif;
         overflow-x: hidden;
         transition: 0.5s;
@@ -120,6 +132,11 @@ function closeNav() {
         color: white;
         display: block;
         transition: 0.3s;
+      }
+      .sidenav h1{
+        padding: 8px 8px 8px 32px;
+        display: block;
+        color:white;
       }
       
       .sidenav a:hover {

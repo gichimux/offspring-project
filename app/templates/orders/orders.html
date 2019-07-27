@@ -12,7 +12,8 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
-          border-top:50px solid #50B9D3;
+          border-top:20px solid rgb(5, 114, 141);
+            border-bottom:20px solid rgb(5, 114, 141);
             margin:10px;
             transition:0.9s;
             padding:20px;
@@ -26,7 +27,7 @@ box-shadow: 4px 2px 12px -4px rgba(0,0,0,0.75);
              text-decoration: none;
              color:black;
              transition:0.6s;
-             font-size:25px;
+             font-size:20px;
          }
          .categories:hover{
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
@@ -39,7 +40,7 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
             
             text-decoration: none;
              color:black; 
-             font-size:30px;
+             font-size:23px;
          }
        
 </style>
@@ -50,15 +51,26 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
     <hr><br>
     <div class="row">
     
-    <div class="col-md-6">
+    <div class="col-md-4">
+        <a  href="{% url 'supply_orders' %}">
       <div class="categories">
-            <a  href="{% url 'supply_orders' %}">Supplied orders</a>
+           Supplied orders
       </div>
+    </a>
     </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
+          <a href="{% url 'transfer_orders'  %}">
       <div class="categories">
-            <a href="{% url 'transfer_orders'  %}">Distributor orders</a>
+            Distributor orders
       </div>
+    </a>
+</div>
+<div class="col-md-4">
+    <a href="{% url 'customer_orders' %}">
+<div class="categories">
+      Customer orders
+</div>
+</a>
 </div>
 </div>
 </div>
