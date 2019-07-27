@@ -26,7 +26,16 @@ urlpatterns=[
 
  url(r'^analysis$',views.full_stock,name='analysis'),
  url(r'^analysis/category/(\d+)$',views.full_category,name='category_analysis'),
- url(r'^analysis/category/product/(\d+)$',views.product_analysis,name="stock_product_analysis"),  
+ url(r'^analysis/category/product/(\d+)$',views.product_analysis,name="stock_product_analysis"), 
+
+ url(r'^customer$',views.all_customers,name="customers"),
+ url(r'^customer/order$',views.customer_order,name="customer_orders"),
+ url(r'^invoice$',views.customers_invoice,name="customers_invoice"),
+
+ url(r'^distributors',views.DistributorsList.as_view()),
+ url(r'^suppliers',views.SuppliersList.as_view()),
+ url(r'^categories',views.CategoriesList.as_view()),
+ 
 ]
 
 
