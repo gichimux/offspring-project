@@ -7,6 +7,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style4.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -27,11 +39,24 @@
 
 <body>
 <div  class="jumbotron"><h3 class="text-center"><b>O</b>ffspring IMS</h3></div>
+
 <div id="mySidenav" class="sidenav">
-    <h1><div class="header-logo"><a href="https://offspring.co.ke/"><img src="https://offspring.co.ke/wp-content/uploads/2019/01/logo1.png" alt="For All Your Parenting Needs" class="logo-default" margin-right="20" width="220" height="98">
+    <h1><div class="header-logo"><a href="https://offspring.co.ke/"><img src="https://offspring.co.ke/wp-content/uploads/2019/01/logo1.png" alt="For All Your Parenting Needs" class="logo-default" margin-left="40px" width="180" height="98">
    </h1>    
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="/">Inventory</a>
+
+ <li>
+    <a href="/">
+    <i class="fas fa-boxes"></i>
+    Inventory
+    </a>
+  </li>
+
+  
+
+  <i class="fas fa-parachute-box"></i>
+
+  {% comment %} <a href="/"><i class="fas fa-hand-holding-box"></i>Inventory</a> {% endcomment %}
   <a href="{% url 'suppliers' %}">Suppliers</a>
 
   <a href="{% url 'distributors' %}">Distributors</a>
@@ -101,7 +126,7 @@ function closeNav() {
         
 
         height: 100%;
-        width: 0;
+        width: 215px;
         position: fixed;
         z-index: 1;
         bottom: 0;
