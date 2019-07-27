@@ -18,8 +18,7 @@ def base_layout(request):
 	return render(request,template)
 
 def inventory(request):
-    order=OrderDetails.objects.get(id=1)
-    
+    order=OrderDetails.objects.get(id=1)    
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
         if form.is_valid():
@@ -42,7 +41,6 @@ def inventory(request):
     
 
     return render(request, 'stockmg/inventory.html', {'form':form,'messages':messages,'product':product,'categories':categories})
-
 
 '''
 view for the single categories displaying
@@ -290,8 +288,16 @@ def product_analysis(request,id):
     print(in_houses)
 
     return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
-
-
 '''
-Api views
+    Function for checking out an order from various places
 '''
+# def transferproduct(request,id):
+#     product= Product.objects.get(pk=id)
+#     warehouse = 
+#     quantity= request.POST.get('quantity')
+#     order_details= OrderDetails(quantity=quantity)
+#     order_details.save()
+#     product.quantity= product.quantity -int(quantity)
+#     product.save()
+
+#     return render(request,'transferinvoice.html')
