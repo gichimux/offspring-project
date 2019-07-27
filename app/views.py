@@ -30,12 +30,8 @@ of items in stock
 '''
 @login_required(login_url='/accounts/login/')
 def inventory(request):
-<<<<<<< HEAD
-    
-=======
     order=OrderDetails.objects.get(id=1)
     categories = Category.objects.all()
->>>>>>> 0f69753028b9c9adeebf52de437d7173bc6e6c0f
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
         if form.is_valid():

@@ -53,14 +53,8 @@ class OrderDetails(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     month=models.PositiveIntegerField(default=0)
     year=models.PositiveIntegerField(default=0)
-<<<<<<< HEAD
-    price = models.PositiveIntegerField(default=0)
-    description= models.CharField(max_length=50)
-
-=======
     date = models.DateTimeField(auto_now_add=True)
     
->>>>>>> 0f69753028b9c9adeebf52de437d7173bc6e6c0f
     def __str__(self):
         return self.product.name
 
