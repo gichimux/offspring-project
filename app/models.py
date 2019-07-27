@@ -67,7 +67,7 @@ class House_product for the products in particular house
 '''
 
 class House_Product(models.Model):
-    name = models.ForeignKey(Product)
+    name = models.ForeignKey(Product,blank=False,null=False)
     sKU = models.CharField(max_length= 10,default='I')
     category = models.ForeignKey(Category,default='Toys')
     warehouse = models.ForeignKey('Distributor',default=1)
@@ -107,7 +107,7 @@ class Order_Product(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.product + ''+self.quantity
+        return self.product.name 
     def year(self):
         return self.date.strftime('%Y')
 
@@ -127,7 +127,6 @@ class Customer_order(models.Model):
     warehouse = models.ForeignKey('Distributor',default=1)
     customer = models.ForeignKey('Customer',default=0)
     quantity =models.PositiveIntegerField(default=0)
-    discount = models.PositiveIntegerField(default=0)
     total_price = models.PositiveIntegerField(default=0)
     month= models.PositiveIntegerField(default=0)
     year= models.PositiveIntegerField(default=0)
@@ -147,4 +146,6 @@ class Customer(models.Model):
 
 class Invoice(models.Model):
     order = models.ForeignKey('Customer_order',default='000')
-    
+    date = models.DateTimeField(auto_now=True)
+
+   

@@ -79,6 +79,7 @@ class CustomerOrder(forms.ModelForm):
         model = Customer_order
         exclude = ['month','date','year','total_price']
 
-class Invoicing(forms.Form):
+class Invoicing(forms.ModelForm):
     class Meta:
-        fields = ['SKU']
+        model = Invoice
+        exclude = ['date']
