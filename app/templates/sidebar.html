@@ -1,0 +1,61 @@
+ 
+ <!-- Sidebar  -->
+        <nav id="sidebar"><br>
+            <div class="sidebar-header" id="header">
+            <p class="text-center"><i class="lni-dashboard" id="child"><br>Admin dashboard</i></p>
+                <h3>Offspring IMS</h3>
+                <strong>IMS</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="{% url 'inventory'%}" data-toggle="collapse" aria-expanded="false">
+                        <i class="fa fa-boxes"></i>
+                        Stock Management
+                    </a>
+                   
+                </li>
+                <li>
+                    <a href="{% url 'supplier'%}">
+                        <i class="fas fa-parachute-box"></i>
+                        Supplier Management
+                    </a>
+            </li>
+            <li>
+                     <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Order Management
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+                 <li>
+                    <a href="#">
+                        <i class="fas fa-warehouse"></i>
+                        Product Tracking
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-chart-line"></i>
+                        Analytics
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                
+            </ul>
+
+        </nav>

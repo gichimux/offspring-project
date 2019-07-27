@@ -10,6 +10,7 @@ from django.core import serializers
 import json
 import datetime 
 
+
 '''
 View for pwa
 '''
@@ -22,7 +23,6 @@ View for the inventory page displaying categories
 of items in stock
 '''
 def inventory(request):
-    order=OrderDetails.objects.get(id=1)
     
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
@@ -231,7 +231,8 @@ view for transfer orders by month
 def transfer_order_month(request,m):
     
     orders = OrderDetails.objects.filter(month=m)
-    return render(request,'orders/transfers_by_month.html',{'orders':orders})
+    invoicing = OrderDetails.generate_invoice()
+    return render(request,'orders/transfers_by_month.html',{'orders':orders, 'invoicing':invoicing})
 
 '''
 view for single distributor orders
@@ -300,6 +301,10 @@ def product_analysis(request,id):
     return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
 
 
-'''
-Api views
-'''
+# def invoice(request):
+#     order = OrderDetails.objects.get(id=id)
+
+
+def test(request):
+
+    return render(request, 'dashboard/invoice.html', {})

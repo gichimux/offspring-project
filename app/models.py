@@ -1,7 +1,10 @@
+import os
+from tempfile import NamedTemporaryFile
 from django.db import models
 import datetime as dt
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from django.contrib.auth.models import User
+
 
 '''
 Class category for product categories
@@ -16,6 +19,11 @@ class Category(models.Model):
 '''
 class product for product in general stock
 '''
+# class Customer(models.Model):
+#     f_name = models.CharField(max_length=30)
+#     l_name = models.CharField(max_length=30)
+#     orders = models.ForeignKey(OrderDetails, on_delete=models.CASCADE)
+
 class Product(models.Model):
     name = models.CharField(max_length= 50,blank=False,null= False)
     sKU = models.CharField(max_length=40)
@@ -44,8 +52,9 @@ class OrderDetails(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     month=models.PositiveIntegerField(default=0)
     year=models.PositiveIntegerField(default=0)
-  
-    
+    price = models.PositiveIntegerField(default=0)
+    description= models.CharField(max_length=50)
+
     def __str__(self):
         return self.product.name
 
@@ -53,6 +62,9 @@ class OrderDetails(models.Model):
     def search_by_id(cls,search_id):
         product=cls.objects.filter(order_id__icontains=search_id)
         return 
+    
+    
+
 
     def year(self):
         return self.date.strftime('%Y')
@@ -125,3 +137,9 @@ class Distributor_sell(models.Model):
     
     def __str__(self):
         return self.warehouse + ''+self.quantity
+
+# class supplier_invoicing(models.Model):
+#     order = models.name = models.ForeignKey('OrderDetails', on_delete=models.CASCADE,blank=False,null=False)
+#     print_date = models.DateField(auto_now_add=True)
+#     due_date = models.DateField(auto_now_add=False)
+    
