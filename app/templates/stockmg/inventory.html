@@ -1,12 +1,14 @@
 {% extends 'base.html'%}
-{% load bootstrap3 %} {% load staticfiles %}
 {% load bootstrap4 %}
+{% load bootstrap3 %} {% load staticfiles %}
+
 {% block content %} 
 {{ block.super}}
 <html>
     <head>
             
-            
+            <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto+Condensed&display=swap" rel="stylesheet">
+      
      <style>
          button{
              float:right;
@@ -15,14 +17,19 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
+            border-top:20px solid rgb(5, 114, 141);
+            border-bottom:20px solid rgb(5, 114, 141);
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
             margin:10px;
             transition:0.9s;
-            padding-bottom:20px;
+            padding-bottom:10px;
 
          }
+        
+         
+         
          a{
              text-decoration: none;
              color:black;
@@ -34,7 +41,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
             margin:10px;
 
          }
-         .categories:hover a{
+          a:hover{
             
             text-decoration: none;
              color:black; 
@@ -43,26 +50,34 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
 
     </head>
     <body>
-            <h4 class=" alert text-center" style="color:red">{{messages}}</h4><br>
+           
         <div class="container">
+            <h5 style="color:red;font-family: 'Lobster', cursive;" class="text-center"><i>{{messages}}</i></h5>
+                {% if request.user.is_superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add new Category
                       </button>
-           
-            
-            
-           <h1 class="text-center">Categories</h1><hr>
+           {% endif %}
+           <h3 class="text-center">Categories</h3><hr>
            <div class="row">
             {% for category in categories %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
                     <a href="{% url 'category' category.id %}">
-                <div  style="border:1px solid white;padding:20px"class="categories">
-                <h3 class="text-center">{{category.name}}</h3></a><hr>
-                <p class="text-center" style="color:red">View</p>
-                <span  class="glyphicon glyphicon-shopping-cart"></span>
+
+                <div  style="padding:15px"class="categories">
+                   
+                    <p style="float:left">{{category.id}}</p>
+                <h5 class="text-center">{{category.name}}</h5><hr>
+                
+               
+                <p class="text-center" style="color:#50B9D3">View</p>
+                
+                
             </div>
+        </a>
             </div>
                 {% endfor %}
+                <span class="glyphicon glyphicon-mail"></span>
                 </div>
             
            
