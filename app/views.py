@@ -137,7 +137,7 @@ quantity of items under a category
 @login_required(login_url='/accounts/login/')
 def house_category(request,h_id,c_id):
     message = ''
-    products = House_Product.objects.filter(warehouse=h_id).filter(category=c_id)
+    products = House_Product.objects.filter(category=c_id).filter(warehouse=h_id)
     category = Category.objects.get(id=c_id)
     house = Distributor.objects.get(id=h_id)
     if request.method == 'POST':
@@ -168,8 +168,8 @@ products quantity within the distributor
 def add_house_product(request,h_id,i_id):
     message = ''
     house = Distributor.objects.get(id=h_id)
-    product = Product.objects.get(id=i_id)
-    to_update = House_Product.objects.filter(warehouse=h_id).get(name=product) 
+    to_update = House_Product.objects.filter(warehouse=h_id).get(id=i_id) 
+    product = Product.objects.get(name=to_update.name.name)
     if request.method == 'POST':
         form = AddHouseProd(request.POST, request.FILES)
         if form.is_valid():
@@ -192,6 +192,7 @@ def add_house_product(request,h_id,i_id):
                 return redirect(add_house_product,h_id,i_id)
     else:
         form =AddHouseProd()
+    print(to_update)
     return render(request,'distributor/item.html',{'message':message,'product':product,'house':house,'to_update':to_update,'form':form})
 
 '''
@@ -372,7 +373,7 @@ def customer_order(request):
             order.month = datetime.datetime.now().strftime ("%m")
             order.year = datetime.datetime.now().strftime ("%y")
             product = Product.objects.get(sKU=order.sKU)
-            order.total_price = product.price + product.tax - order.discount
+            order.total_price = order.quantity * product.unit_price
             to_subtract = House_Product.objects.filter(warehouse=order.warehouse).get(sKU=order.sKU)
             to_subtract.quantity=to_subtract.quantity - order.quantity
             to_subtract.save()
@@ -387,16 +388,33 @@ def customer_order(request):
 generating invoice
 '''
 @login_required(login_url='/accounts/login/')
-def customers_invoice(request):
+def generate_invoice(request):
     if request.method == 'POST':
         form = Invoicing(request.POST, request.FILES)
         if form.is_valid():
             invoice=form.save(commit=False)
-            products = Customer_order.objects.filter(sKU=invoice.SKU)
-            return redirect(customers_invoice)
-    form = Invoicing(request.POST, request.FILES)
+            invoice.save()
+            return redirect('customers_invoice',invoice.order.order_serial)
+    else:
+        form = Invoicing()
 
-    return render(request,'customer/invoice.html',{'form':form})
+    return render(request,'customer/generate_invoice.html',{'form':form})
+'''
+Invoice
+'''
+@login_required(login_url='/accounts/login/')
+def customers_invoice(request,serial):
+    orders = Customer_order.objects.filter(order_serial=serial)
+    orders_c = Customer_order.objects.filter(order_serial=serial)
+    for order in orders_c:
+        total=0
+        total = total+order.total_price
+        print(total)
+    
+   
+    
+    return render(request,'customer/invoice.html',{'orders':orders,'total':total})
+    
 
 
 '''
