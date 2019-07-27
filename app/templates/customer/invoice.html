@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 {% load bootstrap3 %} {% load staticfiles %}
 {% load bootstrap4 %}
+{% load mathfilters %}
 {% block content %} 
 {{ block.super}}
 
@@ -193,8 +194,8 @@
                         <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
                     </div>
                     <div class="col invoice-details">
-                        <h1 class="invoice-id">INVOICE 3-2-1</h1>
-                        <div class="date">Date of Invoice: 01/10/2018</div>
+                        <h1 class="invoice-id">INVOICE 0{{invoice.id}}</h1>
+                        <div class="date">Date of Invoice: {{invoice.date}}</div>
                         <div class="date">Due Date: 30/10/2018</div>
                     </div>
                 </div>
@@ -202,7 +203,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th class="text-left">DESCRIPTION</th>
+                            <th class="text-left">NAME</th>
                             <th class="text-right">ITEM PRICE</th>
                             <th class="text-right">QUANTITY</th>
                             <th class="text-right">TOTAL</th>
@@ -210,55 +211,34 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="no">04</td>
+                            {% for order in orders %}
+                            <td class="no">{{order.id}}</td>
                             <td class="text-left"><h3>
-                                <a target="_blank" href="https://www.youtube.com/channel/UC_UMEcP_kF0z4E6KbxCpV1w">
-                                item 1
-                                </a>
+                                {{order.product}}
                                 </h3>
-                              dimensions
+                             
                             </td>
-                            <td class="unit">$0.00</td>
-                            <td class="qty">100</td>
-                            <td class="total">$0.00</td>
+                            <td class="unit">{{order.product.name.unit_price}}</td>
+                            <td class="qty">{{order.quantity}}</td>
+                            <td class="total">{{order.total_price}}</td>
                         </tr>
-                        <tr>
-                            <td class="no">01</td>
-                            <td class="text-left"><h3>Item 2</h3>dimensions</td>
-                            <td class="unit">$40.00</td>
-                            <td class="qty">30</td>
-                            <td class="total">$1,200.00</td>
-                        </tr>
-                        <tr>
-                            <td class="no">02</td>
-                            <td class="text-left"><h3>Item 3</h3>Dimensions</td>
-                            <td class="unit">$40.00</td>
-                            <td class="qty">80</td>
-                            <td class="total">$3,200.00</td>
-                        </tr>
-                        <tr>
-                            <td class="no">03</td>
-                            <td class="text-left"><h3>Item 4</h3>Dimensions</td>
-                            <td class="unit">$40.00</td>
-                            <td class="qty">20</td>
-                            <td class="total">$800.00</td>
-                        </tr>
+                       {% endfor %}
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="2"></td>
                             <td colspan="2">SUBTOTAL</td>
-                            <td>$5,200.00</td>
+                            <td>{{total}}</td>
                         </tr>
                         <tr>
                             <td colspan="2"></td>
-                            <td colspan="2">TAX 25%</td>
-                            <td>$1,300.00</td>
+                            <td colspan="2">TAX {{order.tax}}</td>
+                           
                         </tr>
                         <tr>
                             <td colspan="2"></td>
                             <td colspan="2">GRAND TOTAL</td>
-                            <td>$6,500.00</td>
+                            <td>{{order.grand_total}}</td>
                         </tr>
                     </tfoot>
                 </table>
