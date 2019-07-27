@@ -48,3 +48,20 @@ class AddHouseProd(forms.ModelForm):
 
 class DateForm(forms.Form):
     day = forms.DateField(initial=datetime.date.today)
+
+
+'''
+form for new supplier
+'''
+class NewSupplier(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        exclude = []
+
+'''
+New distributor
+'''
+class NewDistributor(forms.ModelForm):
+    class Meta:
+        model = Distributor
+        exclude = []

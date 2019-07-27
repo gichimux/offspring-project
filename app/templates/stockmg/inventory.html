@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
-{% load bootstrap3 %} {% load staticfiles %}
 {% load bootstrap4 %}
+{% load bootstrap3 %} {% load staticfiles %}
+
 {% block content %} 
 {{ block.super}}
 <html>
@@ -15,14 +16,18 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
+            border-top:50px solid #50B9D3;
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
             margin:10px;
             transition:0.9s;
-            padding-bottom:20px;
+            padding-bottom:10px;
 
          }
+        
+         
+         
          a{
              text-decoration: none;
              color:black;
@@ -34,7 +39,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
             margin:10px;
 
          }
-         .categories:hover a{
+          a:hover{
             
             text-decoration: none;
              color:black; 
@@ -43,25 +48,35 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
 
     </head>
     <body>
+<<<<<<< HEAD
     <a href="{% url 'invoice'%}">print</a>
             <h4 class=" alert text-center" style="color:red">{{messages}}</h4><br>
+=======
+           
+>>>>>>> 0f69753028b9c9adeebf52de437d7173bc6e6c0f
         <div class="container">
+                {% if request.user == superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add new Category
                       </button>
-           
-            
-            
+           {% endif %}
            <h1 class="text-center">Categories</h1><hr>
            <div class="row">
             {% for category in categories %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
                     <a href="{% url 'category' category.id %}">
-                <div  style="border:1px solid white;padding:20px"class="categories">
-                <h3 class="text-center">{{category.name}}</h3></a><hr>
-                <p class="text-center" style="color:red">View</p>
-                <span  class="glyphicon glyphicon-shopping-cart"></span>
+
+                <div  style="padding:15px"class="categories">
+                   
+                    <p style="float:left">{{category.id}}</p>
+                <h3 class="text-center">{{category.name}}</h3><hr>
+                
+               
+                <p class="text-center" style="color:#50B9D3">View</p>
+                
+                
             </div>
+        </a>
             </div>
                 {% endfor %}
                 </div>

@@ -3,14 +3,32 @@
 {% block content %} 
 {{ block.super}}
 
+<style>
+    .supplier{
+        border:1px solid rgb(218, 216, 216);
+        padding:10px;
+        padding-bottom:20px;
+
+    }
+</style>
+
 <div class='container'>
 <h1>{{supplier.name}}</h1><hr><br>
 <div class="row">
     <div class="col-md-4 col-sm-4 col-lg-4">
-        
+        <div class="supplier">
+        <h4>Product: <b>{{supplier.product}}</b></h4>
+        <h5>Contact: <b>{{supplier.contact}}</b></h5>
+        </div>
     </div>
     <div class="col-md-8 col-sm-8 col-lg-8">
-        
+        {% for order in orders %}
+        <div class="orders">
+        <p>{{order.product}}</p>
+        <p>{{order.quantity}}</p>
+        </div>
+        <hr>
+        {% endfor %}
         </div>
 </div>
 </div>

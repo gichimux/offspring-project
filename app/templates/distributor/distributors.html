@@ -12,6 +12,7 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
+            border-top:50px solid #50B9D3;
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
@@ -39,18 +40,48 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
 </style>
 
 <div class="container">
+        {% if request.user == superuser %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                Add new Distributor
+              </button>
+   {% endif %}
     <h2 class="text-center">Distributors</h2>
-    <hr><hr><br>
+    <hr><br>
         <div class="row">
 {% for house in houses %}
 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
         <a href="{% url 'single_house' house.id %}">
-        <div  style="border:1px solid white;padding:20px"class="categories">
+        <div  style="padding:15px"class="categories">
 <h3 class="text-center">{{house.name}}</h3><hr>
-<p style="color:red"class="text-center">View</p>
+<h4 style="color:orange" class="text-center">{{house.location}}</h4>
+<p style="color:#50B9D3"class="text-center">View</p>
 </div></a>
 </div>
 {% endfor %}
+</div>
+</div>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+            <div class="modal-header">
+                <h3>New</h3>  
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                
+                </div>  
+                <div class="modal-body">    
+{{form.media}}
+<form  action="{% url 'distributors' %}" method="post" enctype="multipart/form-data">
+{%csrf_token%}
+
+{% bootstrap_form form%}
+<input type="submit" class="btn btn-success btn-lg" value="Post">
+</form>
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% bootstrap_javascript %} {% endblock %}
+</div>
+</div>
 </div>
 </div>
 {% endblock %}
