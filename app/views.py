@@ -29,7 +29,7 @@ of items in stock
 '''
 @login_required(login_url='/accounts/login/')
 def inventory(request):
-    messages=''
+    messages=None
     categories = Category.objects.all()
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
@@ -48,7 +48,7 @@ def inventory(request):
             print(messages)
            
         else:
-            messages = ''
+            messages = None
     
     
 
@@ -136,7 +136,7 @@ quantity of items under a category
 '''
 @login_required(login_url='/accounts/login/')
 def house_category(request,h_id,c_id):
-    message = ''
+    message = None
     products = House_Product.objects.filter(category=c_id).filter(warehouse=h_id)
     category = Category.objects.get(id=c_id)
     house = Distributor.objects.get(id=h_id)
@@ -151,6 +151,7 @@ def house_category(request,h_id,c_id):
             except ObjectDoesNotExist:
                 item.warehouse=house
                 item.category=category
+                
                 item.save()
                 return redirect(house_category,h_id,c_id)
     else:
@@ -166,7 +167,7 @@ products quantity within the distributor
 
 @login_required(login_url='/accounts/login/')
 def add_house_product(request,h_id,i_id):
-    message = ''
+    message = None
     house = Distributor.objects.get(id=h_id)
     to_update = House_Product.objects.filter(warehouse=h_id).get(id=i_id) 
     product = Product.objects.get(name=to_update.name.name)
@@ -188,11 +189,11 @@ def add_house_product(request,h_id,i_id):
                 item.save()
                 prod_add.save()
                 prod.save()
-                message = ''
+                message = None
                 return redirect(add_house_product,h_id,i_id)
     else:
         form =AddHouseProd()
-    print(to_update)
+    
     return render(request,'distributor/item.html',{'message':message,'product':product,'house':house,'to_update':to_update,'form':form})
 
 '''
@@ -365,9 +366,9 @@ Customer order processing
 
 @login_required(login_url='/accounts/login/')
 def customer_order(request):
-    message1=''
-    message2=''
-    message3=''
+    message1=None
+    message2=None
+    message3=None
     orders = Customer_order.objects.order_by('-date').all()
     if request.method == 'POST':
         form = CustomerOrder(request.POST, request.FILES)

@@ -52,6 +52,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     </head>
     <body>
         <div class="container">
+                
             {% if request.user.is_superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add product in category
@@ -78,7 +79,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
               </div>
              
               <div class="col-md-2 col-lg-2 col-sm-2">
-                <p>Price</p>
+                <p>Quantity</p>
                 <b>{{product.quantity}}</b>
               </div>
              

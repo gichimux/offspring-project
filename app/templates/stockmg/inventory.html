@@ -52,7 +52,13 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     <body>
            
         <div class="container">
-            <h5 style="color:red;font-family: 'Lobster', cursive;" class="text-center"><i>{{messages}}</i></h5>
+            {% if message is None %}
+            {% else %}
+                <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p style="" class="text-center">{{messages}}</p>
+                    </div>
+                    {% endif %}
                 {% if request.user.is_superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add new Category

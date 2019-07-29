@@ -17,6 +17,13 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
     }
 </style>
 <div class="container">
+  {% if message is None %}
+  {% else %}
+    <div class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <p style="color:red;" class="text-center">{{message}}</p>
+    </div>
+    {% endif %}
     {% if request.user.is_superuser %}
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
         Add quantity

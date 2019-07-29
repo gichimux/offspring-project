@@ -139,7 +139,7 @@ class Customer_order(models.Model):
 class Customer(models.Model):
     name = models.CharField(max_length= 10)
     contact = models.CharField(max_length= 10)
-    email = models.CharField(max_length= 20,default='email@example.com')
+    email = models.CharField(max_length= 30,default='email@example.com')
 
     def __str__(self):
         return self.name 
