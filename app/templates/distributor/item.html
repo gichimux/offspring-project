@@ -30,7 +30,7 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
         <p>SKU</p>
         <b>{{to_update.sKU}}</b>
       </div>
-      <div class="col-md-3 col-lg-3 col-sm-3">
+      <div class="col-md-2 col-lg-2 col-sm-2">
         <p>Description</p>
         <b>{{to_update.name.description}}</b>
       </div>
@@ -46,6 +46,14 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
         <p>Quantity</p>
         <b>{{to_update.quantity}}</b> 
        
+      </div>
+      <div class="col-md-2 col-lg-2 col-sm-2">
+        <p>Size</p>
+        {% if to_update.name.size %}
+       <b>{{to_update.name.size}}</b> 
+        {% else %}
+        <p>-</p> 
+       {% endif %}
       </div><hr>
      
    </div>

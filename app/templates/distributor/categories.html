@@ -39,7 +39,15 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
          }
          .detail{
              font-size:15px;
+             border:1px solid green;
+             border-radius:3px;
+             padding:5px;
          }
+         .invoice table th {
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: 16px
+}
             </style>
     </head>
     <body>
@@ -76,7 +84,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
              
             
             <div class="col-md-2 col-lg-3 col-sm-3">
-            <span class="detail"><a href="{% url 'add_house_product' house.id product.id %}">View</a></span>
+                <a href="{% url 'add_house_product' house.id product.id %}"><span class="detail">View</span></a>
              
             </div>
            
@@ -84,6 +92,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
                 
            
                 {% endfor %}
+               
               </div>
         </div>
         <div class="modal fade" id="myModal">

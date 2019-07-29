@@ -30,7 +30,7 @@ urlpatterns=[
 
  url(r'^customer$',views.all_customers,name="customers"),
  url(r'^customer/order$',views.customer_order,name="customer_orders"),
- url(r'^invoice/(\w+)$',views.customers_invoice,name="customers_invoice"),
+ url(r'^invoice/(\w+)/(\d+)$',views.customers_invoice,name="customers_invoice"),
  url(r'^new/invoice$',views.generate_invoice,name="generate_invoice"),
 
 

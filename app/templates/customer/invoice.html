@@ -1,9 +1,9 @@
-{% extends 'base.html'%}
+
 {% load bootstrap3 %} {% load staticfiles %}
 {% load bootstrap4 %}
 {% load mathfilters %}
 {% block content %} 
-{{ block.super}}
+
 
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -145,6 +145,9 @@
         page-break-before: always
     }
 }
+a{
+    text-decoration:none
+}
  </style>   
 
 </head>
@@ -170,7 +173,7 @@
                 <div class="row">
                     <div class="col">
                         <a target="_blank" href="#">
-                            <img src="http://lobianijs.com/lobiadmin/version/1.0/ajax/img/logo/lobiadmin-logo-text-64.png" data-holder-rendered="true" />
+                            <img src="https://offspring.co.ke/wp-content/uploads/2019/01/logo1.png" alt="For All Your Parenting Needs" class="logo-default" margin-right="20" width="220" height="98">
                             </a>
                     </div>
                     <div class="col company-details">
@@ -189,14 +192,14 @@
                 <div class="row contacts">
                     <div class="col invoice-to">
                         <div class="text-gray-light">INVOICE TO:</div>
-                        <h2 class="to">John Doe</h2>
-                        <div class="address">796 Silver Harbour, TX 79273, US</div>
-                        <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
+                        <h2 class="to">{{invoice.order.customer.name}}</h2>
+                        <div class="address">{{invoice.order.customer.contact}}</div>
+                        <div class="email"><a href="mailto:john@example.com">{{invoice.order.customer.email}}</a></div>
                     </div>
                     <div class="col invoice-details">
-                        <h1 class="invoice-id">INVOICE 0{{invoice.id}}</h1>
+                        <h1 class="invoice-id">INVOICE: {{invoice.order.order_serial}}</h1>
                         <div class="date">Date of Invoice: {{invoice.date}}</div>
-                        <div class="date">Due Date: 30/10/2018</div>
+                       
                     </div>
                 </div>
                 <table border="0" cellspacing="0" cellpadding="0">
@@ -233,12 +236,13 @@
                         <tr>
                             <td colspan="2"></td>
                             <td colspan="2">TAX {{order.tax}}</td>
+                            <td>0</td>
                            
                         </tr>
                         <tr>
                             <td colspan="2"></td>
                             <td colspan="2">GRAND TOTAL</td>
-                            <td>{{order.grand_total}}</td>
+                            <td>{{total | sub:0}}</td>
                         </tr>
                     </tfoot>
                 </table>

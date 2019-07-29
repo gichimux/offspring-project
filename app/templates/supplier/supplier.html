@@ -13,15 +13,17 @@
 </style>
 
 <div class='container'>
-<h1>{{supplier.name}}</h1><hr><br>
+<h3 class="text-center">{{supplier.name}}</h3><hr><br>
 <div class="row">
-    <div class="col-md-4 col-sm-4 col-lg-4">
-        <div class="supplier">
-        <h4>Product: <b>{{supplier.product}}</b></h4>
-        <h5>Contact: <b>{{supplier.contact}}</b></h5>
-        </div>
+    <div class="col-md-3 col-sm-3 col-lg-3">
+        
+        <p>Product: <b>{{supplier.product}}</b></p><hr>
+        <p>Contact: <b>{{supplier.contact}}</b></p><hr>
+        <p>Email: <b>{{supplier.email}}</b></p><hr>
+        <div class="email"><a style="color:blue;"href="mailto:{{supplier.email}}">Make an order</a></div>
     </div>
-    <div class="col-md-8 col-sm-8 col-lg-8">
+    <div class="col-md-9 col-sm-9 col-lg-9">
+       
         {% for order in orders %}
         <div class="orders">
         <p>{{order.product}}</p>

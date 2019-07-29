@@ -29,7 +29,7 @@ of items in stock
 '''
 @login_required(login_url='/accounts/login/')
 def inventory(request):
-    order=OrderDetails.objects.get(id=1)
+    messages=''
     categories = Category.objects.all()
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
@@ -52,7 +52,7 @@ def inventory(request):
     
     
 
-    return render(request, 'stockmg/inventory.html', {'form':form,'messages':messages,'product':product,'categories':categories})
+    return render(request, 'stockmg/inventory.html', {'form':form,'messages':messages,'categories':categories})
 
 
 '''
@@ -152,7 +152,7 @@ def house_category(request,h_id,c_id):
                 item.warehouse=house
                 item.category=category
                 item.save()
-                return redirect(inventory)
+                return redirect(house_category,h_id,c_id)
     else:
         form =NewHouseProd()
     
@@ -365,6 +365,9 @@ Customer order processing
 
 @login_required(login_url='/accounts/login/')
 def customer_order(request):
+    message1=''
+    message2=''
+    message3=''
     orders = Customer_order.objects.order_by('-date').all()
     if request.method == 'POST':
         form = CustomerOrder(request.POST, request.FILES)
@@ -372,38 +375,51 @@ def customer_order(request):
             order=form.save(commit=False)
             order.month = datetime.datetime.now().strftime ("%m")
             order.year = datetime.datetime.now().strftime ("%y")
-            product = Product.objects.get(sKU=order.sKU)
-            order.total_price = order.quantity * product.unit_price
-            to_subtract = House_Product.objects.filter(warehouse=order.warehouse).get(sKU=order.sKU)
-            to_subtract.quantity=to_subtract.quantity - order.quantity
-            to_subtract.save()
-            order.save()
-            return redirect(customer_order)
+            try:
+                product = Product.objects.get(sKU=order.sKU)
+                order.total_price = order.quantity * product.unit_price
+            except ObjectDoesNotExist:
+                message3='Make sure you input the SKU correctly'
+
+            try:
+                to_subtract = House_Product.objects.filter(warehouse=order.warehouse).get(sKU=order.sKU)
+                if order.quantity<to_subtract:
+                    message2 = 'The amount of product in this warehouse is not enough'
+                else:
+                    to_subtract.quantity=to_subtract.quantity - order.quantity
+                    to_subtract.save()
+                    order.save()
+                    return redirect(customer_order)
+            except ObjectDoesNotExist:
+                message1='The prduct does not exist in that warehouse'
+            
     else:
         form =CustomerOrder()
     
-    return render(request,'customer/customers_order.html',{'orders':orders,'form':form})
+    return render(request,'customer/customers_order.html',{'orders':orders,'form':form,'message1':message1,'message2':message2,'message3':message3})
 
 '''
 generating invoice
 '''
 @login_required(login_url='/accounts/login/')
 def generate_invoice(request):
+    invoices=Invoice.objects.order_by('-date').all()
     if request.method == 'POST':
         form = Invoicing(request.POST, request.FILES)
         if form.is_valid():
             invoice=form.save(commit=False)
             invoice.save()
-            return redirect('customers_invoice',invoice.order.order_serial)
+            return redirect('customers_invoice',invoice.order.order_serial,invoice.id)
     else:
         form = Invoicing()
 
-    return render(request,'customer/generate_invoice.html',{'form':form})
+    return render(request,'customer/generate_invoice.html',{'form':form,'invoices':invoices})
 '''
 Invoice
 '''
 @login_required(login_url='/accounts/login/')
-def customers_invoice(request,serial):
+def customers_invoice(request,serial,id):
+    invoice = Invoice.objects.get(id=id)
     orders = Customer_order.objects.filter(order_serial=serial)
     orders_c = Customer_order.objects.filter(order_serial=serial)
     for order in orders_c:
@@ -412,8 +428,7 @@ def customers_invoice(request,serial):
         print(total)
     
    
-    
-    return render(request,'customer/invoice.html',{'orders':orders,'total':total})
+    return render(request,'customer/invoice.html',{'orders':orders,'total':total,'invoice':invoice})
     
 
 

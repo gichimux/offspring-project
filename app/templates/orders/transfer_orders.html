@@ -51,13 +51,14 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
            
             
             
-           <h1 class="text-center">All distributors</h1><hr>
+           <h3 class="text-center">All distributors</h3><hr>
            <div class="row">
             {% for distributor in distributors %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
                     <a href="{% url 'dis_transfer_ord' distributor.id %}">
                 <div  style="padding:15px"class="categories">
-                <h3 class="text-center">{{distributor.name}}</h3><hr>
+                <h4 class="text-center">{{distributor.name}}</h4><hr>
+                <p style="color:orange"class="text-center">{{distributor.location}}</p>
                 <p class="text-center" style="color:#50B9D3;">View</p>
                 <span  class="glyphicon glyphicon-shopping-cart"></span>
             </div></a>

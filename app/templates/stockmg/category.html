@@ -38,7 +38,10 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
              color:green; 
          }
          .detail{
-             font-size:20px;
+             font-size:15px;
+             border:1px solid green;
+             border-radius:3px;
+             padding:5px;
          }
             </style>
     </head>
@@ -57,24 +60,28 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
             {% for product in products %}
            
            
-                <div class="col-md-3 col-lg-3 col-sm-3">
-            <span class="detail"><b>{{product.sKU}}</b></span>
-            <hr>
-            </div>
-           
-            <div class="col-md-3 col-lg-3 col-sm-3">
-            <span class="detail">{{product.name}}</span>
-            <hr>
-            </div>
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <p>SKU</p>
+                <b>{{product.sKU}}</b>
+              </div>
+              <div class="col-md-3 col-lg-3 col-sm-3">
+                <p>Name</p>
+                <b>{{product.name}}</b>
+              </div>
+              <div class="col-md-3 col-lg-2 col-sm-2">
+                <p>Description</p>
+                <b>{{product.description}}</b>
+              </div>
+             
+              <div class="col-md-2 col-lg-2 col-sm-2">
+                <p>Price</p>
+                <b>{{product.quantity}}</b>
+              </div>
+             
             
-            <div class="col-md-3 col-lg-3 col-sm-3">
-            <span class="detail">{{product.quantity}}</span>
-            <hr>
-            </div>
-            
-            <div class="col-md-3 col-lg-3 col-sm-3">
-            <span class="detail"><a href="{% url 'stock_product' product.id %}">View</a></span>
-             <hr>
+            <div class="col-md-2 col-lg-3 col-sm-3">
+                <a href="{% url 'stock_product' product.id %}"><span class="detail">View</span></a>
+             
             </div>
            
               <hr><hr>
