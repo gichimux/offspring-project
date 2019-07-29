@@ -28,8 +28,8 @@ View for the inventory page displaying categories
 of items in stock
 '''
 @login_required(login_url='/accounts/login/')
-def inventory(request):
-    order=OrderDetails.objects.get(id=1)
+def inventory(request,order_id):
+    order=OrderDetails.objects.get(id=order_id)
     categories = Category.objects.all()
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
