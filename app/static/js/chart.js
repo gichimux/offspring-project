@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         series: [{
             name: 'January',
-            data: [1, 0, 4, 5, 0, 6, 7]
+            data: [1, 0, 1, 1, 0, 0, -7]
         }, {
             name: 'February',
             data: [5, 7, 3, 6, 9, 3, 5]

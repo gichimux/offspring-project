@@ -43,8 +43,11 @@ class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.PositiveIntegerField(default=0)
-    month=models.PositiveIntegerField(default=0)
-    year=models.PositiveIntegerField(default=0)
+    created_at= models.DateTimeField(auto_now_add=True)
+    time=models.DateTimeField(null=True)
+
+    # month=models.PositiveIntegerField(default=0)
+    # year=models.PositiveIntegerField(default=0)
   
     
     def __str__(self):
@@ -131,4 +134,4 @@ class Prediction(models.Model):
     item_name = models.CharField(max_length= 50)
     x = models.IntegerField(null= True)
     y = models.IntegerField(null=True)
-    objects = CopyManager()
+  

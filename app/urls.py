@@ -27,6 +27,7 @@ urlpatterns=[
 #  url(r'^invoice$',views.invoice,name='invoice'),
 
  url(r'^analysis$',views.full_stock,name='analysis'),
+ url(r'^csv$',views.xss,name='csv'),
  url(r'^analysis/category/(\d+)$',views.full_category,name='category_analysis'),
  url(r'^analysis/category/product/(\d+)$',views.product_analysis,name="stock_product_analysis"),  
 ]

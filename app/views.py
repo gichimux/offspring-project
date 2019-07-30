@@ -306,3 +306,13 @@ def product_analysis(request,id):
 '''
 Api views
 '''
+
+def xss(request):
+    import csv
+    from django.http import JsonResponse
+    from django.conf import settings
+    path=settings.BASE_DIR+"/app/data/combined.csv"
+    with open(path,"r") as infile:
+        data=csv.DictReader(infile)
+        x=[dict(i) for i in data]
+    return JsonResponse({"data":x})
