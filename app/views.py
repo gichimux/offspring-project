@@ -384,7 +384,7 @@ def customer_order(request):
 
             try:
                 to_subtract = House_Product.objects.filter(warehouse=order.warehouse).get(sKU=order.sKU)
-                if order.quantity<to_subtract:
+                if order.quantity > to_subtract.quantity:
                     message2 = 'The amount of product in this warehouse is not enough'
                 else:
                     to_subtract.quantity=to_subtract.quantity - order.quantity
@@ -423,12 +423,11 @@ def customers_invoice(request,serial,id):
     invoice = Invoice.objects.get(id=id)
     orders = Customer_order.objects.filter(order_serial=serial)
     orders_c = Customer_order.objects.filter(order_serial=serial)
+    lst=[]
     for order in orders_c:
-        total=0
-        total = total+order.total_price
-        print(total)
+        lst.append(order.total_price)
+        total=sum(lst)
     
-   
     return render(request,'customer/invoice.html',{'orders':orders,'total':total,'invoice':invoice})
     
 

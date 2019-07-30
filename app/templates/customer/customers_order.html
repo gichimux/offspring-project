@@ -48,9 +48,27 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     <body>
            
         <div class="container">
-            <h5 style="color:red;font-family: 'Lobster', cursive;" class="text-center"><i>{{message1}}</i></h5>
-            <h5 style="color:red;font-family: 'Lobster', cursive;" class="text-center"><i>{{message2}}</i></h5>
-            <h5 style="color:red;font-family: 'Lobster', cursive;" class="text-center"><i>{{message3}}</i></h5>
+            {% if message1 is None %}
+            {% else %}
+                <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p  class="text-center">{{message1}}</p>
+            </div>
+            {% endif %}
+            {% if message2 is None %}
+            {% else %}
+            <div class="alert alert-warning alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p  class="text-center">{{message2}}</p>
+            </div>
+            {% endif %}
+            {% if message3 is None %}
+            {% else %}
+            <div class="alert alert-warning alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p  class="text-center">{{message3}}</p>
+            </div>
+            {% endif %}
                 {% if request.user.is_superuser %}
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
             Process order
