@@ -17,12 +17,15 @@ def base_layout(request):
 	template='base.html'
 	return render(request,template)
 
+def test(request):
+    return render(request, 'dashboard/index.html')
+
 '''
 View for the inventory page displaying categories
 of items in stock
 '''
 def inventory(request):
-    order=OrderDetails.objects.get(id=1)
+    # order=OrderDetails.objects.get(id=1)
     
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
