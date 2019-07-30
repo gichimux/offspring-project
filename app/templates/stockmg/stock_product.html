@@ -17,16 +17,18 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
     }
 </style>
 <div class="container">
-  
+    {% if request.user.is_superuser %}
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
         Add quantity
-      </button><br>
+      </button>
+      {% endif %}
+      <br>
       <h2 class="text-center">{{to_add.name}} </h2>
-      <hr><hr><br>
+      <hr><br>
       <div class="row">
       <div class="col-md-2 col-lg-2 col-sm-2">
         <p>SKU</p>
-        <b>_{{to_add.sKu}}</b>
+        <b>{{to_add.sKU}}</b>
       </div>
       <div class="col-md-3 col-lg-3 col-sm-3">
         <p>Description</p>
@@ -38,12 +40,12 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
       </div>
       <div class="col-md-2 col-lg-2 col-sm-2">
         <p>colour</p>
-        <b>_{{to_add.product_colour}}</b>
+        <b>{{to_add.product_color}}</b>
       </div>
       <div class="col-md-2 col-lg-2 col-sm-2">
         <p>Quantity</p>
         <b>{{to_add.quantity}}</b> 
-      </div>
+      </div><hr>
      
    </div>
 </div>

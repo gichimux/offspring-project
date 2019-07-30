@@ -9,7 +9,9 @@ admin.site.register(OrderDetails)
 admin.site.register(House_Product)
 admin.site.register(Supplier)
 admin.site.register(Order_Product)
-admin.site.register(Distributor_sell)
+admin.site.register(Customer_order)
+admin.site.register(Customer)
+admin.site.register(Invoice)
 
 admin.site.site_header = "Offspring";
 admin.site.site_title = "Offspring Inventory ";

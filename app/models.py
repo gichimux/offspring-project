@@ -23,10 +23,13 @@ class Product(models.Model):
     description = models.CharField(max_length=200)
     product_color = models.CharField(max_length=50,blank=False)
     quantity = models.PositiveIntegerField(default=0)
+    unit_price = models.PositiveIntegerField(default=0)
+    unit_tax = models.PositiveIntegerField(default=0)
     size = models.CharField(max_length=50,blank=False)
     category=models.ForeignKey(Category,on_delete=models.CASCADE) 
+    
     def __str__(self):
-        return self.name
+        return self.name + '-'+ self.sKU
 
 '''
 class distributor for the different product distributors
@@ -43,12 +46,18 @@ class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.PositiveIntegerField(default=0)
+<<<<<<< HEAD
     created_at= models.DateTimeField(auto_now_add=True)
     time=models.DateTimeField(null=True)
 
     # month=models.PositiveIntegerField(default=0)
     # year=models.PositiveIntegerField(default=0)
   
+=======
+    month=models.PositiveIntegerField(default=0)
+    year=models.PositiveIntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
+>>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
     
     def __str__(self):
         return self.product.name
@@ -68,7 +77,7 @@ class House_product for the products in particular house
 '''
 
 class House_Product(models.Model):
-    name = models.ForeignKey(Product)
+    name = models.ForeignKey(Product,blank=False,null=False)
     sKU = models.CharField(max_length= 10,default='I')
     category = models.ForeignKey(Category,default='Toys')
     warehouse = models.ForeignKey('Distributor',default=1)
@@ -78,8 +87,9 @@ class House_Product(models.Model):
     def search_by_serial(cls,search_serial):
         products=cls.objects.filter(serial__icontains=search_serial)
         return products
+
     def __str__(self):
-        return self.name.name
+        return self.name.name + '-' + self.sKU
 
 '''
 class for the product suppliers
@@ -104,9 +114,10 @@ class Order_Product(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     month= models.PositiveIntegerField(default=0)
     year= models.PositiveIntegerField(default=0)
-    
+    date = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return self.product + ''+self.quantity
+        return self.product.name 
     def year(self):
         return self.date.strftime('%Y')
 
@@ -119,15 +130,20 @@ class to update items quantity when sold by a specific
 distributor
 '''
 
-class Distributor_sell(models.Model):
-    product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
+class Customer_order(models.Model):
+    product=models.ForeignKey(House_Product,on_delete=models.CASCADE,blank=False,null=False)
+    order_serial = models.CharField(max_length= 10)
     sKU = models.CharField(max_length= 10)
     warehouse = models.ForeignKey('Distributor',default=1)
+    customer = models.ForeignKey('Customer',default=0)
     quantity =models.PositiveIntegerField(default=0)
+    total_price = models.PositiveIntegerField(default=0)
     month= models.PositiveIntegerField(default=0)
     year= models.PositiveIntegerField(default=0)
-    
+    date = models.DateTimeField(auto_now=True)
+
     def __str__(self):
+<<<<<<< HEAD
         return self.warehouse + ''+self.quantity
 
 class Prediction(models.Model):
@@ -135,3 +151,21 @@ class Prediction(models.Model):
     x = models.IntegerField(null= True)
     y = models.IntegerField(null=True)
   
+=======
+        return self.order_serial
+
+
+class Customer(models.Model):
+    name = models.CharField(max_length= 10)
+    contact = models.CharField(max_length= 10)
+    email = models.CharField(max_length= 30,default='email@example.com')
+
+    def __str__(self):
+        return self.name 
+
+class Invoice(models.Model):
+    order = models.ForeignKey('Customer_order',default='000')
+    date = models.DateTimeField(auto_now=True)
+
+   
+>>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a

@@ -12,7 +12,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet"> 
+<<<<<<< HEAD
   {% comment %} {% progressive_web_app_meta %} {% endcomment %}
+=======
+  
+>>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
   {% block styles %}
   
             
@@ -27,37 +31,37 @@
 </head>
 
 <body>
-<div style="background-color:black;padding:20px;border-radius:0;margin:o" class="jumbotron"></div>
+<div  class="jumbotron">
+  <span class="text-center"><h6><b>O</b>ffspring IMS</h6>
+  <h6 style="float:right">{{request.user.username}} logged in</h6><br></span>
+</div>
 <div id="mySidenav" class="sidenav">
-  <h1 class="text-center" style="color:white"><b>O</b>ffspring </h1>
+   <h1><b>O</b>ffspring</h1>
+   </h1>    
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="/">Inventory</a>
   <a href="{% url 'suppliers' %}">Suppliers</a>
 
   <a href="{% url 'distributors' %}">Distributors</a>
  
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Orders
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li class="dropdown-header">Orders</li>
-      <li><a  href="{% url 'supply_orders' %}">Supplied orders</a></li>
-      <li><a href="{% url 'transfer_orders'  %}">Distributor orders</a></li>
-    </ul>
-  </div>
+  <a href="{% url 'orders' %}">Orders</a>
+  <a href="{% url 'customers' %}">Customers</a>
+  <a href="{% url 'generate_invoice' %}">Invoice</a>
   <a href="{% url 'analysis' %}">Analysis</a>
 </div>
 
-<div id="main">
+<div id="main" style="margin-left:180px">
     <span style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776;</span>
+    <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
+    
     {% block content %}{%endblock%}
   
 </div>
 
 <script>
 function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
+  document.getElementById("mySidenav").style.width = "200px";
+  document.getElementById("main").style.marginLeft = "200px";
 }
 
 function closeNav() {
@@ -75,6 +79,21 @@ function closeNav() {
     {% endblock %}
    
     <style>
+      .jumbotron{
+        background-color: rgb(5, 114, 141);
+        padding:10px;
+        color:white;
+        border-radius:0;
+        margin:0;
+       
+      }
+      .jumbotron h4{
+        margin-top:0
+      }
+      .jumbotron h6{
+        margin:0
+      }
+
       .dropdown{
         align-content: center;
       }
@@ -89,6 +108,7 @@ function closeNav() {
         #main {
         transition: margin-left .5s;
         padding: 16px;
+        background-color: whitesmoke;
       }
    
       body {
@@ -96,13 +116,15 @@ function closeNav() {
       }
       
       .sidenav {
+        
+
         height: 100%;
-        width: 0;
+        width: 210;
         position: fixed;
         z-index: 1;
         bottom: 0;
         left: 0;
-        background-color: rgb(5, 5, 5);
+        background-color:rgb(5, 114, 141);
         font-family: 'Roboto Condensed', sans-serif;
         overflow-x: hidden;
         transition: 0.5s;
@@ -116,6 +138,11 @@ function closeNav() {
         color: white;
         display: block;
         transition: 0.3s;
+      }
+      .sidenav h1{
+        padding: 8px 8px 8px 32px;
+        display: block;
+        color:white;
       }
       
       .sidenav a:hover {

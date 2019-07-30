@@ -52,3 +52,38 @@ class AddHouseProd(forms.ModelForm):
 
 class DateForm(forms.Form):
     day = forms.DateField(initial=datetime.date.today)
+
+
+'''
+form for new supplier
+'''
+class NewSupplier(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        exclude = []
+
+'''
+New distributor
+'''
+class NewDistributor(forms.ModelForm):
+    class Meta:
+        model = Distributor
+        exclude = []
+
+'''
+New customer
+'''
+class NewCustomer(forms.ModelForm):
+    class Meta:
+        model = Customer
+        exclude = []
+
+class CustomerOrder(forms.ModelForm):
+    class Meta:
+        model = Customer_order
+        exclude = ['month','date','year','total_price']
+
+class Invoicing(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        exclude = ['date']

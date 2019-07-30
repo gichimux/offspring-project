@@ -50,6 +50,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
 
     </head>
     <body>
+<<<<<<< HEAD
 
         <div class="container">
         <div class="card border-danger mb-3, text-center" style="max-width: 18rem;">
@@ -58,6 +59,17 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
             <p class="card-text">{{messages}}</p>
         </div>
         </div>
+=======
+           
+        <div class="container">
+            {% if message is None %}
+            {% else %}
+                <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <p style="" class="text-center">{{messages}}</p>
+                    </div>
+                    {% endif %}
+>>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
                 {% if request.user.is_superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add new Category

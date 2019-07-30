@@ -9,10 +9,16 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 import json
 import datetime 
+from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializer import *
+from rest_framework import status
 
 '''
 View for pwa
 '''
+@login_required(login_url='/accounts/login/')
 def base_layout(request):
 	template='base.html'
 	return render(request,template)
@@ -24,13 +30,19 @@ def test(request):
 View for the inventory page displaying categories
 of items in stock
 '''
+@login_required(login_url='/accounts/login/')
 def inventory(request):
+<<<<<<< HEAD
     # order=OrderDetails.objects.get(id=1)
     
+=======
+    messages=None
+    categories = Category.objects.all()
+>>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
         if form.is_valid():
-            
+            category=form.save(commit=False)
             category.save()
             return redirect(inventory)
     else:
@@ -44,18 +56,18 @@ def inventory(request):
             print(messages)
            
         else:
-            messages = ''
-    categories = Category.objects.all()
+            messages = None
+    
     
 
-    return render(request, 'stockmg/inventory.html', {'form':form,'messages':messages,'product':product,'categories':categories})
+    return render(request, 'stockmg/inventory.html', {'form':form,'messages':messages,'categories':categories})
 
 
 '''
 view for the single categories displaying
 items under a category
 '''
-
+@login_required(login_url='/accounts/login/')
 def stock_category(request,id):
     products = Product.objects.filter(category=id)
     category = Category.objects.get(id=id)
@@ -70,11 +82,12 @@ def stock_category(request,id):
         form =AddProduct()
     return render(request,'stockmg/category.html',{'products':products,'category':category,'form':form})
 
+
 '''
 view for Single stock product under the respective
 category
 '''
-
+@login_required(login_url='/accounts/login/')
 def stock_product(request,id):
     to_add = Product.objects.get(id=id)
     
@@ -100,14 +113,23 @@ views for distributors
 '''
 All distributors
 '''
+@login_required(login_url='/accounts/login/')
 def all_distributors(request):
     houses = Distributor.objects.all()
-    return render(request,'distributor/distributors.html',{'houses':houses})
+    if request.method == 'POST':
+        form = NewDistributor(request.POST, request.FILES)
+        if form.is_valid():
+            distributor=form.save(commit=False)
+            distributor.save()
+            return redirect(all_distributors)
+    else:
+        form =NewDistributor()
+    return render(request,'distributor/distributors.html',{'houses':houses,'form':form})
 
 '''
 View for a single distributor displaying categories
 '''
-
+@login_required(login_url='/accounts/login/')
 def single_house(request,id):
     categories = Category.objects.all()
     house = Distributor.objects.get(id=id)
@@ -120,10 +142,10 @@ def single_house(request,id):
 view for the single categories within a distributor displaying
 quantity of items under a category
 '''
-
+@login_required(login_url='/accounts/login/')
 def house_category(request,h_id,c_id):
-    message = ''
-    products = House_Product.objects.filter(warehouse=h_id).filter(category=c_id)
+    message = None
+    products = House_Product.objects.filter(category=c_id).filter(warehouse=h_id)
     category = Category.objects.get(id=c_id)
     house = Distributor.objects.get(id=h_id)
     if request.method == 'POST':
@@ -137,8 +159,9 @@ def house_category(request,h_id,c_id):
             except ObjectDoesNotExist:
                 item.warehouse=house
                 item.category=category
+                
                 item.save()
-                return redirect(inventory)
+                return redirect(house_category,h_id,c_id)
     else:
         form =NewHouseProd()
     
@@ -150,12 +173,12 @@ view for a single item within a distributor displaying single
 products quantity within the distributor
 '''
 
-
+@login_required(login_url='/accounts/login/')
 def add_house_product(request,h_id,i_id):
-    message = ''
+    message = None
     house = Distributor.objects.get(id=h_id)
-    product = Product.objects.get(id=i_id)
-    to_update = House_Product.objects.filter(warehouse=h_id).get(name=product) 
+    to_update = House_Product.objects.filter(warehouse=h_id).get(id=i_id) 
+    product = Product.objects.get(name=to_update.name.name)
     if request.method == 'POST':
         form = AddHouseProd(request.POST, request.FILES)
         if form.is_valid():
@@ -174,16 +197,17 @@ def add_house_product(request,h_id,i_id):
                 item.save()
                 prod_add.save()
                 prod.save()
-                message = ''
+                message = None
                 return redirect(add_house_product,h_id,i_id)
     else:
         form =AddHouseProd()
+    
     return render(request,'distributor/item.html',{'message':message,'product':product,'house':house,'to_update':to_update,'form':form})
 
 '''
 view to search a particular product by its serial
 '''
-
+@login_required(login_url='/accounts/login/')
 def search(request):
     if 'product' in request.GET and request.GET['product']:
         search_serial =request.GET.get("product")
@@ -198,32 +222,47 @@ def search(request):
 '''
 View for all the suppliers
 '''
-def suppliers(request):
+@login_required(login_url='/accounts/login/')
+def all_suppliers(request):
     suppliers = Supplier.objects.all()
-    return render(request,'supplier/suppliers.html',{'suppliers':suppliers})
+    if request.method == 'POST':
+        form = NewSupplier(request.POST, request.FILES)
+        if form.is_valid():
+            supplier=form.save(commit=False)
+            supplier.save()
+            return redirect(all_suppliers)
+    else:
+        form =NewSupplier()
+    return render(request,'supplier/suppliers.html',{'suppliers':suppliers,'form':form})
 
 '''
 View for supplier details
 '''
+@login_required(login_url='/accounts/login/')
 def single_supplier(request,id):
     supplier = Supplier.objects.get(id=id)
-
-    return render(request,'supplier/supplier.html',{'supplier':supplier})
+    orders = Order_Product.objects.filter(supplier=id)
+    return render(request,'supplier/supplier.html',{'supplier':supplier,'orders':orders})
 
 
 '''
 View for all orders
 '''
+@login_required(login_url='/accounts/login/')
+def all_orders(request):
+    return render(request,'orders/orders.html')
 '''
 view for supply orders
 '''
+@login_required(login_url='/accounts/login/')
 def supply_orders(request):
-    orders = Order_Product.objects.all()
+    orders = Order_Product.objects.order_by('-date').all()
     return render(request,'orders/supply_orders.html',{'orders':orders})
 
 '''
 View for all distributors transfers
 '''
+@login_required(login_url='/accounts/login/')
 def transfer_orders(request):
     distributors = Distributor.objects.all()
     return render(request,'orders/transfer_orders.html',{'distributors':distributors})
@@ -231,6 +270,7 @@ def transfer_orders(request):
 '''
 view for transfer orders by month
 '''
+@login_required(login_url='/accounts/login/')
 def transfer_order_month(request,m):
     
     orders = OrderDetails.objects.filter(month=m)
@@ -239,9 +279,15 @@ def transfer_order_month(request,m):
 '''
 view for single distributor orders
 '''
+@login_required(login_url='/accounts/login/')
 def distributor_transfer_orders(request,id):
     orders = OrderDetails.objects.filter(warehouse=id).all()
     return render(request,'orders/distributor_transfers.html',{'orders':orders})
+
+@login_required(login_url='/accounts/login/')
+def distributor_sale(request):
+    orders = Distributor_sale.objects.all()
+    return render(request,'orders/distributor_sale.html',{'orders':orders})
 
 '''
 View for the distributor orders by the month
@@ -252,13 +298,15 @@ View for the distributor orders by the month
 View for all distributors feedback on items sold
 '''
 
+@login_required(login_url='/accounts/login/')
 def distributor_sale(request):
-    distributors = Distributor.objects.all()
-    return render(request,'orders/distributor_feedback.html',{'distributors':distributors})
+    orders = Distributor_sale.objects.all()
+    return render(request,'orders/distributor_sale.html',{'distributors':distributors})
 
 '''
 View for a single distributors feedback on items sold
 '''
+@login_required(login_url='/accounts/login/')
 def distributor_feedback(request,id):
     orders = Distributor_sell.objects.filter(warehouse=id).order_by('-date')
     return render(request,'orders/single_distri_feedback.html',{'orders':orders})
@@ -271,7 +319,7 @@ Analysis view
 '''
 All categories view 
 '''
-
+@login_required(login_url='/accounts/login/')
 def full_stock(request):
     categories = Category.objects.all()
     
@@ -281,6 +329,7 @@ def full_stock(request):
 '''
 total items in stock  category analysis
 '''
+@login_required(login_url='/accounts/login/')
 def full_category(request,id):
     products = Product.objects.filter(category=id)
     category = Category.objects.get(id=id)
@@ -290,7 +339,7 @@ def full_category(request,id):
 '''
 single item stock analysis 
 '''
-
+@login_required(login_url='/accounts/login/')
 def product_analysis(request,id):
     to_add = Product.objects.get(id=id)
     products = House_Product.objects.filter(name=id) 
@@ -302,10 +351,99 @@ def product_analysis(request,id):
 
     return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
 
+'''
+all cusomers
+'''
+
+@login_required(login_url='/accounts/login/')
+def all_customers(request):
+    customers = Customer.objects.all()
+    if request.method == 'POST':
+        form = NewCustomer(request.POST, request.FILES)
+        if form.is_valid():
+            customer=form.save(commit=False)
+            customer.save()
+            return redirect(all_customers)
+    else:
+        form =NewCustomer()
+    return render(request,'customer/customers.html',{'customers':customers,'form':form})
+
+'''
+Customer order processing
+'''
+
+@login_required(login_url='/accounts/login/')
+def customer_order(request):
+    message1=None
+    message2=None
+    message3=None
+    orders = Customer_order.objects.order_by('-date').all()
+    if request.method == 'POST':
+        form = CustomerOrder(request.POST, request.FILES)
+        if form.is_valid():
+            order=form.save(commit=False)
+            order.month = datetime.datetime.now().strftime ("%m")
+            order.year = datetime.datetime.now().strftime ("%y")
+            try:
+                product = Product.objects.get(sKU=order.sKU)
+                order.total_price = order.quantity * product.unit_price
+            except ObjectDoesNotExist:
+                message3='Make sure you input the SKU correctly'
+
+            try:
+                to_subtract = House_Product.objects.filter(warehouse=order.warehouse).get(sKU=order.sKU)
+                if order.quantity > to_subtract.quantity:
+                    message2 = 'The amount of product in this warehouse is not enough'
+                else:
+                    to_subtract.quantity=to_subtract.quantity - order.quantity
+                    to_subtract.save()
+                    order.save()
+                    return redirect(customer_order)
+            except ObjectDoesNotExist:
+                message1='The prduct does not exist in that warehouse'
+            
+    else:
+        form =CustomerOrder()
+    
+    return render(request,'customer/customers_order.html',{'orders':orders,'form':form,'message1':message1,'message2':message2,'message3':message3})
+
+'''
+generating invoice
+'''
+@login_required(login_url='/accounts/login/')
+def generate_invoice(request):
+    invoices=Invoice.objects.order_by('-date').all()
+    if request.method == 'POST':
+        form = Invoicing(request.POST, request.FILES)
+        if form.is_valid():
+            invoice=form.save(commit=False)
+            invoice.save()
+            return redirect('customers_invoice',invoice.order.order_serial,invoice.id)
+    else:
+        form = Invoicing()
+
+    return render(request,'customer/generate_invoice.html',{'form':form,'invoices':invoices})
+'''
+Invoice
+'''
+@login_required(login_url='/accounts/login/')
+def customers_invoice(request,serial,id):
+    invoice = Invoice.objects.get(id=id)
+    orders = Customer_order.objects.filter(order_serial=serial)
+    orders_c = Customer_order.objects.filter(order_serial=serial)
+    lst=[]
+    for order in orders_c:
+        lst.append(order.total_price)
+        total=sum(lst)
+    
+    return render(request,'customer/invoice.html',{'orders':orders,'total':total,'invoice':invoice})
+    
+
 
 '''
 Api views
 '''
+<<<<<<< HEAD
 
 def xss(request):
     import csv
@@ -316,3 +454,47 @@ def xss(request):
         data=csv.DictReader(infile)
         x=[dict(i) for i in data]
     return JsonResponse({"data":x})
+=======
+class CategoriesList(APIView):
+    def get(self, request, format=None):
+        all_projects = Category.objects.all()
+        serializers = CategorySerializer(all_projects, many=True)
+        return Response(serializers.data)
+
+    def post(self, request, format=None):
+        serializers = CategorySerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+        permission_classes = (IsAdminOrReadOnly,)
+
+class DistributorsList(APIView):
+    def get(self, request, format=None):
+        all_projects = Distributor.objects.all()
+        serializers = DistributorSerializer(all_projects, many=True)
+        return Response(serializers.data)
+
+    def post(self, request, format=None):
+        serializers = DistributorSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+        permission_classes = (IsAdminOrReadOnly,)
+
+class SuppliersList(APIView):
+    def get(self, request, format=None):
+        all_projects = Supplier.objects.all()
+        serializers = SupplierSerializer(all_projects, many=True)
+        return Response(serializers.data)
+
+    def post(self, request, format=None):
+        serializers = SupplierSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+        permission_classes = (IsAdminOrReadOnly,)
+
+>>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a

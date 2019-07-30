@@ -15,6 +15,8 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
+            border-top:20px solid rgb(5, 114, 141);
+            border-bottom:20px solid rgb(5, 114, 141);
             -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
@@ -34,7 +36,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
             margin:10px;
 
          }
-         .categories:hover a{
+          a:hover{
             
             text-decoration: none;
              color:black; 
@@ -49,16 +51,17 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
            
             
             
-           <h1 class="text-center">Distributor</h1><hr>
+           <h3 class="text-center">All distributors</h3><hr>
            <div class="row">
             {% for distributor in distributors %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
                     <a href="{% url 'dis_transfer_ord' distributor.id %}">
-                <div  style="border:1px solid white;padding:20px"class="categories">
-                <h3 class="text-center">{{distributor.name}}</h3></a><hr>
-                <p class="text-center" style="color:red">View</p>
+                <div  style="padding:15px"class="categories">
+                <h4 class="text-center">{{distributor.name}}</h4><hr>
+                <p style="color:orange"class="text-center">{{distributor.location}}</p>
+                <p class="text-center" style="color:#50B9D3;">View</p>
                 <span  class="glyphicon glyphicon-shopping-cart"></span>
-            </div>
+            </div></a>
             </div>
                 {% endfor %}
                 </div>
