@@ -10,6 +10,9 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <style>
+    .btn{
+margin-top:0;
+    }
   #invoice{
     padding: 30px;
 }
@@ -152,7 +155,10 @@ a{
 
 </head>
 <body>
-    
+        <div class="text-right">
+                <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>&nbsp
+                <button class="btn btn-info"><i class="fa fa-file-pdf-o"></i> Export as PDF</button>
+            </div> 
  <div class="container">
       
 
@@ -160,10 +166,7 @@ a{
 <div id="invoice">
 <div class="row">
     <div class="toolbar hidden-print"><br>
-        <div class="text-right">
-            <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>&nbsp
-            <button class="btn btn-info"><i class="fa fa-file-pdf-o"></i> Export as PDF</button>
-        </div>
+       
         <hr>
     </div>
     </div>

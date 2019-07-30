@@ -22,6 +22,11 @@ View for pwa
 def base_layout(request):
 	template='base.html'
 	return render(request,template)
+'''
+Go back button
+'''
+def on_backbutton_clicked(self, widget):
+    self.webview.go_back()
 
 '''
 View for the inventory page displaying categories

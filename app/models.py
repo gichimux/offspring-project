@@ -2,6 +2,7 @@ from django.db import models
 import datetime as dt
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from django.contrib.auth.models import User
+from postgres_copy import CopyManager
 
 '''
 Class category for product categories
@@ -148,4 +149,11 @@ class Invoice(models.Model):
     order = models.ForeignKey('Customer_order',default='000')
     date = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.order
    
+class Prediction(models.Model):
+    item_name = models.CharField(max_length= 50)
+    x = models.IntegerField(null= True)
+    y = models.IntegerField(null=True)
+    objects = CopyManager()
