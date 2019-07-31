@@ -16,17 +16,10 @@ urlpatterns=[
  url(r'^house/category/product/(\d+)/(\d+)$',views.add_house_product,name="add_house_product"),
  url(r'^index/',views.test,name="index"),
 
-<<<<<<< HEAD
- url(r'^supplier$',views.all_distributors,name="suppliers"),
- url(r'^supplier/(\d+)$',views.single_supplier,name="supplier"),
-
-#  url(r'^orders$',views.all_orders,name="orders"),
-=======
  url(r'^supplier$',views.all_suppliers,name="suppliers"),
  url(r'^supplier/(\d+)$',views.single_supplier,name="supplier"),
 
  url(r'^orders$',views.all_orders,name="orders"),
->>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
  url(r'^orders/supplier$',views.supply_orders,name='supply_orders'),
  url(r'^orders/distributors$',views.transfer_orders,name='transfer_orders'),
  url(r'^orders/distributors/(\d+)$',views.distributor_transfer_orders,name="dis_transfer_ord"),

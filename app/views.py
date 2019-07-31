@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.permissions import IsAdminUser
+IsAdminOrReadOnly=IsAdminUser
 from django.core import serializers
 import json
 import datetime 
@@ -32,13 +34,8 @@ of items in stock
 '''
 @login_required(login_url='/accounts/login/')
 def inventory(request):
-<<<<<<< HEAD
-    # order=OrderDetails.objects.get(id=1)
-    
-=======
     messages=None
     categories = Category.objects.all()
->>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
     if request.method == 'POST':
         form = NewCategory(request.POST, request.FILES)
         if form.is_valid():
@@ -381,13 +378,22 @@ def customer_order(request):
     if request.method == 'POST':
         form = CustomerOrder(request.POST, request.FILES)
         if form.is_valid():
+            date_str=form.cleaned_data["date"]
+            # from dateutil import parser
+            # date_=parser.parse(date_str)
+          
             order=form.save(commit=False)
-            order.month = datetime.datetime.now().strftime ("%m")
-            order.year = datetime.datetime.now().strftime ("%y")
+            order.time=date_str
+            # order.month = datetime.datetime.now().strftime ("%m")
+            # order.year = datetime.datetime.now().strftime ("%y")
             try:
-                product = Product.objects.get(sKU=order.sKU)
+                
+                # product = Product.objects.get(sKU=order.sKU)
+                order.sKU=order.product.name.sKU
+                product=order.product.name
                 order.total_price = order.quantity * product.unit_price
-            except ObjectDoesNotExist:
+            except ObjectDoesNotExist as e:
+                print(e)
                 message3='Make sure you input the SKU correctly'
 
             try:
@@ -397,12 +403,17 @@ def customer_order(request):
                 else:
                     to_subtract.quantity=to_subtract.quantity - order.quantity
                     to_subtract.save()
+                    print("i reached here")
                     order.save()
                     return redirect(customer_order)
-            except ObjectDoesNotExist:
+            except ObjectDoesNotExist as e:
+                print(e)
                 message1='The prduct does not exist in that warehouse'
+        else:
+            print(form.errors)
             
     else:
+       
         form =CustomerOrder()
     
     return render(request,'customer/customers_order.html',{'orders':orders,'form':form,'message1':message1,'message2':message2,'message3':message3})
@@ -443,18 +454,6 @@ def customers_invoice(request,serial,id):
 '''
 Api views
 '''
-<<<<<<< HEAD
-
-def xss(request):
-    import csv
-    from django.http import JsonResponse
-    from django.conf import settings
-    path=settings.BASE_DIR+"/app/data/combined.csv"
-    with open(path,"r") as infile:
-        data=csv.DictReader(infile)
-        x=[dict(i) for i in data]
-    return JsonResponse({"data":x})
-=======
 class CategoriesList(APIView):
     def get(self, request, format=None):
         all_projects = Category.objects.all()
@@ -484,6 +483,7 @@ class DistributorsList(APIView):
         permission_classes = (IsAdminOrReadOnly,)
 
 class SuppliersList(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
     def get(self, request, format=None):
         all_projects = Supplier.objects.all()
         serializers = SupplierSerializer(all_projects, many=True)
@@ -495,6 +495,13 @@ class SuppliersList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-        permission_classes = (IsAdminOrReadOnly,)
-
->>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
+        
+def xss(request):
+    import csv
+    from django.http import JsonResponse
+    from django.conf import settings
+    path=settings.BASE_DIR+"/app/data/combined.csv"
+    with open(path,"r") as infile:
+        data=csv.DictReader(infile)
+        x=[dict(i) for i in data]
+    return JsonResponse({"data":x})

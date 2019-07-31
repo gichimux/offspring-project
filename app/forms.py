@@ -42,13 +42,9 @@ low on stock
 '''
 
 class AddHouseProd(forms.ModelForm):
-    date = forms.DateTimeField(
-        input_formats=['%d-%m-%Y'],
-        widget=forms.DateTimeInput(
-        ))
     class Meta:
         model = OrderDetails
-        exclude = ['product','warehouse','time']
+        exclude = ['product','warehouse']
 
 class DateForm(forms.Form):
     day = forms.DateField(initial=datetime.date.today)
@@ -79,9 +75,13 @@ class NewCustomer(forms.ModelForm):
         exclude = []
 
 class CustomerOrder(forms.ModelForm):
+    date = forms.DateTimeField(
+        input_formats=['%d-%m-%Y'],
+        widget=forms.DateTimeInput(
+        ))
     class Meta:
         model = Customer_order
-        exclude = ['month','date','year','total_price']
+        exclude = ['month','date','year',"sKU",'total_price','time']
 
 class Invoicing(forms.ModelForm):
     class Meta:

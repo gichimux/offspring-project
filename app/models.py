@@ -46,18 +46,11 @@ class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.PositiveIntegerField(default=0)
-<<<<<<< HEAD
     created_at= models.DateTimeField(auto_now_add=True)
     time=models.DateTimeField(null=True)
-
-    # month=models.PositiveIntegerField(default=0)
-    # year=models.PositiveIntegerField(default=0)
-  
-=======
     month=models.PositiveIntegerField(default=0)
     year=models.PositiveIntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
->>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
+  
     
     def __str__(self):
         return self.product.name
@@ -113,6 +106,7 @@ class Order_Product(models.Model):
     supplier=models.ForeignKey(Supplier,blank=True,null=True)
     quantity =models.PositiveIntegerField(default=0)
     month= models.PositiveIntegerField(default=0)
+    
     year= models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -141,17 +135,9 @@ class Customer_order(models.Model):
     month= models.PositiveIntegerField(default=0)
     year= models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now=True)
+    time=models.DateTimeField(null=True)
 
     def __str__(self):
-<<<<<<< HEAD
-        return self.warehouse + ''+self.quantity
-
-class Prediction(models.Model):
-    item_name = models.CharField(max_length= 50)
-    x = models.IntegerField(null= True)
-    y = models.IntegerField(null=True)
-  
-=======
         return self.order_serial
 
 
@@ -168,4 +154,7 @@ class Invoice(models.Model):
     date = models.DateTimeField(auto_now=True)
 
    
->>>>>>> 5bf7c93fb2edce34ed63413ef0ac2159aacd7a7a
+class Sales(models.Model):
+    item_name=models.CharField(max_length= 20)
+    date_sold = models.DateField(auto_now=False)
+    predicted=models.IntegerField(default=0)
