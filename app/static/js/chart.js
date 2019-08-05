@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'area'
         },
         title: {
-            text: 'Offspring prediction'
+            text: 'Product Prediction'
         },
         xAxis: {
-            categories: ['pampers', 'baby socks', 'towels']
+            categories: ['months']
         },
         yAxis: {
             title: {
@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         series: [{
-            name: 'January',
-            data: [1, 0, 1, 1, 0, 0, -7]
+            name: 'past sales',
+            data: [1, 0, 1, 1, 0, 0, -1 ,1, 0, 4, 5, 0, 0, -1]
         }, {
-            name: 'February',
-            data: [5, 7, 3, 6, 9, 3, 5]
+            name: 'prediction',
+            data: [5, 7, 3, 6, 9, 3, 5, 1 , 0, 2, 3, 0, 0, -1]
         }]
     });
 });

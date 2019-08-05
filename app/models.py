@@ -70,10 +70,10 @@ class House_product for the products in particular house
 '''
 
 class House_Product(models.Model):
-    name = models.ForeignKey(Product,blank=False,null=False)
+    name = models.ForeignKey(Product,blank=False,null=False,related_name="location")
     sKU = models.CharField(max_length= 10,default='I')
     category = models.ForeignKey(Category,default='Toys')
-    warehouse = models.ForeignKey('Distributor',default=1)
+    warehouse = models.ForeignKey('Distributor',default=1,related_name="warehouse_products")
     quantity =models.PositiveIntegerField(default=0)
     
     @classmethod
@@ -125,7 +125,7 @@ distributor
 '''
 
 class Customer_order(models.Model):
-    product=models.ForeignKey(House_Product,on_delete=models.CASCADE,blank=False,null=False)
+    product=models.ForeignKey(House_Product,on_delete=models.CASCADE,blank=False,null=False,related_name="orders")
     order_serial = models.CharField(max_length= 10)
     sKU = models.CharField(max_length= 10)
     warehouse = models.ForeignKey('Distributor',default=1)
@@ -155,6 +155,11 @@ class Invoice(models.Model):
 
    
 class Sales(models.Model):
+    item_name=models.CharField(max_length= 20)
+    date_sold = models.DateField(auto_now=False)
+    predicted=models.IntegerField(default=0)
+
+class Prediction(models.Model):
     item_name=models.CharField(max_length= 20)
     date_sold = models.DateField(auto_now=False)
     predicted=models.IntegerField(default=0)

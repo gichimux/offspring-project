@@ -333,12 +333,29 @@ def full_category(request,id):
     return render(request,'analysis/category_analysis.html',{'products':products,'category':category})
 
 
+def aggregateOrdersBymonth(orders):
+    months=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    orders_={i:[] for i in months}
+    for i in orders:
+        orders_[months[i["time"].date().month -1]].append(i["quantity"])
+    for k,v in orders_.items():
+        orders_[k]=sum(v)
+    return orders_
+
+
+
 '''
 single item stock analysis 
 '''
 @login_required(login_url='/accounts/login/')
 def product_analysis(request,id):
     to_add = Product.objects.get(id=id)
+    orders=[]
+    for w in to_add.location.all():
+        orders=[{"quantity":i.quantity,"time":i.time} for i in w.orders.all()]
+    data=json.dumps(aggregateOrdersBymonth(orders))
+    print(type(data))
+
     products = House_Product.objects.filter(name=id) 
     in_houses = House_Product.objects.filter(name=id) \
     .values('warehouse') \
@@ -346,7 +363,7 @@ def product_analysis(request,id):
     
     print(in_houses)
 
-    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
+    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products,"data":data})
 
 '''
 all cusomers
@@ -495,13 +512,28 @@ class SuppliersList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-def xss(request):
-    import csv
+
+def customerApiViews(request):
+    # orders=Customer_order.objects.all()
+    # x=[]
+    # for i in orders:
+    #     x.append({"quantity":i.quantity,"time":i.time,"product":i.product.name.name})
+
+    x={}
+    products=Product.objects.all()
+    for p in products:
+        x[p.sKU]=[]
+        for w in p.location.all():
+            x[p.sKU]=[{"quantity":i.quantity,"time":i.time,"product":i.product.name.name} for i in w.orders.all()]
     from django.http import JsonResponse
-    from django.conf import settings
-    path=settings.BASE_DIR+"/app/data/combined.csv"
-    with open(path,"r") as infile:
-        data=csv.DictReader(infile)
-        x=[dict(i) for i in data]
     return JsonResponse({"data":x})
+        
+# def xss(request):
+#     import csv
+#     from django.http import JsonResponse
+#     from django.conf import settings
+#     path=settings.BASE_DIR+"/app/data/combined.csv"
+#     with open(path,"r") as infile:
+#         data=csv.DictReader(infile)
+#         x=[dict(i) for i in data]
+#     return JsonResponse({"data":x})
