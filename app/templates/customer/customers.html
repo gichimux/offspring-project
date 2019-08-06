@@ -12,14 +12,15 @@
      font-family: 'Roboto Condensed', sans-serif;
   }
   .categories{
-    border-top:20px solid rgb(5, 114, 141);
-    border-bottom:20px solid rgb(5, 114, 141);
-     -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+    border-top:15px solid rgb(5, 114, 141);
+            border-bottom:15px solid rgb(5, 114, 141);
+            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-     margin:10px;
-     transition:0.9s;
-     padding-bottom:10px;
+            margin:10px;
+            transition:0.9s;
+            padding-bottom:7px;
+
 
   }
   a{
@@ -38,13 +39,20 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
      text-decoration: none;
       color:black; 
   }
+  a:hover{
+            
+            text-decoration: none;
+             color:black; 
+         }
  </style>   
 
 </head>
 <body>
+  
     
- <div class="container">
 
+ <div class="container">
+        <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
      {% if request.user.is_superuser %}
      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
              Add new Customer
@@ -52,24 +60,56 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
            
         {% endif %}
     <h3 class="text-center"><b>Customers</b></h3><hr>
+    
+    <div class="container">
+            <div class="row">
+           <div class="col-md-1 col-lg-1 col-sm-1">
+               
+             
+               
+       </div>
+       <div class="col-md-4 col-lg-4 col-sm-4">
+              
+              <p><b>Name</b></p>
+              
+       </div>
+       <div class="col-md-4 col-lg-4 col-sm-4">
+               
+               <p class="text-left"><b>Contact</b></p>
+               
+       </div>
+       <div class="col-md-3 col-lg-3 col-sm-3">
+               
+           <p class="text-left"><b>Email</b></p>
+           
+       </div>
+       </div>
+          </div>
     <div class="row">
      {% for customer in customers %}
-    <div class="col-md-4 col-lg-4 col-sm-4">
+    <div class="col-md-1 col-lg-1 col-sm-1">
         
             <p> {{customer.id}}</p>
-            <hr>
+            
     </div>
     <div class="col-md-4 col-lg-4 col-sm-4">
            
-            <p style="color:black" class="text-center">{{customer.name}}</p>
-            <hr>
+            <p style="color:black" class="text-left">{{customer.first_name}} 
+            {{customer.second_name}}</p>
+           
     </div>
     <div class="col-md-4 col-lg-4 col-sm-4">
             
-            <p class="text-center">{{customer.contact}}</p>
-            <hr>
+            <p class="text-left">{{customer.contact}}</p>
+            
     </div>
+    <div class="col-md-3 col-lg-3 col-sm-3">
+            
+        <p class="text-left">{{customer.email}}</p>
+        
+</div>
          {% endfor %}
+         
          <div class="modal fade" id="myModal">
             <div class="modal-dialog">
               <div class="modal-content">

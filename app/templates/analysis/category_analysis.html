@@ -2,55 +2,103 @@
 {% load bootstrap3 %} {% load staticfiles %}
 {% block content %} 
 {{ block.super}}
-<style>
-        button{
-            float:right;
-        }
-        .container{
-           font-family: 'Roboto Condensed', sans-serif;
-        }
-        .categories{
-          border-top:10px solid rgb(5, 114, 141);
-          border-bottom:10px solid rgb(5, 114, 141);
-           -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-      -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-      box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-           margin:10px;
-           transition:0.9s;
-           padding-bottom:10px;
-      
-        }
-        a{
-            text-decoration: none;
-            color:black;
-        }
-        .categories:hover{
-           -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-      -moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-      box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-           margin:10px;
-      
-        }
-        .categories:hover a{
-           
-           text-decoration: none;
-            color:black; 
-        }
-       </style>   
 <html>
     <head>
+        <style>
+              button{
+             float:right;
+         }
+         .container{
+            font-family: 'Roboto Condensed', sans-serif;
+         }
+         .categories{
+          border-top:15px solid rgb(5, 114, 141);
+            border-bottom:15px solid rgb(5, 114, 141);
+            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+            margin:10px;
+            transition:0.9s;
+            padding-bottom:7px;
 
+         }
+         a{
+             text-decoration: none;
+             color:green;
+         }
+         .categories:hover{
+            -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+            margin:10px;
+
+         }
+          a:hover{
+            
+            text-decoration: none;
+             color:green; 
+         }
+         .detail{
+             font-size:15px;
+             border:1px solid green;
+             border-radius:3px;
+             padding:5px;
+         }
+         .invoice table th {
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: 16px
+}
+
+            </style>
     </head>
     <body>
         <div class="container">
-           <h1>{{category.name}}</h1>
+            <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>      
+            {% if request.user.is_superuser %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Add product in category
+                      </button>
+                      {% endif %}
+                <h1 class="text-center">{{category.name}}</h1>
+                <hr><br>
+           
+          <div class="row">
+          
             {% for product in products %}
-                <div  style="border:1px solid balck;padding:20px"class="categories">
-                <h3>{{product.name}} <b>{{product.q}}</b> <a href="{% url 'stock_product_analysis' product.id %}">View</a> </h3>
+           
+            <div class="col-md-2 col-lg-2 col-sm-2">
+                <p>SKU</p>
+                <b>{{product.sKU}}</b>
+              </div>
+              <div class="col-md-3 col-lg-3 col-sm-3">
+                <p>Name</p>
+                <b>{{product.name}}</b>
+              </div>
+              <div class="col-md-3 col-lg-2 col-sm-2">
+                <p>Description</p>
+                <b>{{product.description}}</b>
+              </div>
+             
+              <div class="col-md-2 col-lg-2 col-sm-2">
+                <p>Quantity</p>
+                <b>{{product.quantity}}</b>
+              </div>
+             
+            
+            <div class="col-md-2 col-lg-3 col-sm-3"><br>
+                <a href="{% url 'stock_product_analysis'  product.id %}"><span class="detail">Sales</span></a>
+             
             </div>
+           
+              <hr><hr>
+                
+           
                 {% endfor %}
+               
+              </div>
         </div>
-    
+        
     </body>
 </html>
 {% endblock %}

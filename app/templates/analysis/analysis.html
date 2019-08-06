@@ -1,55 +1,66 @@
-{%extends 'base.html'%}
+{% extends 'base.html'%}
+{% load bootstrap3 %} {% load staticfiles %}
+{% load bootstrap4 %}
 {% block content %} 
 {{ block.super}}
-<style>
-        button{
-            float:right;
-        }
-        .container{
-           font-family: 'Roboto Condensed', sans-serif;
-        }
-        .categories{
-          border-top:10px solid rgb(5, 114, 141);
-          border-bottom:10px solid rgb(5, 114, 141);
-           -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-      -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-      box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-           margin:10px;
-           transition:0.9s;
-           padding-bottom:10px;
-      
-        }
-        a{
-            text-decoration: none;
-            color:black;
-        }
-        .categories:hover{
-           -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-      -moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-      box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-           margin:10px;
-      
-        }
-        .categories:hover a{
-           
-           text-decoration: none;
-            color:black; 
-        }
-       </style>   
-<html>
-    <head>
 
-    </head>
-    <body>
-        <div class="container">
-           
-           <h1>Categories</h1>
-            {% for category in categories %}
-                <div  style="border:1px solid balck;padding:20px"class="categories">
-                <a href="{% url 'category_analysis' category.id %}"><h3>{{category.name}}</h3></a>
-            </div>
-                {% endfor %}
-        </div>
-    </body>
-</html>
-{% endblock %}
+<style>
+  button{
+      float:right;
+  }
+  .container{
+     font-family: 'Roboto Condensed', sans-serif;
+  }
+  .categories{
+    border-top:15px solid rgb(5, 114, 141);
+            border-bottom:15px solid rgb(5, 114, 141);
+            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+            margin:10px;
+            transition:0.9s;
+            padding-bottom:7px;
+
+
+  }
+  a{
+      text-decoration: none;
+      color:black;
+  }
+  .categories:hover{
+     -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+     margin:10px;
+
+  }
+   a:hover{
+     
+     text-decoration: none;
+      color:black; 
+  }
+ </style>   
+
+</head>
+<body>
+    
+ <div class="container">
+        <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a> 
+    
+     
+     
+    <h3 class="text-center"><b>Categories</b></h3><hr>
+    <div class="row">
+     {% for category in categories %}
+     <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">
+             <a href="{% url 'category_analysis' category.id %}">
+         <div  style="padding:15px;background-color: whitesmoke"class="categories">
+         <h5 class="text-center">{{category.name}}</h5><hr>
+         <p class="text-center" style="color:#50B9D3;">View</p>
+         <span  class="glyphicon glyphicon-shopping-cart"></span>
+     </div></a>
+     </div>
+         {% endfor %}
+      
+
+ {% endblock %}

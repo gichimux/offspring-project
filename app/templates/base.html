@@ -26,6 +26,7 @@
 </head>
 
 <body>
+  
 <div  class="jumbotron">
   <span class="text-center"><h6><b>O</b>ffspring IMS</h6>
   <h6 style="float:right">{{request.user.username}} logged in</h6><br></span>
@@ -43,11 +44,12 @@
   <a href="{% url 'customers' %}">Customers</a>
   <a href="{% url 'generate_invoice' %}">Invoice</a>
   <a href="{% url 'analysis' %}">Analysis</a>
+  <a href="{% url 'month_report' %}">Report</a>
 </div>
 
 <div id="main" style="margin-left:180px">
     <span style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776;</span>
-    <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
+   
     
     {% block content %}{%endblock%}
   
@@ -67,10 +69,12 @@ function closeNav() {
   
     
    
-    {% block scripts %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-       
-     {% bootstrap_javascript %}
+  {% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+{% bootstrap_javascript %}
     {% endblock %}
    
     <style>
@@ -198,5 +202,6 @@ window.onclick = function(e) {
   }
 }
       </script>
+    
 </body>
 </html>

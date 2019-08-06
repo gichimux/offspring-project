@@ -15,8 +15,14 @@
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
     }
+    a:hover{
+            
+            text-decoration: none;
+             color:black; 
+         }
 </style>
 <div class="container">
+    <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
   {% if message is None %}
   {% else %}
     <div class="alert alert-danger alert-dismissible">

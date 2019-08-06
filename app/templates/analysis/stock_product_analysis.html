@@ -1,35 +1,29 @@
-{%extends 'base.html'%}
-{% load bootstrap3 %} {% load staticfiles %}
+{% extends 'base.html'%}
+{% load bootstrap3 %} 
+{% load staticfiles %}
+{% load static %}
+
 {% block content %} 
 {{ block.super}}
 
-
 <div id="container"></div>
-        <script src="https://code.highcharts.com/highcharts.src.js"></script>
-        <script>
-                Highcharts.chart('container', {
-                    chart: {
-                        type: 'line'
-                    },
-                    title: {
-                        text: 'Quantity analysis in different locations'
-                    },
-                    xAxis: {
-                        categories: [{% for in_house in in_houses %}'{{in_house.warehouse.name}} Location'{% if not forloop.last %}, {% endif %}{% endfor %}]
-                    },
-                    series: [{
-                        name: 'Data',
-                        data: [
-                            {% for in_house in in_houses %} {{in_house.quantity}}{% if not forloop.last %}, {% endif %}{% endfor %}
-                        ],
-                        color: 'pink'
-                    }]
-                });
-              </script>
+
+    <div id="chart-container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
    
-    <h3 class="text-center">{{to_add.name}} quantity:  <b>{{to_add.quantity}}</b></h3><hr>
+    <h4 class="text-center">{{to_add.name}}</h4><hr>
     {% for product in products %}
-    <p><b>Product:</b> {{product.name}}<br> <b>Location: {{product.warehouse}} </b><br> quantity: <b>{{product.quantity}}</b></p>
+    <p><b>Product:</b> {{product.name}}<br> <b>Location:</b> {{product.warehouse}} <br><b> quantity:</b> <span style="color:orange" >{{product.quantity}}</span></p>
     {% endfor %}
     
+{% endblock %}
+
+{% block scripts %}
+{{ block.super}}
+        <script>
+            window.appConfig={
+                chartData:"{{data | escapejs }}"
+            }
+        </script>
+        <script src="{% static 'js/product_sales_chart.js' %}"></script>
+
 {% endblock %}

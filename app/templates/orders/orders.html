@@ -12,15 +12,15 @@
             font-family: 'Roboto Condensed', sans-serif;
          }
          .categories{
-          border-top:20px solid rgb(5, 114, 141);
-            border-bottom:20px solid rgb(5, 114, 141);
+            border-top:15px solid rgb(5, 114, 141);
+            border-bottom:15px solid rgb(5, 114, 141);
+            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
             margin:10px;
-            transition:0.9s;
-            padding:20px;
-            padding-bottom:20px;
-            -webkit-box-shadow: 4px 2px 12px -4px rgba(0,0,0,0.75);
--moz-box-shadow: 4px 2px 12px -4px rgba(0,0,0,0.75);
-box-shadow: 4px 2px 12px -4px rgba(0,0,0,0.75);
+            transition:0.5s;
+            padding:10px;
+
 
          }
          a{
@@ -46,7 +46,7 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 </style>
 
 <div class="container">
-
+        <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
     <h3 class="text-center"><b>Orders</b></h3>
     <hr><br>
     <div class="row">
