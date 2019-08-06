@@ -46,9 +46,10 @@ class OrderDetails(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     warehouse=models.ForeignKey(Distributor,on_delete=models.CASCADE,blank=False,null=False)
     quantity =models.PositiveIntegerField(default=0)
-    month=models.PositiveIntegerField(default=0)
-    year=models.PositiveIntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
+    created_at= models.DateTimeField(auto_now_add=True)
+    time=models.DateTimeField(null=True)
+    
+  
     
     def __str__(self):
         return self.product.name
@@ -68,10 +69,10 @@ class House_product for the products in particular house
 '''
 
 class House_Product(models.Model):
-    name = models.ForeignKey(Product,blank=False,null=False)
+    name = models.ForeignKey(Product,blank=False,null=False,related_name="location")
     sKU = models.CharField(max_length= 10,default='I')
     category = models.ForeignKey(Category,default='Toys')
-    warehouse = models.ForeignKey('Distributor',default=1)
+    warehouse = models.ForeignKey('Distributor',default=1,related_name="warehouse_products")
     quantity =models.PositiveIntegerField(default=0)
     
     @classmethod
@@ -90,6 +91,7 @@ class Supplier(models.Model):
     name = models.CharField(max_length= 50)
     product = models.CharField(max_length= 50)
     contact = models.CharField(max_length= 50)
+    email = models.CharField(max_length= 50)
     
     def __str__(self):
         return self.name
@@ -103,9 +105,7 @@ class Order_Product(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     supplier=models.ForeignKey(Supplier,blank=True,null=True)
     quantity =models.PositiveIntegerField(default=0)
-    month= models.PositiveIntegerField(default=0)
-    year= models.PositiveIntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
+    time=models.DateTimeField(null=True)
 
     def __str__(self):
         return self.product.name 
@@ -122,38 +122,58 @@ distributor
 '''
 
 class Customer_order(models.Model):
-    product=models.ForeignKey(House_Product,on_delete=models.CASCADE,blank=False,null=False)
+    product=models.ForeignKey(House_Product,on_delete=models.CASCADE,blank=False,null=False,related_name="orders")
     order_serial = models.CharField(max_length= 10)
     sKU = models.CharField(max_length= 10)
     warehouse = models.ForeignKey('Distributor',default=1)
     customer = models.ForeignKey('Customer',default=0)
     quantity =models.PositiveIntegerField(default=0)
     total_price = models.PositiveIntegerField(default=0)
-    month= models.PositiveIntegerField(default=0)
-    year= models.PositiveIntegerField(default=0)
-    date = models.DateTimeField(auto_now=True)
+    
+    time=models.DateTimeField(null=True)
 
     def __str__(self):
         return self.order_serial
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length= 10)
+    first_name = models.CharField(max_length= 10)
+    second_name = models.CharField(max_length= 10)
     contact = models.CharField(max_length= 10)
     email = models.CharField(max_length= 30,default='email@example.com')
 
     def __str__(self):
-        return self.name 
+        return self.first_name
 
 class Invoice(models.Model):
     order = models.ForeignKey('Customer_order',default='000')
     date = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.order
-   
+'''
+Sales model
+'''  
+class Sales(models.Model):
+    item_name=models.CharField(max_length= 20)
+    date_sold = models.DateField(auto_now=False)
+    predicted=models.IntegerField(default=0)
+
+'''
+predicted data
+'''
 class Prediction(models.Model):
-    item_name = models.CharField(max_length= 50)
-    x = models.IntegerField(null= True)
-    y = models.IntegerField(null=True)
-    objects = CopyManager()
+    item_name=models.CharField(max_length= 20)
+    date_sold = models.DateField(auto_now=False)
+    predicted=models.IntegerField(default=0)
+
+'''
+Requested supplies
+'''
+class Requested_supply(models.Model):
+    supplier = models.ForeignKey(Supplier)
+    product = models.CharField(max_length= 20)
+    quantity =models.PositiveIntegerField(default=0)
+    time = models.DateTimeField(null=True)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.product
