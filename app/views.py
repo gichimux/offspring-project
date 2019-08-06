@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.permissions import IsAdminUser
+IsAdminOrReadOnly=IsAdminUser
 from django.core import serializers
 import json
 import datetime 
@@ -22,11 +24,9 @@ View for pwa
 def base_layout(request):
 	template='base.html'
 	return render(request,template)
-'''
-Go back button
-'''
-def on_backbutton_clicked(self, widget):
-    self.webview.go_back()
+
+def test(request):
+    return render(request, 'dashboard/index.html')
 
 '''
 View for the inventory page displaying categories
@@ -182,8 +182,8 @@ def add_house_product(request,h_id,i_id):
             item = form.save(commit=False)
             item.product = product
             item.warehouse=house
-            item.month=datetime.datetime.now().strftime ("%m")
-            item.year=datetime.datetime.now().strftime ("%Y")
+            # item.month=datetime.datetime.now().strftime ("%m")
+            # item.year=datetime.datetime.now().strftime ("%Y")
             prod=Product.objects.get(id=item.product.id)
             if prod.quantity < item.quantity:
                 message = 'The amount of product in stock is not enough'
@@ -238,9 +238,24 @@ View for supplier details
 @login_required(login_url='/accounts/login/')
 def single_supplier(request,id):
     supplier = Supplier.objects.get(id=id)
-    orders = Order_Product.objects.filter(supplier=id)
-    return render(request,'supplier/supplier.html',{'supplier':supplier,'orders':orders})
+    requests = Requested_supply.objects.filter(supplier=id)
+    if request.method == 'POST':
+        form = NewRequest(request.POST, request.FILES)
+        if form.is_valid():
+            requested=form.save(commit=False)
+            requested.supplier=supplier
+            requested.save()
+            return redirect(single_supplier,id)
+    else:
+        form =NewRequest()
+    return render(request,'supplier/supplier.html',{'supplier':supplier,'requests':requests,'form':form})
 
+@login_required(login_url='/accounts/login/')
+def product_status(request,id):
+    requested = Requested_supply.objects.get(id=id)
+    requested.status=True
+    requested.save()
+    return redirect(single_supplier,requested.supplier.id)
 
 '''
 View for all orders
@@ -253,7 +268,7 @@ view for supply orders
 '''
 @login_required(login_url='/accounts/login/')
 def supply_orders(request):
-    orders = Order_Product.objects.order_by('-date').all()
+    orders = Order_Product.objects.order_by('-time').all()
     return render(request,'orders/supply_orders.html',{'orders':orders})
 
 '''
@@ -333,12 +348,30 @@ def full_category(request,id):
     return render(request,'analysis/category_analysis.html',{'products':products,'category':category})
 
 
+def aggregateOrdersBymonth(orders):
+    months=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    orders_={i:[] for i in months}
+    for i in orders:
+        orders_[months[i["time"].date().month -1]].append(i["quantity"])
+    for k,v in orders_.items():
+        orders_[k]=sum(v)
+    return orders_
+
+
+
 '''
 single item stock analysis 
 '''
+
 @login_required(login_url='/accounts/login/')
 def product_analysis(request,id):
     to_add = Product.objects.get(id=id)
+    orders=[]
+    for w in to_add.location.all():
+        orders=[{"quantity":i.quantity,"time":i.time} for i in w.orders.all()]
+    data=json.dumps(aggregateOrdersBymonth(orders))
+    print(type(data))
+
     products = House_Product.objects.filter(name=id) 
     in_houses = House_Product.objects.filter(name=id) \
     .values('warehouse') \
@@ -346,7 +379,7 @@ def product_analysis(request,id):
     
     print(in_houses)
 
-    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products})
+    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products,"data":data})
 
 '''
 all cusomers
@@ -374,17 +407,22 @@ def customer_order(request):
     message1=None
     message2=None
     message3=None
-    orders = Customer_order.objects.order_by('-date').all()
+    orders = Customer_order.objects.order_by('-time').all()
     if request.method == 'POST':
         form = CustomerOrder(request.POST, request.FILES)
         if form.is_valid():
+            date_str=form.cleaned_data["time"]
+            
             order=form.save(commit=False)
-            order.month = datetime.datetime.now().strftime ("%m")
-            order.year = datetime.datetime.now().strftime ("%y")
+            order.time=date_str
+          
             try:
-                product = Product.objects.get(sKU=order.sKU)
+                
+                order.sKU=order.product.name.sKU
+                product=order.product.name
                 order.total_price = order.quantity * product.unit_price
-            except ObjectDoesNotExist:
+            except ObjectDoesNotExist as e:
+                print(e)
                 message3='Make sure you input the SKU correctly'
 
             try:
@@ -394,12 +432,17 @@ def customer_order(request):
                 else:
                     to_subtract.quantity=to_subtract.quantity - order.quantity
                     to_subtract.save()
+                    print("i reached here")
                     order.save()
                     return redirect(customer_order)
-            except ObjectDoesNotExist:
+            except ObjectDoesNotExist as e:
+                print(e)
                 message1='The prduct does not exist in that warehouse'
+        else:
+            print(form.errors)
             
     else:
+       
         form =CustomerOrder()
     
     return render(request,'customer/customers_order.html',{'orders':orders,'form':form,'message1':message1,'message2':message2,'message3':message3})
@@ -469,6 +512,7 @@ class DistributorsList(APIView):
         permission_classes = (IsAdminOrReadOnly,)
 
 class SuppliersList(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
     def get(self, request, format=None):
         all_projects = Supplier.objects.all()
         serializers = SupplierSerializer(all_projects, many=True)
@@ -480,5 +524,31 @@ class SuppliersList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-        permission_classes = (IsAdminOrReadOnly,)
 
+def customerApiViews(request):
+    # orders=Customer_order.objects.all()
+    # x=[]
+    # for i in orders:
+    #     x.append({"quantity":i.quantity,"time":i.time,"product":i.product.name.name})
+
+    x={}
+    products=Product.objects.all()
+    for p in products:
+        x[p.sKU]=[]
+        for w in p.location.all():
+            x[p.sKU]=[{"quantity":i.quantity,"time":i.time,"product":i.product.name.name} for i in w.orders.all()]
+    from django.http import JsonResponse
+    
+    return JsonResponse({"data":x})
+        
+# def xss(request):
+#     import csv
+#     from django.http import JsonResponse
+#     from django.conf import settings
+#     path=settings.BASE_DIR+"/app/data/combined.csv"
+#     with open(path,"r") as infile:
+#         data=csv.DictReader(infile)
+#         x=[dict(i) for i in data]
+#     return JsonResponse({"data":x})
+def generate_report(request):
+    pass
