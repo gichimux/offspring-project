@@ -57,8 +57,11 @@ Use the command given below to run automated tests.
 
 # Built With
 Python - language to formulate code
+
 Django - web framework used
+
 HTML - For building Mark Up pages/User Interface
+
 CSS - For Styling User Interface
 
 # License
