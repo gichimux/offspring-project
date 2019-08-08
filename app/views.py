@@ -16,6 +16,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import *
 from rest_framework import status
+from django.http import JsonResponse
 
 '''
 View for pwa
@@ -525,7 +526,7 @@ def customerApiViews(request):
         x[p.sKU]=[]
         for w in p.location.all():
             x[p.sKU]=[{"quantity":i.quantity,"time":i.time,"product":i.product.name.name} for i in w.orders.all()]
-    from django.http import JsonResponse
+
     return JsonResponse({"data":x})
         
 # def xss(request):
