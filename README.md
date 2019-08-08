@@ -3,10 +3,15 @@
 This is an Inventory Management System built using python for Offspring Company Limited. It is a system that will help track and manage stocks for Offspring Company Limited and provide invoices to their various customers. Additionally, it will help the company analyse sales of their different products using line graphs.
 
 # Authors
+
 Bright Mukonesi
+
 Rewel Kinyanjui
+
 Jaquiline Wangu
+
 George Mwai
+
 Abigail Wambui
 
 # Features
