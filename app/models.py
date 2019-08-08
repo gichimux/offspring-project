@@ -48,8 +48,12 @@ class OrderDetails(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     created_at= models.DateTimeField(auto_now_add=True)
     time=models.DateTimeField(null=True)
+<<<<<<< HEAD
     month=models.PositiveIntegerField(default=0)
     year=models.PositiveIntegerField(default=0)
+=======
+    
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
   
     
     def __str__(self):
@@ -92,6 +96,7 @@ class Supplier(models.Model):
     name = models.CharField(max_length= 50)
     product = models.CharField(max_length= 50)
     contact = models.CharField(max_length= 50)
+    email = models.CharField(max_length= 50)
     
     def __str__(self):
         return self.name
@@ -105,10 +110,14 @@ class Order_Product(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     supplier=models.ForeignKey(Supplier,blank=True,null=True)
     quantity =models.PositiveIntegerField(default=0)
+<<<<<<< HEAD
     month= models.PositiveIntegerField(default=0)
     
     year= models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
+=======
+    time=models.DateTimeField(null=True)
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
 
     def __str__(self):
         return self.product.name 
@@ -132,9 +141,13 @@ class Customer_order(models.Model):
     customer = models.ForeignKey('Customer',default=0)
     quantity =models.PositiveIntegerField(default=0)
     total_price = models.PositiveIntegerField(default=0)
+<<<<<<< HEAD
     month= models.PositiveIntegerField(default=0)
     year= models.PositiveIntegerField(default=0)
     date = models.DateTimeField(auto_now=True)
+=======
+    
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
     time=models.DateTimeField(null=True)
 
     def __str__(self):
@@ -142,24 +155,54 @@ class Customer_order(models.Model):
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length= 10)
+    first_name = models.CharField(max_length= 10)
+    second_name = models.CharField(max_length= 10)
     contact = models.CharField(max_length= 10)
     email = models.CharField(max_length= 30,default='email@example.com')
 
     def __str__(self):
-        return self.name 
+        return self.first_name
 
 class Invoice(models.Model):
     order = models.ForeignKey('Customer_order',default='000')
     date = models.DateTimeField(auto_now=True)
 
+<<<<<<< HEAD
    
+=======
+'''
+Sales model
+'''  
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
 class Sales(models.Model):
     item_name=models.CharField(max_length= 20)
     date_sold = models.DateField(auto_now=False)
     predicted=models.IntegerField(default=0)
 
+<<<<<<< HEAD
 class Prediction(models.Model):
     item_name=models.CharField(max_length= 20)
     date_sold = models.DateField(auto_now=False)
     predicted=models.IntegerField(default=0)
+=======
+'''
+predicted data
+'''
+class Prediction(models.Model):
+    item_name=models.CharField(max_length= 20)
+    date_sold = models.DateField(auto_now=False)
+    predicted=models.IntegerField(default=0)
+
+'''
+Requested supplies
+'''
+class Requested_supply(models.Model):
+    supplier = models.ForeignKey(Supplier)
+    product = models.CharField(max_length= 20)
+    quantity =models.PositiveIntegerField(default=0)
+    time = models.DateTimeField(null=True)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.product
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b

@@ -18,6 +18,7 @@ urlpatterns=[
 
  url(r'^supplier$',views.all_suppliers,name="suppliers"),
  url(r'^supplier/(\d+)$',views.single_supplier,name="supplier"),
+ url(r'^status/(\d+)$',views.product_status,name='status'),
 
  url(r'^orders$',views.all_orders,name="orders"),
  url(r'^orders/supplier$',views.supply_orders,name='supply_orders'),
@@ -39,7 +40,15 @@ urlpatterns=[
  url(r'^distributors',views.DistributorsList.as_view()),
  url(r'^suppliers',views.SuppliersList.as_view()),
  url(r'^categories',views.CategoriesList.as_view()),
+<<<<<<< HEAD
  url(r'^customer-orders',views.customerApiViews,name="customers-orders")
+=======
+ 
+ url(r'^report',views.generate_report,name="month_report"),
+url(r'^customer-orders',views.customerApiViews,name="customers-orders")
+
+
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
 ]
 
 

@@ -15,8 +15,14 @@
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
     }
+    a:hover{
+            
+            text-decoration: none;
+             color:black; 
+         }
 </style>
 <div class="container">
+    <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
   {% if message is None %}
   {% else %}
     <div class="alert alert-danger alert-dismissible">
@@ -30,7 +36,7 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
       </button>
       {% endif %}
       <br>
-      <h3 class="text-center">{{to_update.name}} </h3>
+      <h3 class="text-center"><b>{{to_update.name}}</b> </h3>
       <hr><br>
       <div class="row">
       <div class="col-md-2 col-lg-2 col-sm-2">

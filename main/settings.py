@@ -25,8 +25,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     # 'pwa',
     # 'postgres-copy',
+=======
+    'pwa',
+    'postgres_copy',
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
     'rest_framework.authtoken',
 ]
 

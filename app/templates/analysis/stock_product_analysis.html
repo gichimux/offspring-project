@@ -10,9 +10,9 @@
 
     <div id="chart-container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
    
-    <h3 class="text-center">{{to_add.name}} quantity:  <b>{{to_add.quantity}}</b></h3><hr>
+    <h4 class="text-center">{{to_add.name}}</h4><hr>
     {% for product in products %}
-    <p><b>Product:</b> {{product.name}}<br> <b>Location: {{product.warehouse}} </b><br> quantity: <b>{{product.quantity}}</b></p>
+    <p><b>Product:</b> {{product.name}}<br> <b>Location:</b> {{product.warehouse}} <br><b> quantity:</b> <span style="color:orange" >{{product.quantity}}</span></p>
     {% endfor %}
     
 {% endblock %}

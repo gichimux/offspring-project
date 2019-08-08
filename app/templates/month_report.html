@@ -173,41 +173,10 @@ a{
     <div class="invoice overflow-auto">
         <div style="min-width: 600px">
             <header>
-                <div class="row">
-                    <div class="col">
-                        <a target="_blank" href="#">
-                            <img src="https://offspring.co.ke/wp-content/uploads/2019/01/logo1.png" alt="For All Your Parenting Needs" class="logo-default" margin-right="20" width="220" height="98">
-                            </a>
-                    </div>
-                    <div class="col company-details">
-                        <h2 class="name">
-                            <a target="_blank" href="#">
-                            OFFSPRING COMPANY LIMITED
-                            </a>
-                        </h2>
-                        <div>P.O BOX 28269-00200</div>
-                        <div>Nairobi</div>
-                        <div>Top Plaza Building, 2nd Floor</div>
-                        <div>Kindaruma Road</div>
-                        
-                        <div>(+254) 743-07961</div>
-                    </div>
-                </div>
+              <h3 class="text-center"><b>Report for sale of products in {{month|date:"M" }}</b></h3>  
             </header>
             <main>
-                <div class="row contacts">
-                    <div class="col invoice-to">
-                        <div class="text-gray-light">INVOICE TO:</div>
-                        <h2 class="to">{{invoice.order.customer.name}}</h2>
-                        <div class="address">{{invoice.order.customer.contact}}</div>
-                        <div class="email"><a href="mailto:john@example.com">{{invoice.order.customer.email}}</a></div>
-                    </div>
-                    <div class="col invoice-details">
-                        <h1 class="invoice-id">INVOICE: {{invoice.order.order_serial}}</h1>
-                        <div class="date">Date of Invoice: {{invoice.date}}</div>
-                       
-                    </div>
-                </div>
+                
                 <table border="0" cellspacing="0" cellpadding="0">
                     <thead>
                         <tr>
@@ -238,28 +207,14 @@ a{
                             <td colspan="2"></td>
                             <td colspan="2">SUBTOTAL</td>
                             <td>{{total}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">TAX {{order.tax}}</td>
-                            <td>0</td>
-                           
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">GRAND TOTAL</td>
-                            <td>{{total | sub:0}}</td>
-                        </tr>
+                       
                     </tfoot>
                 </table>
-                <div class="thanks">Thank you!</div>
-                <div class="notices">
-                    <div>NOTICE:</div>
-                    <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-                </div>
+               
+               
             </main>
             <footer>
-                Invoice was created on a computer and is valid without the signature and seal.
+               Report for the sale of products
             </footer>
         </div>
         <div></div>

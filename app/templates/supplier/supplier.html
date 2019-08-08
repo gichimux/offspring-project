@@ -10,28 +10,81 @@
         padding-bottom:20px;
 
     }
+    a:hover{
+            
+            text-decoration: none;
+             color:black; 
+         }
+         .detail{
+             position:fixed
+         }
+         b{
+             padding-left:9px;
+         }
 </style>
 
 <div class='container'>
-<h3 class="text-center">{{supplier.name}}</h3><hr><br>
+        {% if request.user.is_superuser %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                Request Product
+              </button>
+   {% endif %}
+        <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
+<h3 class="text-center"><b>{{supplier.name}}</b></h3><hr><br>
 <div class="row">
     <div class="col-md-3 col-sm-3 col-lg-3">
-        
+        <div class="detail">
         <p>Product: <b>{{supplier.product}}</b></p><hr>
         <p>Contact: <b>{{supplier.contact}}</b></p><hr>
         <p>Email: <b>{{supplier.email}}</b></p><hr>
         <div class="email"><a style="color:blue;"href="mailto:{{supplier.email}}">Make an order</a></div>
+        </div>
     </div>
     <div class="col-md-9 col-sm-9 col-lg-9">
-       
-        {% for order in orders %}
+       <h4 class="text-center">Requested orders</h4><hr>
+        {% for request in requests %}
         <div class="orders">
-        <p>{{order.product}}</p>
-        <p>{{order.quantity}}</p>
+        <p>
+                {{request.id}}. <b>Product:</b> {{request.product}} 
+        <b>Quantity:</b> {{request.quantity}} 
+       <b>Date:</b> {{request.time}}
+        <b>Delivery:</b>
+    {% if request.status is False %}<a href="{% url 'status' request.id %}">
+<b style="border:1px solid grey;padding:2px">✕</b></a>
+{% else %}
+<b style="color:green;font-size:20px;border:1px solid grey;padding:2px">✔</b>
+{% endif %}</p>
+
         </div>
         <hr>
         {% endfor %}
         </div>
+</div>
+</div>
+<div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+                <div class="modal-header">
+                    <h3>New Request</h3>  
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    
+                    </div>  
+                    <div class="modal-body">    
+{{form.media}}
+
+<form  action="{% url 'supplier' supplier.id %}" method="post" enctype="multipart/form-data">
+  {%csrf_token%}
+  
+ 
+  {% bootstrap_form form%}
+  <input type="submit" class="btn btn-success btn-lg" value="Post">
+</form>
+
+ {% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% bootstrap_javascript %} {% endblock %}
+</div>
+</div>
 </div>
 </div>
 {% endblock %}

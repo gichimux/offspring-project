@@ -13,6 +13,7 @@ admin.site.register(Order_Product)
 admin.site.register(Customer_order)
 admin.site.register(Customer)
 admin.site.register(Invoice)
+admin.site.register(Requested_supply)
 
 admin.site.site_header = "Offspring";
 admin.site.site_title = "Offspring Inventory ";

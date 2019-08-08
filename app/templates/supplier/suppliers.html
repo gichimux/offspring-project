@@ -46,6 +46,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     </head>
     <body>
         <div class="container">
+                <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
                 {% if request.user.is_superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Add new supplier
@@ -53,7 +54,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
            {% endif%}
            
             
-           <h3 class="text-center">Suppliers</h3><hr>
+           <h3 class="text-center"><b>Suppliers</b></h3><hr>
            <div class="row">
             {% for supplier in suppliers %}
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 ">

@@ -183,8 +183,8 @@ def add_house_product(request,h_id,i_id):
             item = form.save(commit=False)
             item.product = product
             item.warehouse=house
-            item.month=datetime.datetime.now().strftime ("%m")
-            item.year=datetime.datetime.now().strftime ("%Y")
+            # item.month=datetime.datetime.now().strftime ("%m")
+            # item.year=datetime.datetime.now().strftime ("%Y")
             prod=Product.objects.get(id=item.product.id)
             if prod.quantity < item.quantity:
                 message = 'The amount of product in stock is not enough'
@@ -239,9 +239,24 @@ View for supplier details
 @login_required(login_url='/accounts/login/')
 def single_supplier(request,id):
     supplier = Supplier.objects.get(id=id)
-    orders = Order_Product.objects.filter(supplier=id)
-    return render(request,'supplier/supplier.html',{'supplier':supplier,'orders':orders})
+    requests = Requested_supply.objects.filter(supplier=id)
+    if request.method == 'POST':
+        form = NewRequest(request.POST, request.FILES)
+        if form.is_valid():
+            requested=form.save(commit=False)
+            requested.supplier=supplier
+            requested.save()
+            return redirect(single_supplier,id)
+    else:
+        form =NewRequest()
+    return render(request,'supplier/supplier.html',{'supplier':supplier,'requests':requests,'form':form})
 
+@login_required(login_url='/accounts/login/')
+def product_status(request,id):
+    requested = Requested_supply.objects.get(id=id)
+    requested.status=True
+    requested.save()
+    return redirect(single_supplier,requested.supplier.id)
 
 '''
 View for all orders
@@ -254,7 +269,7 @@ view for supply orders
 '''
 @login_required(login_url='/accounts/login/')
 def supply_orders(request):
-    orders = Order_Product.objects.order_by('-date').all()
+    orders = Order_Product.objects.order_by('-time').all()
     return render(request,'orders/supply_orders.html',{'orders':orders})
 
 '''
@@ -348,6 +363,7 @@ def aggregateOrdersBymonth(orders):
 '''
 single item stock analysis 
 '''
+
 @login_required(login_url='/accounts/login/')
 def product_analysis(request,id):
     to_add = Product.objects.get(id=id)
@@ -392,10 +408,11 @@ def customer_order(request):
     message1=None
     message2=None
     message3=None
-    orders = Customer_order.objects.order_by('-date').all()
+    orders = Customer_order.objects.order_by('-time').all()
     if request.method == 'POST':
         form = CustomerOrder(request.POST, request.FILES)
         if form.is_valid():
+<<<<<<< HEAD
             date_str=form.cleaned_data["date"]
             # from dateutil import parser
             # date_=parser.parse(date_str)
@@ -407,6 +424,15 @@ def customer_order(request):
             try:
                 
                 # product = Product.objects.get(sKU=order.sKU)
+=======
+            date_str=form.cleaned_data["time"]
+            
+            order=form.save(commit=False)
+            order.time=date_str
+          
+            try:
+                
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
                 order.sKU=order.product.name.sKU
                 product=order.product.name
                 order.total_price = order.quantity * product.unit_price
@@ -526,7 +552,12 @@ def customerApiViews(request):
         x[p.sKU]=[]
         for w in p.location.all():
             x[p.sKU]=[{"quantity":i.quantity,"time":i.time,"product":i.product.name.name} for i in w.orders.all()]
+<<<<<<< HEAD
 
+=======
+    from django.http import JsonResponse
+    
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
     return JsonResponse({"data":x})
         
 # def xss(request):
@@ -537,4 +568,10 @@ def customerApiViews(request):
 #     with open(path,"r") as infile:
 #         data=csv.DictReader(infile)
 #         x=[dict(i) for i in data]
+<<<<<<< HEAD
 #     return JsonResponse({"data":x})
+=======
+#     return JsonResponse({"data":x})
+def generate_report(request):
+    pass
+>>>>>>> edf189615cae01061032f150b9a156b987a3044b
