@@ -38,39 +38,43 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
       <br>
       <h3 class="text-center"><b>{{to_update.name}}</b> </h3>
       <hr><br>
+      <div class="item">
       <div class="row">
-      <div class="col-md-2 col-lg-2 col-sm-2">
-        <p>SKU</p>
-        <b>{{to_update.sKU}}</b>
-      </div>
-      <div class="col-md-2 col-lg-2 col-sm-2">
-        <p>Description</p>
-        <b>{{to_update.name.description}}</b>
-      </div>
-      <div class="col-md-2 col-lg-2 col-sm-2">
-        <p>Colour</p>
-        <b>{{to_update.name.product_color}}</b> 
-      </div>
-      <div class="col-md-2 col-lg-2 col-sm-2">
-        <p>Price</p>
-        <b>{{to_update.name.unit_price}}</b>
-      </div>
-      <div class="col-md-2 col-lg-2 col-sm-2">
-        <p>Quantity</p>
-        <b>{{to_update.quantity}}</b> 
-       
-      </div>
-      <div class="col-md-2 col-lg-2 col-sm-2">
-        <p>Size</p>
-        {% if to_update.name.size %}
-       <b>{{to_update.name.size}}</b> 
-        {% else %}
-        <p>-</p> 
-       {% endif %}
-      </div><hr>
-     
+          <p>SKU</p>
+          <b>{{to_update.name.sKU}}</b>
+          </div>
+          <div class="row">
+          <p>Description</p>
+          <b>{{to_update.name.description}}</b>
+        </div>
+        <div class="row">
+          <p>Size</p>
+          <b>{{to_update.name.size}}</b>
+        </div>
+        <div class="row">
+          <p>colour</p>
+          <b>{{to_update.name.product_color}}</b>
+         
+        </div>
+        <div class="row">
+          <p>Quantity</p>
+          <b>{{to_update.quantity}}</b> 
+          
+        </div>
+        <div class="row">
+            <p>Price</p>
+            <b>{{to_update.name.unit_price}}</b> 
+            
+          </div>
+</div>
    </div>
 </div>
+<style>
+    .item b{
+      margin-left:10%;
+      
+    }
+  </style>
     <div class="modal fade" id="myModal">
         <div class="modal-dialog">
           <div class="modal-content">

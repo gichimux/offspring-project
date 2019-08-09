@@ -143,6 +143,7 @@ quantity of items under a category
 def house_category(request,h_id,c_id):
     message = None
     products = House_Product.objects.filter(category=c_id).filter(warehouse=h_id)
+    
     category = Category.objects.get(id=c_id)
     house = Distributor.objects.get(id=h_id)
     if request.method == 'POST':
@@ -416,29 +417,38 @@ def customer_order(request):
             order=form.save(commit=False)
             order.time=date_str
             order.status=False
-          
+            
             try:
                 
                 order.sKU=order.product.name.sKU
                 product=order.product.name
                 order.total_price = order.quantity * product.unit_price
             except ObjectDoesNotExist as e:
-                
+               
                 message3='Make sure you input the SKU correctly'
-
-            try:
-                to_subtract = House_Product.objects.filter(warehouse=order.warehouse).get(sKU=order.sKU)
+            
+            if order.warehouse.location == 'karen':
+                to_subtract = Product.objects.get(sKU=order.sKU)
+                
                 if order.quantity > to_subtract.quantity:
-                    message2 = 'The amount of product in this warehouse is not enough'
+                    message2 = 'The amount of product is not enough'
                 else:
-                    to_subtract.quantity=to_subtract.quantity - order.quantity
-                    
-                    
                     order.save()
                     return redirect(customer_order)
-            except ObjectDoesNotExist as e:
+            else:
+                try:
+                    to_subtract = House_Product.objects.filter(warehouse=order.warehouse).get(sKU=order.product.sKU)
+                    if order.quantity > to_subtract.quantity:
+                        message2 = 'The amount of product in this warehouse is not enough'
+                    else:
+                        to_subtract.quantity=to_subtract.quantity - order.quantity
+                    
+                    
+                        order.save()
+                        return redirect(customer_order)
+                except ObjectDoesNotExist as e:
                 
-                message1='The prduct does not exist in that warehouse'
+                    message1='The product does not exist in that warehouse'
         else:
             print(form.errors)
             
@@ -456,12 +466,19 @@ View for checking if customer order is delivered
 def customer_order_status(request,id):
     order = Customer_order.objects.get(id=id)
     order.status=True
-    to_subtract=House_Product.objects.get(id=order.product.id)
+    if order.warehouse.location=='karen':
+        to_subtract=Product.objects.get(sKU=order.sKU)
+        to_subtract.quantity=to_subtract.quantity - order.quantity
+        to_subtract.save()
+        order.save()
+        return redirect(customer_order)
+    else:
+        to_subtract=House_Product.objects.get(id=order.product.id)
     
-    to_subtract.quantity=to_subtract.quantity - order.quantity
-    to_subtract.save()
-    order.save()
-    return redirect(customer_order)
+        to_subtract.quantity=to_subtract.quantity - order.quantity
+        to_subtract.save()
+        order.save()
+        return redirect(customer_order)
 
 '''
 generating invoice

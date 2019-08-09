@@ -70,7 +70,7 @@ class House_product for the products in particular house
 
 class House_Product(models.Model):
     name = models.ForeignKey(Product,blank=False,null=False,related_name="location")
-    sKU = models.CharField(max_length= 10,default='I')
+    sKU = models.CharField(max_length=40)
     category = models.ForeignKey(Category,default='Toys')
     warehouse = models.ForeignKey('Distributor',default=1,related_name="warehouse_products")
     quantity =models.PositiveIntegerField(default=0)
@@ -81,7 +81,7 @@ class House_Product(models.Model):
         return products
 
     def __str__(self):
-        return self.name.name + '-' + self.sKU
+        return self.name.name + '-' + self.name.sKU
 
 '''
 class for the product suppliers
@@ -124,7 +124,7 @@ distributor
 class Customer_order(models.Model):
     product=models.ForeignKey(House_Product,on_delete=models.CASCADE,blank=False,null=False,related_name="orders")
     order_serial = models.CharField(max_length= 10)
-    sKU = models.CharField(max_length= 10)
+    sKU = models.CharField(max_length=40)
     warehouse = models.ForeignKey('Distributor',default=1)
     customer = models.ForeignKey('Customer',default=0)
     quantity =models.PositiveIntegerField(default=0)
