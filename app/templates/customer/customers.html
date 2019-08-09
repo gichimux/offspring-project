@@ -4,47 +4,9 @@
 {% block content %} 
 {{ block.super}}
 
-<style>
-  button{
-      float:right;
-  }
-  .container{
-     font-family: 'Roboto Condensed', sans-serif;
-  }
-  .categories{
-    border-top:15px solid rgb(5, 114, 141);
-            border-bottom:15px solid rgb(5, 114, 141);
-            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-            margin:10px;
-            transition:0.9s;
-            padding-bottom:7px;
-
-
-  }
-  a{
-      text-decoration: none;
-      color:black;
-  }
-  .categories:hover{
-     -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-     margin:10px;
-
-  }
-  .categories:hover a{
-     
-     text-decoration: none;
-      color:black; 
-  }
-  a:hover{
-            
-            text-decoration: none;
-             color:black; 
-         }
- </style>   
+   
+{% block styles %} {% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/customer.css' %}"> {% endblock %}
 
 </head>
 <body>
@@ -52,7 +14,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
     
 
  <div class="container">
-        <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
+       
      {% if request.user.is_superuser %}
      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
              Add new Customer

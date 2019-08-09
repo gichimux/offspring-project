@@ -6,49 +6,12 @@
 <html>
     <head>
         <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto+Condensed&display=swap" rel="stylesheet">
-           
+        
+        {% block styles %} {% bootstrap_css %}
+        <link rel="stylesheet" href="{% static 'css/customer.css' %}"> {% endblock %}
+  
             
-     <style>
-         button{
-             float:right;
-         }
-         .container{
-            font-family: 'Roboto Condensed', sans-serif;
-         }
-         .categories{
-            border-top:15px solid rgb(5, 114, 141);
-            border-bottom:15px solid rgb(5, 114, 141);
-            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-            margin:10px;
-            transition:0.9s;
-            padding-bottom:7px;
-
-
-         }
-         a{
-             text-decoration: none;
-             color:black;
-         }
-         .categories:hover{
-            -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-            margin:10px;
-
-         }
-         .categories:hover a{
-            
-            text-decoration: none;
-             color:black; 
-         }
-         a:hover{
-            
-            text-decoration: none;
-             color:black; 
-         }
-        </style>   
+       
 
     </head>
     <body>
@@ -94,7 +57,7 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
                     <p><b>product: </b> {{order.product}}</p>
                     <hr>
             </div>
-            <div class="col-md-3 col-lg-3 col-sm-3">
+            <div class="col-md-2 col-lg-2 col-sm-2">
                    
                     <p style="color:orange" class="text-center"> <b >Customer: </b> {{order.customer}}</p>
                     <hr>
@@ -108,6 +71,13 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
                     
                     <p class="text-center"><b>Date</b>: {{order.time}}</p>
                     <hr>
+            </div>
+            <div class="col-md-1 col-sm-1 col-lg-1">
+                {% if order.status is False %}<a href="{% url 'customer_status' order.id %}">
+                    <b style="border:1px solid grey;padding:2px">✕</b></a>
+                    {% else %}
+                    <b style="color:green;font-size:20px;border:1px solid grey;padding:2px">✔</b>
+                    {% endif %}</p>
             </div>
                 {% endfor %}
                 </div>

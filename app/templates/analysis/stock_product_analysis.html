@@ -6,6 +6,10 @@
 {% block content %} 
 {{ block.super}}
 
+{% block styles %} {% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/analysis.css' %}"> {% endblock %}
+</head>   
+
 <div id="container"></div>
 
     <div id="chart-container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>

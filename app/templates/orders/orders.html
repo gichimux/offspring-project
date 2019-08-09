@@ -4,46 +4,9 @@
 {% block content %} 
 {{ block.super}}
 
-<style>
-     button{
-             float:right;
-         }
-         .container{
-            font-family: 'Roboto Condensed', sans-serif;
-         }
-         .categories{
-            border-top:15px solid rgb(5, 114, 141);
-            border-bottom:15px solid rgb(5, 114, 141);
-            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-            margin:10px;
-            transition:0.5s;
-            padding:10px;
+{% block styles %} {% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/orders.css' %}"> {% endblock %}
 
-
-         }
-         a{
-             text-decoration: none;
-             color:black;
-             transition:0.6s;
-             font-size:20px;
-         }
-         .categories:hover{
-            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-            margin:10px;
-
-         }
-         a:hover {
-            
-            text-decoration: none;
-             color:black; 
-             font-size:23px;
-         }
-       
-</style>
 
 <div class="container">
         <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>

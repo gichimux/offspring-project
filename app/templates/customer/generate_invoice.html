@@ -4,45 +4,12 @@
 {% block content %} 
 {{ block.super}}
 
-<style>
-        button{
-            float:right;
-        }
-        .container{
-           font-family: 'Roboto Condensed', sans-serif;
-        }
-        .categories{
-          border-top:15px solid rgb(5, 114, 141);
-            border-bottom:15px solid rgb(5, 114, 141);
-            -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-            margin:10px;
-            transition:0.9s;
-            padding-bottom:7px;
+{% block styles %} {% bootstrap_css %}
+<link rel="stylesheet" href="{% static 'css/customer.css' %}"> {% endblock %}
 
-      
-        }
-        a{
-            text-decoration: none;
-            color:black;
-        }
-        .categories:hover{
-           -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-      -moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-      box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
-           margin:10px;
-      
-        }
-         a:hover{
-           
-           text-decoration: none;
-            color:black; 
-        }
-       </style>  
 
 <div style="margin-top:50px"class="container">
-    <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
+   
         {% if request.user.is_superuser %}
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                 New Invoice
@@ -56,9 +23,9 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
                 <div class="categories">
               <a href="{% url 'customers_invoice' invoice.order invoice.id %}">
         
-                <p> {{invoice.id}}</p> 
+                
                 <p style="color:black" class="text-center"><b>{{invoice.order}}</b></p>
-                <p class="text-left">customer: <b>{{invoice.order.customer.name}}</b></p>
+                <p class="text-left">customer: <b>{{invoice.order.customer.first_name}}</b></p>
                 <p class="text-left">Date: <b>{{invoice.date}}</b></p>
               </a>
               </div>

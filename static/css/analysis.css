@@ -5,12 +5,15 @@ button{
    font-family: 'Roboto Condensed', sans-serif;
 }
 .categories{
-   -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+  border-top:15px solid rgb(5, 114, 141);
+          border-bottom:15px solid rgb(5, 114, 141);
+          -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
-   margin:10px;
-   transition:0.9s;
-   padding-bottom:20px;
+          margin:10px;
+          transition:0.9s;
+          padding-bottom:7px;
+
 
 }
 a{
@@ -24,8 +27,19 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
    margin:10px;
 
 }
-.categories:hover a{
+ a:hover{
    
    text-decoration: none;
     color:black; 
+}
+.detail{
+    font-size:15px;
+    border:1px solid green;
+    border-radius:3px;
+    padding:5px;
+}
+.invoice table th {
+white-space: nowrap;
+font-weight: 400;
+font-size: 16px
 }

@@ -1,0 +1,50 @@
+.supplier{
+    border:1px solid rgb(218, 216, 216);
+    padding:10px;
+    padding-bottom:20px;
+
+}
+a:hover{
+        
+        text-decoration: none;
+         color:black; 
+     }
+     .detail{
+         position:fixed
+     }
+     b{
+         padding-left:9px;
+     }
+     button{
+        float:right;
+    }
+    .container{
+       font-family: 'Roboto Condensed', sans-serif;
+    }
+    .categories{
+       border-top:20px solid rgb(5, 114, 141);
+       border-bottom:20px solid rgb(5, 114, 141);
+       -webkit-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
+       margin:10px;
+       transition:0.9s;
+       padding-bottom:20px;
+
+    }
+    a{
+        text-decoration: none;
+        color:black;
+    }
+    .categories:hover{
+       -webkit-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
+       margin:10px;
+
+    }
+     a:hover{
+       
+       text-decoration: none;
+        color:black; 
+    }
