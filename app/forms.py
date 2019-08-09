@@ -81,7 +81,7 @@ class CustomerOrder(forms.ModelForm):
         widget = forms.SelectDateWidget())
     class Meta:
         model = Customer_order
-        exclude = ['month','year',"sKU",'total_price']
+        exclude = ['status','month','year',"sKU",'total_price']
 
 class Invoicing(forms.ModelForm):
     class Meta:

@@ -129,7 +129,7 @@ class Customer_order(models.Model):
     customer = models.ForeignKey('Customer',default=0)
     quantity =models.PositiveIntegerField(default=0)
     total_price = models.PositiveIntegerField(default=0)
-    
+    status = models.BooleanField(default=False)
     time=models.DateTimeField(null=True)
 
     def __str__(self):

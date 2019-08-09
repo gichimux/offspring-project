@@ -33,7 +33,7 @@ urlpatterns=[
  url(r'^customer/order$',views.customer_order,name="customer_orders"),
  url(r'^invoice/(\w+)/(\d+)$',views.customers_invoice,name="customers_invoice"),
  url(r'^new/invoice$',views.generate_invoice,name="generate_invoice"),
-
+ url(r'^customer/orders/status/(\d+)$',views.customer_order_status,name='customer_status'),
 
  url(r'^distributors',views.DistributorsList.as_view()),
  url(r'^suppliers',views.SuppliersList.as_view()),

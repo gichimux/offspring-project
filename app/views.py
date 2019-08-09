@@ -415,6 +415,7 @@ def customer_order(request):
             
             order=form.save(commit=False)
             order.time=date_str
+            order.status=False
           
             try:
                 
@@ -422,7 +423,7 @@ def customer_order(request):
                 product=order.product.name
                 order.total_price = order.quantity * product.unit_price
             except ObjectDoesNotExist as e:
-                print(e)
+                
                 message3='Make sure you input the SKU correctly'
 
             try:
@@ -431,12 +432,12 @@ def customer_order(request):
                     message2 = 'The amount of product in this warehouse is not enough'
                 else:
                     to_subtract.quantity=to_subtract.quantity - order.quantity
-                    to_subtract.save()
-                    print("i reached here")
+                    
+                    
                     order.save()
                     return redirect(customer_order)
             except ObjectDoesNotExist as e:
-                print(e)
+                
                 message1='The prduct does not exist in that warehouse'
         else:
             print(form.errors)
@@ -446,6 +447,21 @@ def customer_order(request):
         form =CustomerOrder()
     
     return render(request,'customer/customers_order.html',{'orders':orders,'form':form,'message1':message1,'message2':message2,'message3':message3})
+
+
+'''
+View for checking if customer order is delivered
+'''
+@login_required(login_url='/accounts/login/')
+def customer_order_status(request,id):
+    order = Customer_order.objects.get(id=id)
+    order.status=True
+    to_subtract=House_Product.objects.get(id=order.product.id)
+    
+    to_subtract.quantity=to_subtract.quantity - order.quantity
+    to_subtract.save()
+    order.save()
+    return redirect(customer_order)
 
 '''
 generating invoice
