@@ -50,7 +50,7 @@ def inventory(request):
         if product.quantity < 80:
             message1 = 's are running low on stock'
             messages = product.name + ''+ message1
-            print(messages)
+            
            
         else:
             messages = None
@@ -112,7 +112,8 @@ All distributors
 '''
 @login_required(login_url='/accounts/login/')
 def all_distributors(request):
-    houses = Distributor.objects.all()
+    houses = Distributor.objects.exclude(location='karen')
+   
     if request.method == 'POST':
         form = NewDistributor(request.POST, request.FILES)
         if form.is_valid():
@@ -128,24 +129,10 @@ View for a single distributor displaying categories
 '''
 @login_required(login_url='/accounts/login/')
 def single_house(request,id):
+    message = None
     categories = Category.objects.all()
     house = Distributor.objects.get(id=id)
     house_products = House_Product.objects.filter(warehouse=id)
-    
-    return render(request,'distributor/distributor.html',{'house':house,'categories':categories})
-
-
-'''
-view for the single categories within a distributor displaying
-quantity of items under a category
-'''
-@login_required(login_url='/accounts/login/')
-def house_category(request,h_id,c_id):
-    message = None
-    products = House_Product.objects.filter(category=c_id).filter(warehouse=h_id)
-    
-    category = Category.objects.get(id=c_id)
-    house = Distributor.objects.get(id=h_id)
     if request.method == 'POST':
         form = NewHouseProd(request.POST, request.FILES)
         if form.is_valid():
@@ -155,15 +142,36 @@ def house_category(request,h_id,c_id):
                 
                 message = 'That item already exists in this store'
             except ObjectDoesNotExist:
+                
                 item.warehouse=house
-                item.category=category
+                
                 
                 item.save()
-                return redirect(house_category,h_id,c_id)
+                product=Product.objects.get(id=item.name.id)
+                item.sKU=product.sKU
+                item.save()
+               
+                return redirect(single_house,id)
     else:
         form =NewHouseProd()
     
-    return render(request,'distributor/categories.html',{'message':message,'products':products,'category':category,'house':house,'form':form})
+    return render(request,'distributor/distributor.html',{'message':message,'house':house,'categories':categories,'form':form})
+
+
+'''
+view for the single categories within a distributor displaying
+quantity of items under a category
+'''
+@login_required(login_url='/accounts/login/')
+def house_category(request,h_id,c_id):
+    
+    products = House_Product.objects.filter(category=c_id).filter(warehouse=h_id)
+    
+    category = Category.objects.get(id=c_id)
+    house = Distributor.objects.get(id=h_id)
+    
+    
+    return render(request,'distributor/categories.html',{'products':products,'category':category,'house':house})
 
 
 '''
@@ -176,7 +184,7 @@ def add_house_product(request,h_id,i_id):
     message = None
     house = Distributor.objects.get(id=h_id)
     to_update = House_Product.objects.filter(warehouse=h_id).get(id=i_id) 
-    product = Product.objects.get(name=to_update.name.name)
+    product = Product.objects.get(sKU=to_update.name.sKU)
     if request.method == 'POST':
         form = AddHouseProd(request.POST, request.FILES)
         if form.is_valid():
@@ -335,6 +343,11 @@ All categories view
 @login_required(login_url='/accounts/login/')
 def full_stock(request):
     categories = Category.objects.all()
+    from datetime import datetime
+    
+    now =int( datetime.now().strftime('%m'))+1
+   
+    print(now)
     
 
     return render(request, 'analysis/analysis.html', {'categories':categories})
@@ -352,6 +365,7 @@ def full_category(request,id):
 def aggregateOrdersBymonth(orders):
     months=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     orders_={i:[] for i in months}
+    orders_.update({months[5]:[2,3]})
     for i in orders:
         orders_[months[i["time"].date().month -1]].append(i["quantity"])
     for k,v in orders_.items():
@@ -369,18 +383,12 @@ def product_analysis(request,id):
     to_add = Product.objects.get(id=id)
     orders=[]
     for w in to_add.location.all():
-        orders=[{"quantity":i.quantity,"time":i.time} for i in w.orders.all()]
+        orders=[{"quantity":i.quantity,"time":i.time} for i in w.orders.filter().all()]
     data=json.dumps(aggregateOrdersBymonth(orders))
     print(type(data))
 
-    products = House_Product.objects.filter(name=id) 
-    in_houses = House_Product.objects.filter(name=id) \
-    .values('warehouse') \
-    .values('quantity') \
-    
-    print(in_houses)
 
-    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,'in_houses':in_houses,'products':products,"data":data})
+    return render(request,'analysis/stock_product_analysis.html',{'to_add':to_add,"data":data})
 
 '''
 all cusomers

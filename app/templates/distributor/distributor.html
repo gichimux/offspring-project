@@ -45,8 +45,20 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
 <body>
     
  <div class="container">
-        <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{% url 'distributors' %}">❰ Back</a> 
-    
+        {% if message is None %}
+        {% else %}
+          <div class="alert alert-danger alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <p style="color:red;" class="text-center">{{message}}</p>
+          </div>
+          {% endif %}
+        <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{% url 'distributors' %}">❰ Back</a>
+        {% if request.user.is_superuser %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Add product
+                      </button>
+                      {% endif %} 
+        
      
      
     <h3 class="text-center"><b>Categories</b></h3><hr>
@@ -61,6 +73,29 @@ box-shadow: 3px 2px 15px 3px rgba(0,0,0,0.75);
      </div></a>
      </div>
          {% endfor %}
-      
+         <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>New</h3>  
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        
+                        </div>  
+                        <div class="modal-body">    
+    {{form.media}}
+    <form  action="{% url 'single_house' house.id  %}" method="post" enctype="multipart/form-data">
+      {%csrf_token%}
+  
+      {% bootstrap_form form%}
+      <input type="submit" class="btn btn-success btn-lg" value="Post">
+    </form>
+  
+     {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% bootstrap_javascript %} {% endblock %}
+</div>
+</div>
+</div>
+</div>    
 
  {% endblock %}

@@ -134,7 +134,8 @@ class Customer_order(models.Model):
 
     def __str__(self):
         return self.order_serial
-
+    def year(self):
+        return self.time.strftime('%Y')
 
 class Customer(models.Model):
     first_name = models.CharField(max_length= 10)

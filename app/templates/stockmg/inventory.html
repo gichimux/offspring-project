@@ -19,10 +19,12 @@
                 
             {% if message is None %}
             {% else %}
-                <div class="alert alert-warning alert-dismissible">
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <p style="" class="text-center">{{messages}}</p>
+                    <p style="" class="text-center">{{message}}</p>
                     </div>
+                    {% endfor %}
                     {% endif %}
                 {% if request.user.is_superuser %}
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">

@@ -29,7 +29,7 @@ Highcharts.chart('chart-container', {
     },
     series: [
         {
-            name: 'Tokyo',
+            name: 'month ',
             data: Object.values(chartData)
         }
     ]
