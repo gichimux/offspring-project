@@ -37,7 +37,7 @@
 <body>
   
 <div  class="jumbotron">
-  <span class="text-center"><h6 style="margin-top:30px;"><b><i style="margin-right:20px;"class="fas fa-tachometer-alt"></i>D</b>ASHBOARD</h6>  <h6 style="float:right"><b>{{request.user.username}} </b>  <a style="font-size:14px;color:white"class="glyphicon glyphicon-off " href="/logout">Logout</a></h6><br></span>
+  <span class="text-center"><h6 style="margin-top:10px;"><b><i style="margin-right:20px;"class="fas fa-tachometer-alt"></i>D</b>ASHBOARD</h6>  <h6 style="float:right"><b>{{request.user.username}} </b>  <a style="font-size:14px;color:white"class="glyphicon glyphicon-off " href="/logout">Logout</a></h6><br></span>
 </div>
 <div id="mySidenav" class="sidenav">
   
@@ -78,7 +78,20 @@
    
 </div>
 
-<div id="main" style="margin-left:180px">
+<div id="main" style="">
+  <div class="col-sm-4 col-md-4 col-xs-3 navbar-right">
+
+    <form class="navbar-form" role="search" action="{% url 'search_product' %}">
+
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search product" name="product">
+        <div class="input-group-btn">
+          <button class="btn btn-sm btn-primary" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+      </div>
+
+    </form>
+  </div>
     <span style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776;</span>
    
     
@@ -147,7 +160,7 @@ function closeNav() {
       body {
         font-family: "Lato", sans-serif;
       }
-      
+      @media screen and (min-width: 550px) {
       .sidenav {
         
 
@@ -163,7 +176,41 @@ function closeNav() {
         transition: 0.5s;
         padding-top: 60px;
       }
-      
+    }
+    @media screen and (max-width: 550px) {
+      .sidenav {
+        
+
+        height: 100%;
+        width: 100;
+        position: fixed;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        background-color:rgb(5, 114, 141);
+        font-family: 'Roboto Condensed', sans-serif;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+    }
+    @media screen and (max-width: 470px) {
+      .sidenav {
+        
+
+        height: 100%;
+        width: 0;
+        
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        background-color:rgb(5, 114, 141);
+        font-family: 'Roboto Condensed', sans-serif;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+    }
       .sidenav a {
         padding: 8px 8px 8px 32px;
         text-decoration: none;
@@ -193,8 +240,15 @@ function closeNav() {
       #main {
         transition: margin-left .5s;
         padding: 16px;
+        margin-left:180px
       }
-      
+      @media screen and (max-width: 470px) {
+        #main {
+        transition: margin-left .5s;
+        padding: 10px;
+        margin-left:0px
+      }
+    }
       @media screen and (max-height: 450px) {
         .sidenav {padding-top: 15px;}
         .sidenav a {font-size: 18px;}

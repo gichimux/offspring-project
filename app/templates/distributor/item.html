@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
-{% load bootstrap3 %} {% load staticfiles %}
+{% load bootstrap3 %} 
+{% load bootstrap4 %}{% load staticfiles %}
 {% block content %} 
 {{ block.super}}
 <style>
@@ -22,7 +23,7 @@ box-shadow: 3px 2px 12px 0px rgba(0,0,0,0.75);
          }
 </style>
 <div class="container">
-    <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{{request.META.HTTP_REFERER|escape}}">❰ Back</a>
+    <a style="font-size:20px;margin-left:20px;color:rgb(5, 114, 141);text-decoration: none;"  href="{% url 'house_category' house.id product.category.id %}">❰ Back</a>
   {% if message is None %}
   {% else %}
     <div class="alert alert-danger alert-dismissible">

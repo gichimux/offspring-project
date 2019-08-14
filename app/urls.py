@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 urlpatterns=[
  url(r'^$',views.inventory,name='inventory'),
- url(r'^search/',views.search,name='search_results'),
+ 
  url(r'^category/(\d+)$',views.stock_category,name='category'),
  url(r'^category/product/(\d+)$',views.stock_product,name="stock_product"),
      
@@ -40,9 +40,9 @@ urlpatterns=[
  url(r'^categories',views.CategoriesList.as_view()),
  
  url(r'^report',views.generate_report,name="month_report"),
-url(r'^customer-orders',views.customerApiViews,name="customers-orders")
+url(r'^customer-orders',views.customerApiViews,name="customers-orders"),
 
-
+url(r'^search/', views.search_product, name='search_product'),
 ]
 
 

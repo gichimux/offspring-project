@@ -1,0 +1,70 @@
+{%extends 'base.html'%}
+{% load bootstrap4 %}
+{% load bootstrap3 %}
+{% block content %} 
+
+{{ block.super}}
+
+  
+      
+        {% if products%}
+        <h2>Found {{ products|length }} of searched term<br> .{{message}}</h2>
+      {% else %}
+        <h2> Found 0 images for the search term {{message}}</h2>
+      {% endif %}
+  <hr>
+   
+    {% if products%}
+    {% for product in products %}
+    <div class="container">
+    <a href="{% url 'stock_product' product.id %}">
+    <div class="row">
+        
+    <div class="col-xs-2 col-md-2 col-lg-2 col-sm-2">
+        <p>SKU</p>
+        <b>{{product.sKU}}</b>
+      </div>
+      <div class="col-xs-3 col-md-3 col-lg-3 col-sm-3">
+        <p>Name</p>
+        <b>{{product.name}}</b>
+      </div>
+      <div class="col-xs-3  col-md-3 col-lg-3 col-sm-2">
+        <p>Color</p>
+        <b>{{product.product_color}}</b>
+      </div>
+     
+      <div class=" col-xs-2 col-md-2 col-lg-3 col-sm-2">
+        <p>Quantity</p>
+        <b>{{product.quantity}}</b>
+      </div>
+             
+            </div> 
+            </a>
+          </div><br><br>
+ 
+<style>
+.row{
+    border:1px solid rgb(221, 219, 219);
+    padding:5px;
+
+}
+a{
+    text-decoration: none;
+    color:black;
+}
+a:hover{
+    text-decoration: none;
+    color:black;
+}
+.container{
+    font-family: 'Roboto Condensed', sans-serif;
+}
+   
+</style>
+
+{% endfor %}
+{% endif %}
+
+
+
+{% endblock %}

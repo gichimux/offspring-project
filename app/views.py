@@ -213,17 +213,6 @@ def add_house_product(request,h_id,i_id):
 '''
 view to search a particular product by its serial
 '''
-@login_required(login_url='/accounts/login/')
-def search(request):
-    if 'product' in request.GET and request.GET['product']:
-        search_serial =request.GET.get("product")
-        searched_product = House_Product.search_by_serial(search_serial)
-        message=f"{search_serial}"
-        return render(request,'search.html',{"message":message,"products":searched_order})
-    else:
-        message="You did not return any product"
-        return render(request,'search.html',{"message":message})
-
 
 '''
 View for all the suppliers
@@ -593,3 +582,15 @@ def customerApiViews(request):
 #     return JsonResponse({"data":x})
 def generate_report(request):
     pass
+
+def search_product(request):
+    if 'product' in request.GET and request.GET['product']:
+        search_term = request.GET.get('product')
+        products = Product.search_by_name(search_term)
+        # in_houses = House_Product.search_by_name(search_term)
+        message = f'{search_term}'
+
+        return render(request,'searched.html',{'products':products})
+    else:
+        message = 'you have not searched for anything'
+        return render(request,'searched.html',{'message':message})

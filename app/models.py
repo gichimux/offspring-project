@@ -30,7 +30,10 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name + '-'+ self.sKU
-
+    @classmethod
+    def search_by_name(cls,search_term):
+        products = cls.objects.filter(name__icontains=search_term)
+        return products
 '''
 class distributor for the different product distributors
 '''
@@ -76,8 +79,8 @@ class House_Product(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     
     @classmethod
-    def search_by_serial(cls,search_serial):
-        products=cls.objects.filter(serial__icontains=search_serial)
+    def search_by_name(cls,search_term):
+        products = cls.objects.filter(name__icontains=search_term)
         return products
 
     def __str__(self):
