@@ -48,12 +48,7 @@ class OrderDetails(models.Model):
     quantity =models.PositiveIntegerField(default=0)
     created_at= models.DateTimeField(auto_now_add=True)
     time=models.DateTimeField(null=True)
-<<<<<<< HEAD
-    month=models.PositiveIntegerField(default=0)
-    year=models.PositiveIntegerField(default=0)
-=======
     
->>>>>>> edf189615cae01061032f150b9a156b987a3044b
   
     
     def __str__(self):
@@ -110,14 +105,7 @@ class Order_Product(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=False,null=False)
     supplier=models.ForeignKey(Supplier,blank=True,null=True)
     quantity =models.PositiveIntegerField(default=0)
-<<<<<<< HEAD
-    month= models.PositiveIntegerField(default=0)
-    
-    year= models.PositiveIntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
-=======
     time=models.DateTimeField(null=True)
->>>>>>> edf189615cae01061032f150b9a156b987a3044b
 
     def __str__(self):
         return self.product.name 
@@ -141,13 +129,7 @@ class Customer_order(models.Model):
     customer = models.ForeignKey('Customer',default=0)
     quantity =models.PositiveIntegerField(default=0)
     total_price = models.PositiveIntegerField(default=0)
-<<<<<<< HEAD
-    month= models.PositiveIntegerField(default=0)
-    year= models.PositiveIntegerField(default=0)
-    date = models.DateTimeField(auto_now=True)
-=======
     
->>>>>>> edf189615cae01061032f150b9a156b987a3044b
     time=models.DateTimeField(null=True)
 
     def __str__(self):
@@ -167,24 +149,14 @@ class Invoice(models.Model):
     order = models.ForeignKey('Customer_order',default='000')
     date = models.DateTimeField(auto_now=True)
 
-<<<<<<< HEAD
-   
-=======
 '''
 Sales model
 '''  
->>>>>>> edf189615cae01061032f150b9a156b987a3044b
 class Sales(models.Model):
     item_name=models.CharField(max_length= 20)
     date_sold = models.DateField(auto_now=False)
     predicted=models.IntegerField(default=0)
 
-<<<<<<< HEAD
-class Prediction(models.Model):
-    item_name=models.CharField(max_length= 20)
-    date_sold = models.DateField(auto_now=False)
-    predicted=models.IntegerField(default=0)
-=======
 '''
 predicted data
 '''
@@ -205,4 +177,3 @@ class Requested_supply(models.Model):
 
     def __str__(self):
         return self.product
->>>>>>> edf189615cae01061032f150b9a156b987a3044b

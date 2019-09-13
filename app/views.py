@@ -412,19 +412,6 @@ def customer_order(request):
     if request.method == 'POST':
         form = CustomerOrder(request.POST, request.FILES)
         if form.is_valid():
-<<<<<<< HEAD
-            date_str=form.cleaned_data["date"]
-            # from dateutil import parser
-            # date_=parser.parse(date_str)
-          
-            order=form.save(commit=False)
-            order.time=date_str
-            # order.month = datetime.datetime.now().strftime ("%m")
-            # order.year = datetime.datetime.now().strftime ("%y")
-            try:
-                
-                # product = Product.objects.get(sKU=order.sKU)
-=======
             date_str=form.cleaned_data["time"]
             
             order=form.save(commit=False)
@@ -432,7 +419,6 @@ def customer_order(request):
           
             try:
                 
->>>>>>> edf189615cae01061032f150b9a156b987a3044b
                 order.sKU=order.product.name.sKU
                 product=order.product.name
                 order.total_price = order.quantity * product.unit_price
@@ -552,12 +538,8 @@ def customerApiViews(request):
         x[p.sKU]=[]
         for w in p.location.all():
             x[p.sKU]=[{"quantity":i.quantity,"time":i.time,"product":i.product.name.name} for i in w.orders.all()]
-<<<<<<< HEAD
-
-=======
     from django.http import JsonResponse
     
->>>>>>> edf189615cae01061032f150b9a156b987a3044b
     return JsonResponse({"data":x})
         
 # def xss(request):
@@ -568,10 +550,6 @@ def customerApiViews(request):
 #     with open(path,"r") as infile:
 #         data=csv.DictReader(infile)
 #         x=[dict(i) for i in data]
-<<<<<<< HEAD
-#     return JsonResponse({"data":x})
-=======
 #     return JsonResponse({"data":x})
 def generate_report(request):
     pass
->>>>>>> edf189615cae01061032f150b9a156b987a3044b

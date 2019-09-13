@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> edf189615cae01061032f150b9a156b987a3044b
 var chartData=JSON.parse(window.appConfig.chartData)
 
 
@@ -37,8 +33,4 @@ Highcharts.chart('chart-container', {
             data: Object.values(chartData)
         }
     ]
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> edf189615cae01061032f150b9a156b987a3044b
