@@ -11,7 +11,7 @@ django-postgres-copy==2.4.1
 django-progressive-web-app==0.1.1
 django-registration==2.4.1
 django-tinymce==2.8.0
-djangorestframework==3.9.4
+djangorestframework==3.11.2
 gunicorn==19.9.0
 Pillow==6.0.0
 psycopg2==2.8.2
